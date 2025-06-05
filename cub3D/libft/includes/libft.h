@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:09:12 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/02/19 14:25:21 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:40:21 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
 int		ft_isspace(int c);
+int		ft_isdigit_s(char *s);
 
 /*
 **	lst
@@ -114,6 +115,7 @@ void	ft_putstr(char *s);
 **	str
 */
 
+size_t	ft_countwords(const char *str, char *charset);
 void	ft_split_free(char **arrs);
 char	**ft_split(char const *s, char c);
 char	**ft_split_charset(char const *s, char *charset);
@@ -122,11 +124,15 @@ char	*ft_strchr(const char *str, int c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strdup(const char *s);
+char	**ft_tabdup(char **tab);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin_sep(char **strs, char *sep);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
+int		ft_tablen(char **tab);
+size_t	ft_strlen_egal(const char *str);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);

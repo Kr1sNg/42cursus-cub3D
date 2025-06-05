@@ -6,7 +6,7 @@
 #    By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 19:03:06 by tat-nguy          #+#    #+#              #
-#    Updated: 2025/06/01 19:55:28 by tat-nguy         ###   ########.fr        #
+#    Updated: 2025/06/05 11:57:09 by tat-nguy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ clean:
 fclean: clean
 	@$(RM) $(NAME)
 	@$(MAKE) -s -C $(LIBFT_DIR) fclean
-	@$(MAKE) -s -C $(MLX_DIR) fclean
+	@$(MAKE) -s -C $(MLX_DIR) clean
 
 re: fclean all
 
