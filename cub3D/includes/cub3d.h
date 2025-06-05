@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/04 18:54:07 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:01:45 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,32 @@ typedef struct s_map
 	
 }	t_map;
 
+
+typedef struct s_texture
+{
+	int		count_no;
+	int		count_so;
+	int		count_we;
+	int		count_ea;
+}	t_texture;
+
 /*
 ** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
 */
 
+/* parsing */
 
+bool	is_cub_file(char *path);
+char	**read_file(char *path);
+
+bool	is_texture_line(char *line);
+bool	is_color_line(char *line);
+bool	is_empty_line(char *line);
+bool	is_map_line(char *s);
+
+int	ft_parsing(char *path, t_map *map);
+int	parse_texture_line(char *line, t_map *map);
+int	parse_color_line(char *line, t_map *map);
+
+int	print_error(char *str);
 #endif
