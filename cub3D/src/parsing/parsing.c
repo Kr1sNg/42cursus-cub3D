@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/05 12:07:26 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/05 22:38:34 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ int	ft_parsing(char *path, t_map *map)
 			parse_texture_line(lines[i], map);
 		else if (is_color_line(lines[i]))
 			parse_color_line(lines[i], map);
-		else if (!is_empty_line(lines[i]))
+		else if (is_empty_line(lines[i]))
+			printf("empty line\n");
+		else
 		{
 			free(lines);	
 			exit(print_error("Invalid line before map"));
@@ -126,13 +128,13 @@ bool	is_texture_line(char *line)
 	i = 0;
 	while (line[i] && ft_isspace(line[i]))
 		i++;
-	if (ft_strncmp(&line[i], "NO ", 3))
+	if (!ft_strncmp(&line[i], "NO ", 3))
 		return (true);
-	else if (ft_strncmp(&line[i], "SO ", 3))
+	else if (!ft_strncmp(&line[i], "SO ", 3))
 		return (true);
-	else if (ft_strncmp(&line[i], "WE ", 3))
+	else if (!ft_strncmp(&line[i], "WE ", 3))
 		return (true);
-	else if (ft_strncmp(&line[i], "EA ", 3))
+	else if (!ft_strncmp(&line[i], "EA ", 3))
 		return (true);
 	return (false);
 }
@@ -144,9 +146,9 @@ bool	is_color_line(char *line)
 	i = 0;
 	while (line[i] && ft_isspace(line[i]))
 		i++;
-	if (ft_strncmp(&line[i], "F ", 2))
+	if (!ft_strncmp(&line[i], "F ", 2))
 		return (true);
-	else if (ft_strncmp(&line[i], "C ", 2))
+	else if (!ft_strncmp(&line[i], "C ", 2))
 		return (true);
 	return (false);
 }
@@ -156,9 +158,12 @@ bool	is_empty_line(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i] && ft_isspace(line[i]))
-		i++;
-	if (i == 0 || (line[i] && line[i] != '\n'))
+	while (line[i])
+	{
+		if (ft_isspace(line[i]))
+			i++;
+	}
+	if (line[i])
 		return (false);
 	return (true);
 }
@@ -168,12 +173,12 @@ bool	is_map_line(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i] && (ft_isspace(s[i]) || s[i] == '1' || s[i] == '0' || s[i] == 'N'
-			|| s[i] == 'S' || s[i] == 'E' || s[i] == 'W'))
+	while (s[i] && ft_isspace(s[i]))
 		i++;
-	if (i == 0 || (s[i] && s[i] != '\n'))
-		return (false);
-	return (true);
+	if (s[i] && (s[i] == '1'))// || s[i] == '0' || s[i] == 'N'
+			//|| s[i] == 'S' || s[i] == 'E' || s[i] == 'W'))
+		return (true);
+	return (false);
 }
 
 int	print_error(char *str)
