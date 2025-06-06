@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/05 12:01:45 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/06 20:05:35 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,35 @@
 ** :::::::::::::::::::::::::::* STRUCT DECLARATION *::::::::::::::::::::::::: **
 */
 
+typedef struct s_count
+{
+	int		no_line;
+	int		so_line;
+	int		we_line;
+	int		ea_line;
+	int		f_line;
+	int		c_line;
+	int		map_lines;
+	int		player_count;
+}	t_count;
+
+
 typedef struct s_map
 {
-	void	*tex_n;
-	void	*tex_s;
-	void	*tex_w;
-	void	*tex_e;
+	void	*tex_n; //need to free
+	void	*tex_s; //need to free
+	void	*tex_w; //need to free
+	void	*tex_e; //need to free
 	int		color_f;
 	int		color_c;
-	char	**map;
+	char	**the_map;
 	int		posx;
 	int		posy;
 	int		dirx;
 	int		diry;
+	t_count	count;
 	
 }	t_map;
-
-
-typedef struct s_texture
-{
-	int		count_no;
-	int		count_so;
-	int		count_we;
-	int		count_ea;
-}	t_texture;
 
 /*
 ** ::::::::::::::::::::::::::* FUNCTION PROTOTYPES *::::::::::::::::::::::::: **
@@ -70,14 +75,19 @@ typedef struct s_texture
 bool	is_cub_file(char *path);
 char	**read_file(char *path);
 
-bool	is_texture_line(char *line);
-bool	is_color_line(char *line);
+int	is_texture_line(char *line);
+int	is_color_line(char *line);
 bool	is_empty_line(char *line);
 bool	is_map_line(char *s);
 
 int	ft_parsing(char *path, t_map *map);
-int	parse_texture_line(char *line, t_map *map);
-int	parse_color_line(char *line, t_map *map);
+void	parse_texture_line(char *line, t_map *map);
+void	parse_color_line(char *line, t_map *map);
+int	color_int(char *r, char *g, char *b);
+void	parse_map_lines(char **line, t_map *map);
+
+
 
 int	print_error(char *str);
+void	print_map(t_map *map);
 #endif

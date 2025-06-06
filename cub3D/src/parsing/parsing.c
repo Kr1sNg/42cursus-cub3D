@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/05 22:38:34 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/06 20:11:53 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ Parsing:
 	- check open file
 	- read file into char **lines
 	- read lines by line then 
-		- if it's texture => input in texture
-		- if it's color => input in color
+		- if it's texture => input in texture + count in texture count
+		- if it's color => input in color + count in count color
+		- if it's map => input into maps
 	
 */
 
@@ -73,55 +74,39 @@ int	ft_parsing(char *path, t_map *map)
 			parse_texture_line(lines[i], map);
 		else if (is_color_line(lines[i]))
 			parse_color_line(lines[i], map);
-		else if (is_empty_line(lines[i]))
-			printf("empty line\n");
-		else
+		else if (!is_empty_line(lines[i]))
 		{
 			free(lines);	
 			exit(print_error("Invalid line before map"));
 		}
 		i++;
 	}
-	// check map
-	while (lines[i] && is_map_line(lines[i]))
+	if (lines[i] && is_map_line(lines[i]))
 	{
-		printf("Map[%i]: %s\n", i, lines[i]);
+		parse_map_lines(&lines[i], map);
 		i++;
 	}
+	while (lines[i] && is_map_line(lines[i]))
+		i++;
 	if (lines[i])
 	{
 		free(lines);
 		exit(print_error("map is not in the last of file"));
 	}
 	printf("File OK!");
+	printf("after parsing: s link [%s]\n", (char *)map->tex_s);
+	printf("after parsing: e link [%s]\n", (char *)map->tex_e);
+	printf("after parsing: n link [%s]\n", (char *)map->tex_n);
+	printf("after parsing: w link [%s]\n", (char *)map->tex_w);
+	printf("after parsing: c color [%i]\n", map->color_c);
+	printf("after parsing: f color [%i]\n", map->color_f);
+	print_map(map);
 	free(lines);
 	return (0);
 }
 
-int	parse_texture_line(char *line, t_map *map)
-{
-	// t_texture	*texture;
-	
-	// texture = ft_calloc(1, sizeof(texture));
-	// if (!texture)
-	// 	exit(print_error("Cannot allocate memory"));
-	
-	(void)map;
-	
-	if (line)
-		printf("Texture: %s\n", line);
-	return (1);
-}
 
-int	parse_color_line(char *line, t_map *map)
-{
-	(void)map;
-	if (line)
-		printf("Color: %s\n", line);
-	return (1);
-}
-
-bool	is_texture_line(char *line)
+int	is_texture_line(char *line)
 {
 	int	i;
 
@@ -129,28 +114,28 @@ bool	is_texture_line(char *line)
 	while (line[i] && ft_isspace(line[i]))
 		i++;
 	if (!ft_strncmp(&line[i], "NO ", 3))
-		return (true);
+		return (1);
 	else if (!ft_strncmp(&line[i], "SO ", 3))
-		return (true);
+		return (2);
 	else if (!ft_strncmp(&line[i], "WE ", 3))
-		return (true);
+		return (3);
 	else if (!ft_strncmp(&line[i], "EA ", 3))
-		return (true);
-	return (false);
+		return (4);
+	return (0);
 }
 
-bool	is_color_line(char *line)
+int	is_color_line(char *line)
 {
 	int	i;
 
 	i = 0;
 	while (line[i] && ft_isspace(line[i]))
 		i++;
-	if (!ft_strncmp(&line[i], "F ", 2))
-		return (true);
-	else if (!ft_strncmp(&line[i], "C ", 2))
-		return (true);
-	return (false);
+	if (!ft_strncmp(&line[i], "C ", 2))
+		return (5);
+	else if (!ft_strncmp(&line[i], "F ", 2))
+		return (6);
+	return (0);
 }
 
 bool	is_empty_line(char *line)
@@ -189,3 +174,5 @@ int	print_error(char *str)
 	write(2, "\n", 1);
 	return (1);
 }
+
+// is valid file! - 4 is_texture_line + 2 color 
