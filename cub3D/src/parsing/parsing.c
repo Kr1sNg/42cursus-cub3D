@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/06 20:11:53 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/07 10:02:03 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_parsing(char *path, t_map *map)
 	}
 	if (lines[i] && is_map_line(lines[i]))
 	{
-		parse_map_lines(&lines[i], map);
+		parse_map_block(&lines[i], map);
 		i++;
 	}
 	while (lines[i] && is_map_line(lines[i]))
@@ -100,7 +100,7 @@ int	ft_parsing(char *path, t_map *map)
 	printf("after parsing: w link [%s]\n", (char *)map->tex_w);
 	printf("after parsing: c color [%i]\n", map->color_c);
 	printf("after parsing: f color [%i]\n", map->color_f);
-	print_map(map);
+	print_map(map->the_map);
 	free(lines);
 	return (0);
 }

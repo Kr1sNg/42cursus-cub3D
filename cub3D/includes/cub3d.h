@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/06 20:05:35 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/07 10:01:21 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,17 @@ int	ft_parsing(char *path, t_map *map);
 void	parse_texture_line(char *line, t_map *map);
 void	parse_color_line(char *line, t_map *map);
 int	color_int(char *r, char *g, char *b);
-void	parse_map_lines(char **line, t_map *map);
+void	parse_map_block(char **line, t_map *map);
 
 
 
 int	print_error(char *str);
-void	print_map(t_map *map);
+void	print_map(char **map);
+
+void	free_map_data(t_map *map);
+
+
+int	is_valid_map(char **map);
+bool	is_bordered(char **map);
+
 #endif

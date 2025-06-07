@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/06 20:30:54 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/07 10:05:06 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,52 +22,79 @@
 		int		diry;
 */
 
-void	parse_map_lines(char **line, t_map *map)
+void	parse_map_block(char **line, t_map *map)
 {
-	int	height;
-	int	width;
 	int	i;
-	int	len;
 
 	i = 0;
-	width = 0;
-	height = 0;
 	
 	while (line[i])
 	{
 		if (!is_map_line(line[i]))
 			exit(print_error("empty line in map"));
-		len = ft_strlen(line[i]);
-		if (len > width)
-			width = len;
 		i++;
 	}
-	height = i;
-	map->the_map = ft_calloc(height + 1, sizeof(char *));
+	map->count.map_lines = i;
+	map->the_map = ft_calloc(i + 1, sizeof(char *));
 	if (!map->the_map)
 		exit(print_error("Malloc failed"));
 	i = -1;
-	while (++i < height)
+	while (++i < map->count.map_lines)
 		map->the_map[i] = ft_strdup(line[i]);
-	
+	if (!is_valid_map(map->the_map))
+		exit(print_error("Invalid THE map!"));
 }
 
-void	print_map(t_map *map)
+void	print_map(char **map)
 {
 	int	i;
 	
-	if (!map->the_map)
-		printf("There's no map\n");
 	i = -1;
-	while (map->the_map[++i])
-		printf("map[%i]: [%s]\n", i, map->the_map[i]);
+	while (map && map[++i])
+		printf("map[%i]: [%s]\n", i, map[i]);
 }
 
 int	is_valid_map(char **map)
 {
-	- check_border( - line 0 + line n has all 1, all others line start and end with 1)
-	- check_floodfill
-	- check_map object: player, characters
+	if (!is_bordered(map))
+		return (false);
+	// - check_floodfill
+	// - check_map object: player, characters
+	return (true);
 }
 
-bool	is_bordered()
+bool	is_bordered(char **map)
+{
+	int	i;
+	int	len;
+	
+	// first line 11111111111111 1111111 1111111111
+	i = 0;
+	if (map && map[0])
+	{
+		while (map[0] && map[0][i])
+		{
+			if (!(ft_isspace(map[0][i]) || map[0][i] == '1'))
+				return (false);
+			i++;
+		}
+	}
+	// middle  1xxxxxxxxxx xxxx xxx1\n
+	i = 0;
+	while (map && map[++i])
+	{
+		len = ft_strlen(map[i]);
+		// if (map[i][0] != '1' || map[i][len - 2] != '1')
+		// 	return (false);
+	}
+	// last line 11111111 11111 111111111
+	len = 0;
+	while (map[i] && map[i][len])
+	{
+		if(!(ft_isspace(map[i][len]) || map[i][len] == '1'))
+				return (false);
+		len ++;
+	}
+	return (true);
+}
+
