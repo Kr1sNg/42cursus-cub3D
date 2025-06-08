@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/07 10:02:03 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/08 10:54:50 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	ft_parsing(char *path, t_map *map)
 	printf("after parsing: c color [%i]\n", map->color_c);
 	printf("after parsing: f color [%i]\n", map->color_f);
 	print_map(map->the_map);
+	printf("num of player: %i\n", map->count.player_count);
+	printf("playser posx %i, posy %i\n", map->posx, map->posy);
 	free(lines);
 	return (0);
 }
@@ -145,25 +147,35 @@ bool	is_empty_line(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (ft_isspace(line[i]))
-			i++;
+		if (!ft_isspace(line[i]))
+			return (false);
+		i++;
 	}
-	if (line[i])
-		return (false);
 	return (true);
+}
+
+static bool	is_map_obj(char c)
+{
+	if (c == ' ' || c == '	' || c == '1' || c == '0' || c == 'N' || c == 'S'
+		|| c == 'E' || c =='W' || c == '\n')
+		return (true);
+	return (false);
 }
 
 bool	is_map_line(char *s)
 {
 	int	i;
 
+	if (is_empty_line(s))
+		return (false);
 	i = 0;
-	while (s[i] && ft_isspace(s[i]))
+	while (s[i])
+	{
+		if (!is_map_obj(s[i]))
+			return (false);
 		i++;
-	if (s[i] && (s[i] == '1'))// || s[i] == '0' || s[i] == 'N'
-			//|| s[i] == 'S' || s[i] == 'E' || s[i] == 'W'))
-		return (true);
-	return (false);
+	}
+	return (true);
 }
 
 int	print_error(char *str)

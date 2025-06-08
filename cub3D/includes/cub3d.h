@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/07 10:01:21 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/08 12:19:35 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ typedef struct s_map
 	int		color_f;
 	int		color_c;
 	char	**the_map;
-	int		posx;
-	int		posy;
-	int		dirx;
-	int		diry;
+	int		posx; // horizontal
+	int		posy; //  vertical
+	int		dirx; // N=(dirx = 0, diry = -1), S=(dirx = 0, diry = 1)
+	int		diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
 	t_count	count;
 	
 }	t_map;
@@ -94,7 +94,9 @@ void	print_map(char **map);
 void	free_map_data(t_map *map);
 
 
-int	is_valid_map(char **map);
-bool	is_bordered(char **map);
+int	is_valid_map(t_map *map);
+// bool	is_bordered(char **map);
+bool	has_one_player(t_map *map);
+bool	is_closed_map(t_map	*map);
 
 #endif
