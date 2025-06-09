@@ -6,7 +6,7 @@
 #    By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 19:03:06 by tat-nguy          #+#    #+#              #
-#    Updated: 2025/06/05 22:01:52 by tat-nguy         ###   ########.fr        #
+#    Updated: 2025/06/08 18:52:45 by tat-nguy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MLX			= $(MLX_DIR)/libmlx.a
 
 # Source Files
 SRC_DIR 	= src
-SUBDIRS		= parsing rendering raycasting
+SUBDIRS		= main parsing rendering raycasting
 SRC_SUBDIR	= $(foreach dir, $(SUBDIRS), $(addprefix $(SRC_DIR)/, $(dir)))
 SRC     	= $(foreach dir, $(SRC_SUBDIR), $(wildcard $(dir)/*.c))
 

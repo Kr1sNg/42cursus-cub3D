@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/08 12:19:35 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:16:20 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_count
 	int		player_count;
 }	t_count;
 
-
 typedef struct s_map
 {
 	void	*tex_n; //need to free
@@ -62,8 +61,8 @@ typedef struct s_map
 	int		posy; //  vertical
 	int		dirx; // N=(dirx = 0, diry = -1), S=(dirx = 0, diry = 1)
 	int		diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
+	char	**map_copy;
 	t_count	count;
-	
 }	t_map;
 
 /*
@@ -71,32 +70,39 @@ typedef struct s_map
 */
 
 /* parsing */
-
-bool	is_cub_file(char *path);
-char	**read_file(char *path);
-
-int	is_texture_line(char *line);
-int	is_color_line(char *line);
+// error_map
+void	perror_and_exit(t_map *map, char *str);
+// free_map
+void	free_map_data(t_map *map);
+//is_line
+int		is_texture_line(char *line);
+int		is_color_line(char *line);
 bool	is_empty_line(char *line);
 bool	is_map_line(char *s);
 
-int	ft_parsing(char *path, t_map *map);
-void	parse_texture_line(char *line, t_map *map);
-void	parse_color_line(char *line, t_map *map);
-int	color_int(char *r, char *g, char *b);
-void	parse_map_block(char **line, t_map *map);
+//floodfill
+bool	is_closed_map(t_map	*map, char **lines);
 
+// player
+bool	has_located_player(t_map *map);
 
+//pars_lines
+void	parse_texture_line(t_map *map, char **lines, int i);
+void	parse_color_line(t_map *map, char **lines, int i);
 
-int	print_error(char *str);
-void	print_map(char **map);
+//parse_map
+int		parse_map_block(t_map *map, char **lines);
+int		is_valid_map(t_map *map, char **lines);
 
-void	free_map_data(t_map *map);
+// parsing
+int		ft_parsing(char *path, t_map *map);
 
+//read_file
+bool	is_cub_file(char *path);
+char	**read_file(char *path);
 
-int	is_valid_map(t_map *map);
-// bool	is_bordered(char **map);
-bool	has_one_player(t_map *map);
-bool	is_closed_map(t_map	*map);
+//utils
+int		color_toi(t_map *map, char **split, char **lines);
+void	print_map(t_map *map);
 
 #endif
