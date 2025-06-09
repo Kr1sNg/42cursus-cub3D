@@ -1,14 +1,13 @@
-NO ./textures/bark.xpm
-SO ./textures/bricks.xpm
-EA ./textures/wood.xpm
-WE ./textures/wood.xpm
+NO textures/simonkraft/wet_sponge.xpm
+SO textures/simonkraft/wet_sponge.xpm
+WE textures/simonkraft/wet_sponge.xpm
+EA textures/simonkraft/wet_sponge.xpm
 
-F 32, 32, 32
-C 0, 0, 102
+F 164,169,20
+C 153,204,255
 
-
-	111111111111111111111
-	101000001000000000001
+111111111111111111111
+101000001000000000001
 101010101011111110001
 100010100010000010001
 111110101111101011101
@@ -28,3 +27,4 @@ C 0, 0, 102
 101010111011111111101
 1N1000001000000000001
 111111111111111111111
+
