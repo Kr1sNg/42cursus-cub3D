@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 13:09:17 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:37:50 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	parse_map_block(t_map *map, char **lines)
 int	is_valid_map(t_map *map, char **lines)
 {
 	if (!has_located_player(map))
+		return (false);
+	if (!map->count.player_count)
 		return (false);
 	if (!is_closed_map(map, lines))
 		return (false);
