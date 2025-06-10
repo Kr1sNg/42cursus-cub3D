@@ -1,7 +1,7 @@
-NO ./textures/bark.xpm
-SO ./textures/bricks.xpm 
-EA ./textures/wood.xpm
-WE ./textures/wood.xpm
+NO textures/test/north.xpm
+SO textures/test/south.xpm
+WE textures/test/west.xpm
+EA textures/test/east.xpm
 
 11111
 10001

@@ -1,17 +1,17 @@
-   WE                            ./textures/bark.xpm
-NO      ./textures/bark.xpm
+   WE                            textures/wolfenstein/grey_stone.xpm
+NO      textures/wolfenstein/purple_stone.xpm
 
 
 
-SO ./textures/bark.xpm
+SO textures/wolfenstein/red_brick.xpm
 
-F      55,    55,     55
+F      17,    38,     64
 
-EA ./textures/bark.xpm
+EA textures/wolfenstein/wood.xpm
 
 
 
-C 0, 0, 0
+C 218, 234, 235
 
 1111111111111111111111111
 10S0110000100000000000001

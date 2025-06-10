@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 10:16:20 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:06:09 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # include "../libft/includes/libft.h"
 # include "../minilibx/mlx.h"
+# include "../minilibx/mlx_int.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -45,6 +46,7 @@ typedef struct s_count
 	int		f_line;
 	int		c_line;
 	int		map_lines;
+	int		map_width; // include space
 	int		player_count;
 }	t_count;
 
