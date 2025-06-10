@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:23:26 by layang            #+#    #+#             */
-/*   Updated: 2025/06/07 14:23:52 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/09 16:00:37 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	key_hooks(int keycode, t_scene	*all)
 		zoom(all->map, 1.2);
 	if (keycode == XK_minus)
 		zoom(all->map, 1 / 1.2); */
-/* 	if (keycode == XK_Left)
-		translate(all->map, (t_point){-10, 0, 0, 0});
+	if (keycode == XK_Left)
+		rotate(all, -0.1);
 	if (keycode == XK_Right)
-		translate(all->map, (t_point){10, 0, 0, 0});
-	if (keycode == XK_Up)
+		rotate(all, 0.1);
+/* 		if (keycode == XK_Up)
 		translate(all->map, (t_point){0, -10, 0, 0});
 	if (keycode == XK_Down)
 		translate(all->map, (t_point){0, 10, 0, 0}); */

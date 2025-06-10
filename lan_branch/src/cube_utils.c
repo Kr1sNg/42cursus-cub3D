@@ -6,11 +6,21 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:24:16 by layang            #+#    #+#             */
-/*   Updated: 2025/06/07 14:25:28 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/09 16:56:13 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
+
+double	get_player_angle(t_cam player)
+{
+	double angle_radian;
+
+	angle_radian = -atan2(player.diry, player.dirx);
+	if (angle_radian < 0)
+		angle_radian += 2 * M_PI;
+	return (angle_radian);
+}
 
 void	put_pixel(t_pic	*img, t_point	pt)
 {
@@ -52,6 +62,11 @@ void	render_background(t_pic	*img, t_map	*tmap)
 		}
 		i++;
 	}
+}
+
+void	rotate(t_scene	*scene, double angl_turn)
+{
+	scene->tmap->player.p_angle += angl_turn;
 }
 
 void	translate(t_map	*tmap, t_point	mov)

@@ -6,7 +6,7 @@
 #    By: layang <layang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/06 15:21:57 by layang            #+#    #+#              #
-#    Updated: 2025/06/07 14:26:22 by layang           ###   ########.fr        #
+#    Updated: 2025/06/09 16:58:37 by layang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC_C = main.c \
 		minimap.c \
 		cube_free.c \
 		event_hook.c \
-		cube_utils.c
+		cube_utils.c \
+		minimap_utils.c
 
 SRCS = $(addprefix $(SRC_F), $(SRC_C))
 

@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:48:19 by layang            #+#    #+#             */
-/*   Updated: 2025/06/07 14:35:12 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:16:58 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,26 @@
 # include <math.h>
 # include <stdarg.h>
 
-//# define WIDTH			1920
-//# define HEIGHT			1080
-# define WIDTH			920
-# define HEIGHT			680
+# define WIDTH			1920
+# define HEIGHT			1080
+//# define WIDTH			920
+//# define HEIGHT			680
 # define WHITE			0x00FFFFFF
+
+typedef enum e_hit
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}	t_hit;
+
+typedef struct s_point
+{
+	int		x;
+	int		y;
+	int		color;
+}	t_point;
 
 typedef	struct s_lmap
 {
@@ -33,11 +48,16 @@ typedef	struct s_lmap
 
 typedef	struct s_cam
 {
-	int		posx;
-	int		posy;
-	int		dirx;
-	int		diry;
-	int		pitch;	
+	double	posx;
+	double	posy;
+	double	dirx;
+	double	diry;
+	double	planex;
+	double	planey;
+	double  p_angle;
+	int		pitch;
+	double  fov;
+	int		ray_nb;
 }	t_cam;
 
 typedef	struct s_map
@@ -57,13 +77,29 @@ typedef	struct s_map
 
 //pitch: 玩家视角的俯仰角（上下看）for sky and floor: 
 // y_offset = (screen_height / 2) + player->pitch;	
-
-typedef struct s_point
+typedef struct s_raycastor
 {
-	int		x;
-	int		y;
-	int		color;
-}	t_point;
+	double	start_angle;
+	double	angle_step;
+	int		grid;
+	double	ra;
+	int		dof;	
+	double	disH;
+	double	disV;
+	double	dist;
+	double	rx;
+	double	ry;
+	double	final_x;
+	double	final_y;
+	double	hx;
+	double	hy;
+	double	vx;
+	double	vy;
+	double	stepx;
+	double	stepy;
+	t_hit	hit;
+	t_point	in_map;	
+}	t_raycastor;
 
 typedef struct s_pic
 {
@@ -78,11 +114,8 @@ typedef	struct s_scene
 {
 	t_map	*tmap;
 	t_pic	img;
-	t_cam	*cam;
 	void	*mlx;
 	void	*win;
-	double	planex;
-	double	planey;
 }	t_scene;
 
 
@@ -201,20 +234,28 @@ lineHeight = screenHeight / perpWallDist;
 
 /* main.c 5*/
 
-/* minimap.c 3*/
+/* minimap.c 2*/
 void	put_minimap(t_scene	*scene);
-void	draw_square(t_scene	*scene, t_point p, int size, unsigned int color);
 
-/* cube_utils.c 3*/
+/* minimap_utils.c 3*/
+int		inside_map_array(int x, int y, t_scene *scene);
+void	draw_square(t_scene	*scene, t_point p, int size);
+void	draw_line(t_scene	*scene, t_point	s, t_point	e, int	color);
+void	draw_player_vector(t_scene	*scene, t_point player, int	len);
+void	draw_player_vision(t_scene *scene, t_point p, int grid);
+
+/* cube_utils.c 5*/
+double	get_player_angle(t_cam player);
 void	put_pixel(t_pic	*img, t_point	pt);
 void	render_background(t_pic	*img, t_map	*tmap);
+void	rotate(t_scene	*scene, double angl_turn);
 void	translate(t_map	*tmap, t_point	mov);
 
 /* event_hook.c 2*/
 int		key_hooks(int keycode, t_scene	*all);
 void	hook_controls(t_scene	*scene);
 
-/* cube_free.c 3*/
+/* cube_free.c 5*/
 void	free_arr(char	***paths);
 void	free_lst(t_lmap	**tokens);
 int		close_cube3d(t_scene	*scene);

@@ -6,29 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/07 14:27:55 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/10 16:04:57 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
-
-void draw_square(t_scene	*scene, t_point p, int size, unsigned int color)
-{
-	int	i;
-	int	j;
-	
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (j < size)
-		{
-			put_pixel(&scene->img, (t_point){p.x + i, p.y + j, color});
-			j++;
-		}
-		i++;
-	}
-}
 
 static void	draw_minimap(t_scene	*scene, int grid, t_point	player)
 {
@@ -51,9 +33,7 @@ static void	draw_minimap(t_scene	*scene, int grid, t_point	player)
 			map_p.x = scene->tmap->player.posx + x;
 			map_p.y = scene->tmap->player.posy + y;
 			//printf("map: (%d,%d)\n", map_p.x, map_p.y);
-			if (map_p.x >= 0 && map_p.y >= 0 && map_p.x < scene->tmap->map_w
-					&& map_p.y < scene->tmap->map_h
-					&& map_p.x < (int)ft_strlen(scene->tmap->map[map_p.y]))
+			if (inside_map_array(map_p.x, map_p.y, scene))
 			{
 				c = scene->tmap->map[map_p.y][map_p.x];
 				if (c && (c == '1' || c == '0' || c == 'N' || c == 'S'
@@ -69,8 +49,9 @@ static void	draw_minimap(t_scene	*scene, int grid, t_point	player)
 						off = 0;
 					pix_p.x = player.x + x * grid + off;
 					pix_p.y = player.y + y * grid + off;
+					pix_p.color = col;
 					//printf("Draw square at pixel (%d,%d)\n", pix_p.x, pix_p.y);
-					draw_square(scene, pix_p, grid - off, col);
+					draw_square(scene, pix_p, grid - off);
 				}
 			}
 			x++;
@@ -83,17 +64,24 @@ void	put_minimap(t_scene	*scene)
 {
 	int		size = round((WIDTH + HEIGHT)/ 10);
 	t_point	center;
-	int		grid;
+	int		grid = size / 10;
 	t_point	start;
+	t_point	draw_start;
+	int		size_player;
 	
-	center.x = (int)(WIDTH / 50 + size / 2);
-	center.y = (int)(HEIGHT / 50 + size / 2);
 	start.x = (int)(WIDTH / 50);
 	start.y = (int)(HEIGHT / 50);
-	grid = size / 10;
-	draw_square(scene, start, size, 0x00FFFFFF);
-	draw_minimap(scene, grid, center);
-	center.x += size / 40;
-	center.y += size / 40;
-	draw_square(scene, center, grid / 2, 0xDE3163);
+	start.color = 0x00FFFFFF;
+	draw_start.x = start.x + 5 * grid;
+	draw_start.y = start.y + 5 * grid;
+	draw_square(scene, start, size);
+	draw_minimap(scene, grid, draw_start);
+	size_player = grid / 3;
+	center.x = draw_start.x + grid / 2;
+	center.y = draw_start.y + grid / 2;
+	center.color = 0x000000;
+	//draw_player_vision(scene, center, grid);
+	draw_player_vector(scene, center, grid / 2);
+	draw_square(scene, (t_point){center.x - size_player / 2,
+		center.y - size_player / 2, 0xDE3163}, size_player);
 }
