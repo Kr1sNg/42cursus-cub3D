@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 19:37:50 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:03:30 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 int	parse_map_block(t_map *map, char **lines)
 {
 	int	i;
+	int	len;
 
 	i = 0;
+	len = 0;
 	while (lines && lines[i])
 	{
 		if (!is_map_line(lines[i]))
 			break ;
+		len = ft_strlen(lines[i]);
+		if (len > map->count.map_width)
+			map->count.map_width = len;
 		i++;
 	}
 	map->count.map_lines = i;

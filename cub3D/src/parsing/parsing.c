@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 13:08:46 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:24:39 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	parse_map_if_present(t_map *map, char **lines, int i)
 {
 	int	status;
 
+	status = 0;
 	if (lines && lines[i] && is_map_line(lines[i]))
 	{
 		status = parse_map_block(map, &lines[i]);
@@ -78,7 +79,6 @@ static int	check_nothing_after_map(char **lines, int i, t_map *map)
 		{
 			ft_split_free(lines);
 			return (perror_and_exit(map, "map is not in the last of file"), -42);
-	
 		}
 		i++;
 	}
@@ -91,6 +91,7 @@ int	ft_parsing(char *path, t_map *map)
 	int		i;
 
 	lines = NULL;
+	ft_memset(map, 0, sizeof(t_map));
 	i = check_file_and_read_lines(path, map, &lines);
 	if (i < 0)
 		return (ft_split_free(lines), -42);

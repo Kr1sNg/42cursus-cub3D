@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:56:18 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 10:32:33 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:07:52 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ void	parse_texture_line(t_map *map, char **lines, int i)
 {
 	char	**split;
 
-	split = NULL;
-	if (lines && lines[i])
-		split = ft_split_charset(lines[i], " \n");
+	split = ft_split_charset(lines[i], " \n");
 	if (!split || !split[0] || !split[1] || ft_tablen(split) > 2)
 	{
 		ft_split_free(lines);
@@ -68,8 +66,7 @@ void	parse_color_line(t_map *map, char **lines, int i)
 {
 	char	**split;
 
-	if (lines && lines[i])
-		split = ft_split_charset(lines[i], " ,	\n");
+	split = ft_split_charset(lines[i], " ,	\n");
 	if (!split || !split[0] || !split[1] || !split[2] || !split[3]
 		|| (split && ft_tablen(split) > 4))
 		return (ft_split_free(lines), ft_split_free(split),
