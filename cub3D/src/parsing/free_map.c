@@ -6,24 +6,25 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 18:40:45 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 10:23:13 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:57:30 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	free_map_data(t_map *map)
+void	free_map_data(t_map *tmap)
 {
-	if (!map)
+	if (!tmap)
 		return ;
-	if (map->the_map)
-		ft_split_free(map->the_map);
-	if (map->tex_e)
-		free(map->tex_e);
-	if (map->tex_n)
-		free(map->tex_n);
-	if (map->tex_s)
-		free(map->tex_s);
-	if (map->tex_w)
-		free(map->tex_w);
+	if (tmap->the_map)
+		ft_split_free(tmap->the_map);
+	if (tmap->path_e)
+		free(tmap->path_e);
+	if (tmap->path_n)
+		free(tmap->path_n);
+	if (tmap->path_s)
+		free(tmap->path_s);
+	if (tmap->path_w)
+		free(tmap->path_w);
+	free(tmap);
 }

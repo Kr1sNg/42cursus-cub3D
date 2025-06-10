@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 19:36:03 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:47:27 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ static bool	set_player(t_map *map, char dir, int x, int y)
 	if (map->count.player_count != 0)
 		return (false);
 	map->count.player_count = dir;
-	map->posx = x;
-	map->posy = y;
+	map->player.posx = x;
+	map->player.posy = y;
 	if (dir == 'N' || dir == 'S')
 	{
-		map->dirx = 0;
+		map->player.dirx = 0;
 		if (dir == 'N')
-			map->diry = -1;
-		map->diry = 1;
+			map->player.diry = -1;
+		map->player.diry = 1;
 	}
 	else if (dir == 'W' || dir == 'E')
 	{
-		map->diry = 0;
+		map->player.diry = 0;
 		if (dir == 'W')
-			map->dirx = -1;
-		map->dirx = 1;
+			map->player.dirx = -1;
+		map->player.dirx = 1;
 	}
 	return (true);
 }
@@ -71,7 +71,7 @@ bool	has_located_player(t_map *map)
 			return (false);
 		i++;
 	}
-	printf("PLAYER posx: %i, posy: %i\n", map->posx, map->posy);
+	printf("PLAYER posx: %i, posy: %i\n", map->player.posx, map->player.posy);
 	return (true);
 }
 

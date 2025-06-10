@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 10:55:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 10:24:47 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:45:24 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	is_closed_map(t_map	*map, char **lines)
 	if (!map->map_copy)
 		return (ft_split_free(lines),
 			perror_and_exit(map, "Malloc failed"), false);
-	flood_fill(map, map->posx, map->posy, lines);
+	flood_fill(map, map->player.posx, map->player.posy, lines);
 	ft_split_free(map->map_copy);
 	return (true);
 }

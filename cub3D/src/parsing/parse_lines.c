@@ -6,13 +6,13 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:56:18 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/10 14:07:52 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:42:03 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	set_texture(void **dst, int *count_line, char **split, t_map *map)
+static void	set_texture(char **dst, int *count_line, char **split, t_map *map)
 {
 	if (*count_line)
 	{
@@ -20,7 +20,7 @@ static void	set_texture(void **dst, int *count_line, char **split, t_map *map)
 		return ;
 	}
 	*count_line = 1;
-	*dst = (char *)ft_strdup(split[1]);
+	*dst = ft_strdup(split[1]);
 	if (!*dst)
 		perror_and_exit(map, "Texture strdup failed");
 }
@@ -32,13 +32,16 @@ static void	parse_texture_dispatch(t_map *map, char **split, char *line,
 
 	type = is_texture_line(line);
 	if (type == 1)
-		set_texture(&map->tex_n, &map->count.no_line, split, map);
+		set_texture(&map->path_n, &map->count.no_line, split, map);
 	else if (type == 2)
-		set_texture(&map->tex_s, &map->count.so_line, split, map);
+		set_texture(&map->path_s, &map->count.so_line, split, map);
 	else if (type == 3)
-		set_texture(&map->tex_w, &map->count.we_line, split, map);
+		set_texture(&map->path_w, &map->count.we_line, split, map);
 	else if (type == 4)
-		set_texture(&map->tex_e, &map->count.ea_line, split, map);
+	{
+		set_texture(&map->path_e, &map->count.ea_line, split, map);
+		printf("path_e: %s\n", map->path_e);
+	}
 	else
 	{
 		ft_split_free(lines);
@@ -58,7 +61,9 @@ void	parse_texture_line(t_map *map, char **lines, int i)
 		ft_split_free(split);
 		perror_and_exit(map, "Invalid texture");
 	}
+	printf("texture after split: %s\n", split[1]);
 	parse_texture_dispatch(map, split, lines[i], lines);
+	printf("after dispatch e: %s\n", map->path_e);
 	ft_split_free(split);
 }
 
@@ -105,7 +110,7 @@ void	parse_texture_line(t_map *map, char **lines, int i)
 			return (ft_split_free(lines), ft_split_free(split),
 				perror_and_exit(map, "Dup texture"));
 		map->count.no_line = 1;
-		map->tex_n = ft_strdup(split[1]);
+		map->path_n = ft_strdup(split[1]);
 	}
 	else if (is_texture_line(lines[i]) == 2)
 	{
@@ -113,7 +118,7 @@ void	parse_texture_line(t_map *map, char **lines, int i)
 			return (ft_split_free(lines), ft_split_free(split),
 				perror_and_exit(map, "Dup texture"));
 		map->count.so_line = 1;
-		map->tex_s = ft_strdup(split[1]);
+		map->path_s = ft_strdup(split[1]);
 	}
 	else if (is_texture_line(lines[i]) == 3)
 	{
@@ -121,7 +126,7 @@ void	parse_texture_line(t_map *map, char **lines, int i)
 			return (ft_split_free(lines), ft_split_free(split),
 				perror_and_exit(map, "Dup texture"));
 		map->count.we_line = 1;
-		map->tex_w = ft_strdup(split[1]);
+		map->path_w = ft_strdup(split[1]);
 	}
 	else if (is_texture_line(lines[i]) == 4)
 	{
@@ -129,7 +134,7 @@ void	parse_texture_line(t_map *map, char **lines, int i)
 			return (ft_split_free(lines), ft_split_free(split),
 				perror_and_exit(map, "Dup texture"));
 		map->count.ea_line = 1;
-		map->tex_e = ft_strdup(split[1]);
+		map->path_e = ft_strdup(split[1]);
 	}
 	ft_split_free(split);
 }

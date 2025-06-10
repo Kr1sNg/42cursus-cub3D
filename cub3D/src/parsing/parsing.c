@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/10 14:24:39 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:17:44 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,16 @@ int	ft_parsing(char *path, t_map *map)
 	if (!is_valid_map(map, lines))
 		return (ft_split_free(lines), perror_and_exit(map, "Invalid Map"), -42);
 	
-	printf("after parsing: s link [%s]\n", (char *)map->tex_s);
-	printf("after parsing: e link [%s]\n", (char *)map->tex_e);
-	printf("after parsing: n link [%s]\n", (char *)map->tex_n);
-	printf("after parsing: w link [%s]\n", (char *)map->tex_w);
+	printf("after parsing: s link [%s]\n", (char *)map->path_s);
+	printf("after parsing: s link [%s]\n", (char *)map->tex_e);
+	printf("after parsing: e link [%s]\n", (char *)map->path_e);
+	printf("after parsing: n link [%s]\n", (char *)map->path_n);
+	printf("after parsing: w link [%s]\n", (char *)map->path_w);
 	printf("after parsing: c color [%i]\n", map->color_c);
 	printf("after parsing: f color [%i]\n", map->color_f);
 	print_map(map);
 	printf("num of player: %i\n", map->count.player_count);
-	printf("playser posx %i, posy %i\n", map->posx, map->posy);
+	printf("playser posx %i, posy %i\n", map->player.posx, map->player.posy);
 	
 	ft_split_free(lines);
 	return (0);
@@ -157,10 +158,10 @@ int	ft_parsing(char *path, t_map *map)
 // 		ft_split_free(lines);
 // 		return(perror_and_exit(map, "map is not in the last of file"), -42);
 // 	}
-	// printf("after parsing: s link [%s]\n", (char *)map->tex_s);
-	// printf("after parsing: e link [%s]\n", (char *)map->tex_e);
-	// printf("after parsing: n link [%s]\n", (char *)map->tex_n);
-	// printf("after parsing: w link [%s]\n", (char *)map->tex_w);
+	// printf("after parsing: s link [%s]\n", (char *)map->path_s);
+	// printf("after parsing: e link [%s]\n", (char *)map->path_e);
+	// printf("after parsing: n link [%s]\n", (char *)map->path_n);
+	// printf("after parsing: w link [%s]\n", (char *)map->path_w);
 	// printf("after parsing: c color [%i]\n", map->color_c);
 	// printf("after parsing: f color [%i]\n", map->color_f);
 	// print_map(map);
