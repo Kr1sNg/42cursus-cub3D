@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/10 17:59:15 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/11 14:27:08 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ typedef struct s_count
 
 typedef struct s_map
 {
+	void	*door; //2
+	void	*sprite; //3
 	void	*tex_n;
 	void	*tex_s;
 	void	*tex_w; //image
@@ -209,11 +211,11 @@ void	translate(t_map	*tmap, t_point	mov);
 /* event_hook.c 2*/
 int		key_hooks(int keycode, t_scene	*all);
 void	hook_controls(t_scene	*scene);
+int		mouse_rotate(t_scene *all);
 
 /* cube_free.c 5*/
 void	free_arr(char	***paths);
 void	free_lst(t_lmap	**tokens);
 int		close_cube3d(t_scene	*scene);
-
 
 #endif

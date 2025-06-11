@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:21:11 by layang            #+#    #+#             */
-/*   Updated: 2025/06/10 18:50:03 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:51:13 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,14 @@ int	close_cube3d(t_scene	*scene)
 	mlx_destroy_image(scene->mlx, scene->tmap->tex_s);
 	mlx_destroy_image(scene->mlx, scene->tmap->tex_w);
 	mlx_destroy_image(scene->mlx, scene->tmap->tex_e);
+	if (scene->tmap->door)
+		mlx_destroy_image(scene->mlx, scene->tmap->door);
+	if (scene->tmap->sprite)
+		mlx_destroy_image(scene->mlx, scene->tmap->sprite);
 	mlx_destroy_display(scene->mlx);
 	free_arr(&scene->tmap->the_map);
 	free_lst(&scene->tmap->lmap);
-	free_map_data(scene->tmap); // add
+	free_map_data(scene->tmap);
 	free(scene->mlx);
 	exit (0);
     return (0);
