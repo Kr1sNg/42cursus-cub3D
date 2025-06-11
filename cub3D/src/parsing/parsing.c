@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/10 18:17:44 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:16:03 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,38 +85,40 @@ static int	check_nothing_after_map(char **lines, int i, t_map *map)
 	return (0);
 }
 
-int	ft_parsing(char *path, t_map *map)
+int	ft_parsing(char *path, t_scene *scene)
 {
 	char	**lines;
 	int		i;
 
 	lines = NULL;
-	ft_memset(map, 0, sizeof(t_map));
-	i = check_file_and_read_lines(path, map, &lines);
+	scene->tmap = ft_calloc(1, sizeof(t_map));
+	if (!scene->tmap)
+		return (perror_and_exit(scene, "Malloc failed"), -42);
+		
+	i = check_file_and_read_lines(path, scene->tmap, &lines);
 	if (i < 0)
 		return (ft_split_free(lines), -42);
-	i = parse_non_map_lines(map, lines, i);
+	i = parse_non_map_lines(scene->tmap, lines, i);
 	if (i < 0)
 		return (ft_split_free(lines), -42);
-	i = parse_map_if_present(map, lines, i);
+	i = parse_map_if_present(scene->tmap, lines, i);
 	if (i < 0)
-		return (ft_split_free(lines), perror_and_exit(map, "Invalid Block"), -42);
-	if (check_nothing_after_map(lines, i, map) < 0)
-		return (ft_split_free(lines), perror_and_exit(map, "Unexpected line after map"), -42);
+		return (ft_split_free(lines), perror_and_exit(scene->tmap, "Invalid Block"), -42);
+	if (check_nothing_after_map(lines, i, scene->tmap) < 0)
+		return (ft_split_free(lines), perror_and_exit(scene->tmap, "Unexpected line after map"), -42);
 	
-	if (!is_valid_map(map, lines))
-		return (ft_split_free(lines), perror_and_exit(map, "Invalid Map"), -42);
+	if (!is_valid_map(scene->tmap, lines))
+		return (ft_split_free(lines), perror_and_exit(scene->tmap, "Invalid Map"), -42);
 	
-	printf("after parsing: s link [%s]\n", (char *)map->path_s);
-	printf("after parsing: s link [%s]\n", (char *)map->tex_e);
-	printf("after parsing: e link [%s]\n", (char *)map->path_e);
-	printf("after parsing: n link [%s]\n", (char *)map->path_n);
-	printf("after parsing: w link [%s]\n", (char *)map->path_w);
-	printf("after parsing: c color [%i]\n", map->color_c);
-	printf("after parsing: f color [%i]\n", map->color_f);
-	print_map(map);
-	printf("num of player: %i\n", map->count.player_count);
-	printf("playser posx %i, posy %i\n", map->player.posx, map->player.posy);
+	printf("after parsing: s link [%s]\n", scene->tmap->path_s);
+	printf("after parsing: e link [%s]\n", scene->tmap->path_e);
+	printf("after parsing: n link [%s]\n", scene->tmap->path_n);
+	printf("after parsing: w link [%s]\n", scene->tmap->path_w);
+	printf("after parsing: c color [%i]\n", scene->tmap->color_c);
+	printf("after parsing: f color [%i]\n", scene->tmap->color_f);
+	print_map(scene->tmap);
+	printf("num of player: %i\n", scene->tmap->count.player_count);
+	printf("playser posx %i, posy %i\n", scene->tmap->player.posx, scene->tmap->player.posy);
 	
 	ft_split_free(lines);
 	return (0);

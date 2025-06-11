@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/11 13:54:21 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:18:29 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ static void player_init(t_map *tmap)
 	tmap->player.ray_nb = 240;
 }
 
-t_map	*map_init(void *mlx, char *path)
+t_map	*map_init(t_scene *scene, char *path)
 {
 	t_map	*tmap;
 	
 	tmap = ft_calloc(1, sizeof(t_map));
 	if (!tmap)
 		return (perror("Error\nMalloc failed\n"), NULL);
-	ft_parsing(path, tmap);
-	if (!img_init(mlx, tmap))
-		return (perror_and_exit(tmap, "Cannot load image"), NULL);
+	ft_parsing(path, scene); //ft_parsing(path, tmap); 
+	if (!img_init(scene->mlx, tmap))
+		return (perror_and_exit(scene, "Cannot load image"), NULL);
 	player_init(tmap);
 	return (tmap);
 }

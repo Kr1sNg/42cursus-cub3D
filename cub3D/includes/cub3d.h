@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/11 14:27:08 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:17:49 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ typedef	struct s_scene
 
 /* parsing */
 // error_map
-void	perror_and_exit(t_map *map, char *str);
+void	perror_and_exit(t_scene *scene, char *str);
 // free_map
 void	free_map_data(t_map *map);
 //is_line
@@ -178,7 +178,7 @@ void	parse_color_line(t_map *map, char **lines, int i);
 int		parse_map_block(t_map *map, char **lines);
 int		is_valid_map(t_map *map, char **lines);
 // parsing
-int		ft_parsing(char *path, t_map *map);
+int		ft_parsing(char *path, t_scene *scene);
 //read_file
 bool	is_cub_file(char *path);
 char	**read_file(char *path);
@@ -189,7 +189,7 @@ void	print_map(t_map *map);
 
 
 /*main*/
-t_map	*map_init(void *mlx, char *path);
+t_map	*map_init(t_scene *scene, char *path);
 
 /* minimap.c 2*/
 void	put_minimap(t_scene	*scene);
