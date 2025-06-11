@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/09 10:01:15 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:47:06 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ bool	is_empty_line(char *line)
 static bool	is_map_obj(char c)
 {
 	if (c == ' ' || c == '	' || c == '1' || c == '0' || c == 'N' || c == 'S'
-		|| c == 'E' || c == 'W' || c == '\n')
+		|| c == 'E' || c == 'W' || c == '\n' || c == '2' || c == '3')
 		return (true);
 	return (false);
 }

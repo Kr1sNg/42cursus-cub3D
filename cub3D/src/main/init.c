@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/10 18:06:54 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:54:21 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ static bool img_init(void *mlx, t_map *tmap)
 	if (!check_img(mlx, &tmap->tex_e, tmap->path_e)
 		|| !check_img(mlx, &tmap->tex_n, tmap->path_n) 
 		|| !check_img(mlx, &tmap->tex_s, tmap->path_s)
-		|| !check_img(mlx, &tmap->tex_w, tmap->path_w))
+		|| !check_img(mlx, &tmap->tex_w, tmap->path_w)
+		|| !check_img(mlx, &tmap->door, "textures/door.xpm")
+		|| !check_img(mlx, &tmap->sprite, "textures/sprite.xpm"))
 		return (false);
 	return (true);
 }
