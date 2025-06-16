@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:21:11 by layang            #+#    #+#             */
-/*   Updated: 2025/06/11 13:51:13 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:24:50 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,40 @@ void	free_lst(t_lmap	**tokens)
 	*tokens = NULL;
 }
 
-int	close_cube3d(t_scene	*scene)
+int	close_cube3d(t_scene *scene)
 {
-	mlx_destroy_window(scene->mlx, scene->win);
-	scene->win = NULL;
-	mlx_destroy_image(scene->mlx, scene->img.mlx_img);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_n);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_s);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_w);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_e);
-	if (scene->tmap->door)
-		mlx_destroy_image(scene->mlx, scene->tmap->door);
-	if (scene->tmap->sprite)
-		mlx_destroy_image(scene->mlx, scene->tmap->sprite);
-	mlx_destroy_display(scene->mlx);
-	free_arr(&scene->tmap->the_map);
-	free_lst(&scene->tmap->lmap);
-	free_map_data(scene->tmap);
-	free(scene->mlx);
-	exit (0);
+	if (!scene)
+		return (0);
+	if (scene->win)
+	{
+		mlx_destroy_window(scene->mlx, scene->win);
+		scene->win = NULL;
+	}
+	if (scene->img.mlx_img)
+		mlx_destroy_image(scene->mlx, scene->img.mlx_img);
+	if (scene->tmap)
+	{
+		if (scene->tmap->tex_n)
+			mlx_destroy_image(scene->mlx, scene->tmap->tex_n);
+		if (scene->tmap->tex_s)
+			mlx_destroy_image(scene->mlx, scene->tmap->tex_s);
+		if (scene->tmap->tex_w)
+			mlx_destroy_image(scene->mlx, scene->tmap->tex_w);
+		if (scene->tmap->tex_e)
+			mlx_destroy_image(scene->mlx, scene->tmap->tex_e);
+		if (scene->tmap->door)
+			mlx_destroy_image(scene->mlx, scene->tmap->door);
+		if (scene->tmap->sprite)
+			mlx_destroy_image(scene->mlx, scene->tmap->sprite);
+		free_map_data(scene->tmap);
+	}
+	if (scene->mlx)
+	{
+		mlx_destroy_display(scene->mlx);
+		free(scene->mlx);
+	}	
+	exit (1);
     return (0);
 }
+
+

@@ -6,11 +6,45 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/11 14:36:43 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:27:59 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+static bool	check_img(void *mlx, void **image, char *path)
+{
+	int	width;
+	int	height;
+
+	*image = mlx_xpm_file_to_image(mlx, path, &width, &height);
+	if (!(*image))
+		return (false);
+	return (true);
+}
+
+static bool img_init(void *mlx, t_map *tmap)
+{
+	if (!check_img(mlx, &tmap->tex_e, tmap->path_e)
+		|| !check_img(mlx, &tmap->tex_n, tmap->path_n) 
+		|| !check_img(mlx, &tmap->tex_s, tmap->path_s)
+		|| !check_img(mlx, &tmap->tex_w, tmap->path_w)
+		|| !check_img(mlx, &tmap->door, "textures/door.xpm")
+		|| !check_img(mlx, &tmap->sprite, "textures/sprite.xpm"))
+		return (false);
+	return (true);
+}
+
+static void player_init(t_map *tmap)
+{
+	tmap->player.planex = 0.66;
+	tmap->player.planey = 0;
+	tmap->player.pitch = 0;
+	tmap->player.p_angle = get_player_angle(tmap->player);
+	tmap->player.fov = 66.0;
+	tmap->player.ray_nb = 240;
+}
+
 
 static int	loop_img(t_scene *scene)
 {
@@ -35,26 +69,25 @@ int	main(int ac, char **av)
 	
 	if (ac != 2)
 		return (printf("Usage: ./cub3d valid_map.cub"));
-	
+	if (ft_parsing(av[1], &scene) != 0)
+		return (free_map_data(scene.tmap), 1);
 	scene.mlx = mlx_init();
 	if (!scene.mlx)
-		return (perror("Cube3D: mlx_init"), 1);
+		return (perror_and_exit(&scene, "Cube3D: mlx_init"), 1);
 	scene.win = mlx_new_window(scene.mlx, WIDTH, HEIGHT, "Cube 3D");
 	if (!scene.win)
-		return (mlx_destroy_window(scene.mlx, NULL),
-			perror("Cube3D: mlx_new_window"), 1);
-			
-	scene.tmap = map_init(scene.mlx, av[1]);
+		return (perror_and_exit(&scene, "Cube3D: mlx_new_window"), 1);
+	if (!img_init(scene.mlx, scene.tmap))
+		return (perror_and_exit(&scene, "Cannot load image"), 1);
+	player_init(scene.tmap);
 	scene.img.mlx_img = mlx_new_image(scene.mlx, WIDTH, HEIGHT);
 	if (!scene.img.mlx_img)
-		return (perror("mlx_new_image"), 1);
+		return (perror_and_exit(&scene, "mlx_new_image"), 1);
 	scene.img.addr = mlx_get_data_addr(scene.img.mlx_img, &scene.img.bits_pix,
 		&scene.img.line_len, &scene.img.endian);
-	// mlx_mouse_move(scene.mlx, scene.win, WIDTH/2, HEIGHT/2);
 	hook_controls(&scene);
 	mlx_loop_hook(scene.mlx, loop_img, &scene);
 	mlx_loop(scene.mlx);
-	
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/10 15:47:27 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:54:54 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ bool	has_located_player(t_map *map)
 			return (false);
 		i++;
 	}
-	printf("PLAYER posx: %i, posy: %i\n", map->player.posx, map->player.posy);
 	return (true);
 }
 

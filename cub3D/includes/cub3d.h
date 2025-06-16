@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/11 14:27:08 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:25:57 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,37 +159,37 @@ typedef	struct s_scene
 
 /* parsing */
 // error_map
-void	perror_and_exit(t_map *map, char *str);
+void	perror_and_exit(t_scene *scene, char *str);
 // free_map
-void	free_map_data(t_map *map);
+void	free_map_data(t_map *tmap);
 //is_line
 int		is_texture_line(char *line);
 int		is_color_line(char *line);
 bool	is_empty_line(char *line);
 bool	is_map_line(char *s);
 //floodfill
-bool	is_closed_map(t_map	*map, char **lines);
+bool	is_closed_map(t_map *tmap, char **lines);
 // player
-bool	has_located_player(t_map *map);
+bool	has_located_player(t_map *tmap);
 //pars_lines
-void	parse_texture_line(t_map *map, char **lines, int i);
-void	parse_color_line(t_map *map, char **lines, int i);
+bool	parse_texture_line(t_map *tmap, char **lines, int i);
+bool	parse_color_line(t_map *tmap, char **lines, int i);
 //parse_map
-int		parse_map_block(t_map *map, char **lines);
-int		is_valid_map(t_map *map, char **lines);
+int		parse_map_block(t_map *tmap, char **lines);
+int		is_valid_map(t_map *tmap, char **lines);
 // parsing
-int		ft_parsing(char *path, t_map *map);
+int		ft_parsing(char *path, t_scene *scene);
 //read_file
 bool	is_cub_file(char *path);
 char	**read_file(char *path);
 //utils
-int		color_toi(t_map *map, char **split, char **lines);
-void	print_map(t_map *map);
+int		color_toi(char **split);
+void	print_map(t_scene *scene);
 
 
 
 /*main*/
-t_map	*map_init(void *mlx, char *path);
+t_map	*map_init(t_scene *scene, char *path);
 
 /* minimap.c 2*/
 void	put_minimap(t_scene	*scene);
@@ -214,8 +214,8 @@ void	hook_controls(t_scene	*scene);
 int		mouse_rotate(t_scene *all);
 
 /* cube_free.c 5*/
-void	free_arr(char	***paths);
+void	free_arr(char ***paths);
 void	free_lst(t_lmap	**tokens);
-int		close_cube3d(t_scene	*scene);
+int		close_cube3d(t_scene *scene);
 
 #endif
