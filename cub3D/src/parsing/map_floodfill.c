@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 10:55:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/16 11:53:40 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/17 10:49:11 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	flood_fill(t_map *tmap, int x, int y, char **lines)
 	{
 		ft_split_free(lines);
 		ft_split_free(tmap->map_copy);
-		printf("Map not closed (out of bounds)\n");
+		print_err("Map not closed (out of bounds)");
 		free_map_data(tmap);
 		exit(1);
 	}
@@ -32,7 +32,7 @@ static void	flood_fill(t_map *tmap, int x, int y, char **lines)
 	{
 		ft_split_free(lines);
 		ft_split_free(tmap->map_copy);
-		printf("Map not closed (space leak)\n");
+		print_err("Map not closed (space leak)");
 		free_map_data(tmap);
 		exit(1);
 	}
@@ -50,7 +50,7 @@ bool	is_closed_map(t_map *tmap, char **lines)
 {
 	tmap->map_copy = ft_tabdup(tmap->the_map);
 	if (!tmap->map_copy)
-		return (ft_split_free(lines), printf("Malloc failed"), false);
+		return (ft_split_free(lines), print_err("Malloc failed"), false);
 	flood_fill(tmap, tmap->player.posx, tmap->player.posy, lines);
 	ft_split_free(tmap->map_copy);
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/16 11:52:12 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:31:03 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ int	parse_map_block(t_map *map, char **lines)
 int	is_valid_map(t_map *tmap, char **lines)
 {
 	if (!has_located_player(tmap))
-		return (printf("Invalid map block\n"), false);
+		return (print_err("Invalid player"), false);
 	if (!tmap->count.player_count)
-		return (printf("Invalid map block\n"), false);
+		return (print_err("Invalid number of player"), false);
 	if (!is_closed_map(tmap, lines))
-		return (printf("Invalid map block\n"), false);
-	if (tmap->count.c_line != 1 || tmap->count.f_line != 1 || tmap->count.ea_line != 1
-		|| tmap->count.no_line != 1 || tmap->count.so_line != 1 || tmap->count.we_line != 1)
-		return (printf("Missing element\n"), false);
+		return (print_err("Invalid map block"), false);
+	if (tmap->count.c_line != 1 || tmap->count.f_line != 1
+		|| tmap->count.ea_line != 1 || tmap->count.no_line != 1 
+		|| tmap->count.so_line != 1 || tmap->count.we_line != 1)
+		return (print_err("Missing element"), false);
 	return (true);
 }

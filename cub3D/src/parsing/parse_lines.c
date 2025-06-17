@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:56:18 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/16 11:42:09 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:03:42 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,75 @@
 bool	parse_color_line(t_map *tmap, char **lines, int i)
 {
 	char	**split;
+	int		color;
 
 	split = ft_split_charset(lines[i], " ,	\n");
 	if (!split || !split[0] || !split[1] || !split[2] || !split[3]
 		|| (split && ft_tablen(split) > 4))
-		return (ft_split_free(split), printf("Invalid color\n"), false);
+		return (ft_split_free(split), print_err("Invalid color"), false);
+	color = color_toi(split);
+	if (color < 0)
+		return (ft_split_free(split), print_err("Invalid color"), false);
 	if (is_color_line(lines[i]) == 5)
 	{
 		if (tmap->count.c_line)
-			return (ft_split_free(split),printf("Dup color\n"), false);
+			return (ft_split_free(split), print_err("Dup color"), false);
 		tmap->count.c_line = 1;
-		tmap->color_c = color_toi(split);
-		if (tmap->color_c < 0)
-			return (ft_split_free(split),printf("Unvalid color\n"), false);
+		tmap->color_c = color;
 	}
 	else if (is_color_line(lines[i]) == 6)
 	{
 		if (tmap->count.f_line)
-			return (ft_split_free(split),printf("Dup color\n"), false);
+			return (ft_split_free(split), print_err("Dup color"), false);
 		tmap->count.f_line = 1;
-		tmap->color_f = color_toi(split);
-		if (tmap->color_f < 0)
-			return (ft_split_free(split),printf("Unvalid color\n"), false);
+		tmap->color_f = color;
 	}
 	return (ft_split_free(split), true);
 }
 
+static bool	store_texture(t_map *map, char **split, char *line)
+{
+	int	type;
+	
+	type = is_texture_line(line);
+	if (type == 1 && !map->count.no_line)
+		return (map->count.no_line = 1, 
+			map->path_n = ft_strdup(split[1]), true);
+	if (type == 2 && !map->count.so_line)
+		return (map->count.so_line = 1,
+			map->path_s = ft_strdup(split[1]), true);
+	if (type == 3 && !map->count.we_line)
+		return (map->count.we_line = 1,
+			map->path_w = ft_strdup(split[1]), true);
+	if (type == 4 && !map->count.ea_line)
+		return (map->count.ea_line = 1,
+			map->path_e = ft_strdup(split[1]), true);
+	if (type >= 1 && type <= 4)
+		return (print_err("Duplicate texture"), false);
+	return (print_err("Unknown texture type"), false);
+}
+
+
+
 bool	parse_texture_line(t_map *map, char **lines, int i)
 {	
 	char **split;
-	if (lines && lines[i])
-		split = ft_split_charset(lines[i], " \n");
+	
+	if (!lines || !(*lines))
+		return (print_err("Missing line"), false);
+	split = ft_split_charset(lines[i], " \n");
 	if (!split || !split[0] || !split[1] || (split && ft_tablen(split) > 2))
-		return (ft_split_free(split),
-			printf("Invalid texture\n"), false);
-	if (is_texture_line(lines[i]) == 1)
+		return (ft_split_free(split), print_err("Invalid texture"), false);
+	if (!store_texture(map, split, lines[i]))
+		return (ft_split_free(split), false);
+	ft_split_free(split);
+	return (true);
+}
+
+
+
+
+	/*	if (is_texture_line(lines[i]) == 1)
 	{
 		if (map->count.no_line)
 			return (ft_split_free(split), printf("Dup texture\n"), false);
@@ -82,4 +116,5 @@ bool	parse_texture_line(t_map *map, char **lines, int i)
 	ft_split_free(split);
 	return (true);
 }
+	*/
 

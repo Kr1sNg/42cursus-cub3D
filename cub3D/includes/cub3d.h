@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/16 11:25:57 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/17 10:25:31 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ typedef	struct s_scene
 /* parsing */
 // error_map
 void	perror_and_exit(t_scene *scene, char *str);
+void	print_err(char *str);
 // free_map
 void	free_map_data(t_map *tmap);
 //is_line
