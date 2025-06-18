@@ -29,16 +29,18 @@ bool	parse_headers(t_map *map, char **lines, int *i)
 	{
 		if (is_texture_line(lines[*i]))
 		{
+			printf("texture line\n");
 			if (!parse_texture_line(map, lines, *i))
 				return (false);
 		}
 		else if (is_color_line(lines[*i]))
 		{
+			printf("color line\n");
 			if (!parse_color_line(map, lines, *i))
 				return (false);
 		}
-		else if (!is_empty_line(lines[*i]))
-			return (print_err("Invalid line before map block\n"), false);
+		//else if (!is_empty_line(lines[*i]))
+		//	return (print_err("Invalid line before map block\n"), false);
 		(*i)++;
 	}
 	if (!lines[*i])
