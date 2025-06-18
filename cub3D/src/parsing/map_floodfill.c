@@ -51,7 +51,7 @@ bool	is_closed_map(t_map *tmap, char **lines)
 	tmap->map_copy = ft_tabdup(tmap->the_map);
 	if (!tmap->map_copy)
 		return (ft_split_free(lines), print_err("Malloc failed"), false);
-	flood_fill(tmap, tmap->player.posx, tmap->player.posy, lines);
+	flood_fill(tmap, tmap->player->posx, tmap->player->posy, lines);
 	ft_split_free(tmap->map_copy);
 	return (true);
 }

@@ -62,13 +62,6 @@ typedef struct s_point
 	int		color;
 }	t_point;
 
-
-typedef	struct s_lmap
-{
-	char			*line;
-	struct s_lmap	*next;
-}	t_lmap;
-
 typedef struct s_pic
 {
 	void	*mlx_img;
@@ -76,6 +69,8 @@ typedef struct s_pic
 	int		bits_pix;
 	int		line_len;
 	int		endian;
+	int		width;
+	int		height;
 }	t_pic;
 
 typedef struct s_count
@@ -125,7 +120,7 @@ typedef struct s_raycastor
 	t_hit	hhit;
 	t_hit	hit;
 	t_point	offset;
-	t_point	in_map
+	t_point	in_map;
 }	t_raycastor;
 
 typedef	struct s_cam
@@ -274,6 +269,7 @@ void	put_pixel_texture(t_scene	*scene, t_point	po, t_raycastor	*cast);
 void	rotate(t_scene	*scene, double angl_turn);
 void	translate(t_map	*tmap, double	mov);
 int		key_hooks(int keycode, t_scene	*all);
+int		mouse_rotate(t_scene *all);
 void	hook_controls(t_scene	*scene);
 
 /* event_hook_2.c */
@@ -281,7 +277,7 @@ void	floating_coord(t_map	*tmap, int	n_pix, int	sign);
 
 /* cube_free.c 3*/
 void	free_arr(char	***paths);
-void	free_lst(t_lmap	**tokens);
+//void	free_lst(t_lmap	**tokens);
 int		close_cube3d(t_scene	*scene);
 
 #endif

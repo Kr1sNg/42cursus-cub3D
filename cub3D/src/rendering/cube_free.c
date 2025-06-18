@@ -29,7 +29,7 @@ void	free_arr(char	***paths)
 	*paths = NULL;
 }
 
-void	free_lst(t_lmap	**tokens)
+/* void	free_lst(t_lmap	**tokens)
 {
 	t_lmap	*tmp;
 
@@ -47,7 +47,7 @@ void	free_lst(t_lmap	**tokens)
 		free(tmp);
 	}
 	*tokens = NULL;
-}
+} */
 
 int	close_cube3d(t_scene *scene)
 {

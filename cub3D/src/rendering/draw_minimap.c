@@ -92,9 +92,8 @@ void	draw_player_vision(t_scene *scene, t_point p, int grid, t_point	off)
 	t_raycastor	*cast;
 	int		r;
 	int		n;
-	double	off_r;
-	int		depth;
 	
+	(void)grid;
 	cast = scene->tmap->player->ray2;
 	cast->ra = scene->tmap->player->p_angle;
 	r = 0;

@@ -15,7 +15,7 @@
 static t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 {	
 	if (cast->hit == DEFAULT)
-		return ((t_pic){NULL, NULL, 0, 0, 0});
+		return ((t_pic){NULL, NULL, 0, 0, 0, 0, 0});
 	else if (cast->hit == NORTH)
 		return (scene->tmap->tex_n);
 	else if (cast->hit == SOUTH)

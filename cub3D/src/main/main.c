@@ -25,14 +25,11 @@
 
 static bool	check_img(void *mlx, t_pic *image, char *path)
 {
-	int	width;
-	int	height;
-
-	(*image).mlx_img = mlx_xpm_file_to_image(mlx, path, &width, &height);
+	(*image).mlx_img = mlx_xpm_file_to_image(mlx, path, &(*image).width, &(*image).height);
 	if (!(*image).mlx_img)
 		return (false);
-	(*image).addr = mlx_get_data_addr((*image).mlx_img, (*image).bits_pix,
-		(*image).line_len, (*image).endian);
+	(*image).addr = mlx_get_data_addr((*image).mlx_img, &(*image).bits_pix,
+		&(*image).line_len, &(*image).endian);
 	if (!(*image).addr)
 		return (mlx_destroy_image(mlx, (*image).mlx_img), false);
 	return (true);
