@@ -6,11 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:43:22 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 13:56:48 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:18:05 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 void	intersect_v(t_raycastor	*cast, t_point p, int *depth)
 {
@@ -60,7 +60,7 @@ void	get_dis_v(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 		cast->in_map.x = scene->tmap->player->posx + floor(cast->rx  / cast->grid) - 5;
 		cast->in_map.y = scene->tmap->player->posy + floor(cast->ry  / cast->grid) - 5;
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& scene->tmap->map[cast->in_map.y][cast->in_map.x] == '1')
+				&& scene->tmap->the_map[cast->in_map.y][cast->in_map.x] == '1')
 		{
 			cast->vx = cast->rx;
 			cast->vy = cast->ry;
@@ -116,7 +116,7 @@ void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 		cast->in_map.x = scene->tmap->player->posx + floor(cast->rx  / cast->grid) - 5;
 		cast->in_map.y = scene->tmap->player->posy + floor(cast->ry  / cast->grid) - 5;		
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& scene->tmap->map[cast->in_map.y][cast->in_map.x] == '1')
+				&& scene->tmap->the_map[cast->in_map.y][cast->in_map.x] == '1')
 		{
 			cast->hx = cast->rx;
 			cast->hy = cast->ry;

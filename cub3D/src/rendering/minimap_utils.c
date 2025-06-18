@@ -6,19 +6,19 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 12:45:35 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:08:55 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 int	inside_map_array(int x, int y, t_scene *scene)
 {
 	if (x < 0 || y < 0)
 		return (0);
-	if (y >= scene->tmap->map_h)
+	if (y >= scene->tmap->count.map_lines)
 		return (0);
-	if (x >= (int)ft_strlen(scene->tmap->map[y]))
+	if (x >= (int)ft_strlen(scene->tmap->the_map[y]))
 		return (0);
 	return (1);
 }

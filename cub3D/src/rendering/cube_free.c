@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cube_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  layang <layang@student.42.fr>             +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:21:11 by layang            #+#    #+#             */
-/*   Updated: 2025/06/17 14:57:10 by  layang          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:13:54 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 void	free_arr(char	***paths)
 {
@@ -49,19 +49,40 @@ void	free_lst(t_lmap	**tokens)
 	*tokens = NULL;
 }
 
-int	close_cube3d(t_scene	*scene)
+int	close_cube3d(t_scene *scene)
 {
-	mlx_destroy_window(scene->mlx, scene->win);
-	scene->win = NULL;
-	mlx_destroy_image(scene->mlx, scene->img.mlx_img);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_n.mlx_img);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_s.mlx_img);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_w.mlx_img);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_e.mlx_img);
-	mlx_destroy_display(scene->mlx);
-	free_arr(&scene->tmap->map);
-	free_lst(&scene->tmap->lmap);
-	free(scene->mlx);
-	exit (0);
+	if (!scene)
+		return (0);
+	if (scene->win)
+	{
+		mlx_destroy_window(scene->mlx, scene->win);
+		scene->win = NULL;
+	}
+	if (scene->img.mlx_img)
+		mlx_destroy_image(scene->mlx, scene->img.mlx_img);
+	if (scene->tmap)
+	{
+		if (scene->tmap->tex_n.mlx_img)
+			mlx_destroy_image(scene->mlx, scene->tmap->tex_n.mlx_img);
+		if (scene->tmap->tex_s.mlx_img)
+			mlx_destroy_image(scene->mlx, scene->tmap->tex_s.mlx_img);
+		if (scene->tmap->tex_w.mlx_img)
+			mlx_destroy_image(scene->mlx, scene->tmap->tex_w.mlx_img);
+		if (scene->tmap->tex_e.mlx_img)
+			mlx_destroy_image(scene->mlx, scene->tmap->tex_e.mlx_img);
+		if (scene->tmap->door.mlx_img)
+			mlx_destroy_image(scene->mlx, scene->tmap->door.mlx_img);
+		if (scene->tmap->sprite.mlx_img)
+			mlx_destroy_image(scene->mlx, scene->tmap->sprite.mlx_img);
+		free_map_data(scene->tmap);
+	}
+	if (scene->mlx)
+	{
+		mlx_destroy_display(scene->mlx);
+		free(scene->mlx);
+	}	
+	exit (1);
     return (0);
 }
+
+

@@ -6,11 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:59:38 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 14:00:05 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:15:20 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 static int	not_near_wall(t_map *tmap, double fx, double fy)
 {
@@ -34,14 +34,14 @@ static int	not_near_wall(t_map *tmap, double fx, double fy)
 				check_x = (int)((fx + i * margin) / grid);
 				check_y = (int)((fy + j * margin) / grid);
 				if (check_x < 0 || check_y < 0
-					|| check_y >= tmap->map_h
-					|| check_x >= (int)ft_strlen(tmap->map[check_y]))
+					|| check_y >= tmap->count.map_lines
+					|| check_x >= (int)ft_strlen(tmap->the_map[check_y]))
 					return (0);
-				if (tmap->map[check_y][check_x] != '0'
-					&& tmap->map[check_y][check_x] != 'N'
-					&& tmap->map[check_y][check_x] != 'S'
-					&& tmap->map[check_y][check_x] != 'E'
-					&& tmap->map[check_y][check_x] != 'W')
+				if (tmap->the_map[check_y][check_x] != '0'
+					&& tmap->the_map[check_y][check_x] != 'N'
+					&& tmap->the_map[check_y][check_x] != 'S'
+					&& tmap->the_map[check_y][check_x] != 'E'
+					&& tmap->the_map[check_y][check_x] != 'W')
 					return (0);
 			}
 			j++;
@@ -75,11 +75,11 @@ void	floating_coord(t_map	*tmap, int	n_pix, int	sign)
 	}
 	new.x = (int)floor(fx / grid2);
 	new.y = (int)floor(fy / grid2);
-	if (new.x >= 0 && new.y >= 0 && new.x < tmap->map_w
-		&& new.y < tmap->map_h
-		&& new.x < (int)ft_strlen(tmap->map[new.y]))
+	if (new.x >= 0 && new.y >= 0 && new.x < tmap->count.map_width
+		&& new.y < tmap->count.map_lines
+		&& new.x < (int)ft_strlen(tmap->the_map[new.y]))
 	{
-		c = tmap->map[new.y][new.x];
+		c = tmap->the_map[new.y][new.x];
 		if (c && (c == '0' || c == 'N' || c == 'S'
 				|| c == 'E' || c == 'W')
 				&& not_near_wall(tmap, fx, fy))

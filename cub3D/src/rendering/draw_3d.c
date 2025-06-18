@@ -6,11 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:09:52 by  layang           #+#    #+#             */
-/*   Updated: 2025/06/18 11:48:45 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 16:50:42 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 static void	draw_pix_column(int r, t_raycastor	*cast, t_scene *scene)
 {
@@ -20,7 +20,7 @@ static void	draw_pix_column(int r, t_raycastor	*cast, t_scene *scene)
 
 	start = WIDTH - r * cast->pix_ray - 1;
 	i = WIDTH - r * cast->pix_ray - 1;
-	cast->step_tt = 64.0 / cast->ori_map_h;
+	cast->step_tt = 64.0 / cast->ori_rend_h;
 	while (i > start - cast->pix_ray)
 	{
 		j = 0;
@@ -30,7 +30,7 @@ static void	draw_pix_column(int r, t_raycastor	*cast, t_scene *scene)
 			j++;
 		}
 		put_pixel_texture(scene, (t_point){i, j, PURPLE}, cast);
-		j += cast->map_h;
+		j += cast->rend_h;
 		while (j < HEIGHT)
 		{
 			put_pixel(&scene->img, (t_point){i, j, scene->tmap->color_f});
@@ -68,11 +68,11 @@ static void	draw_ray_3d(t_raycastor	*cast, t_scene *scene, int r, double ra)
 	ca = normalize_angle(scene->tmap->player->p_angle - ra);
 	no_fisheye_dist = cast->dist * cos(ca);
 	proj_plane_dist = (WIDTH / 2.0) / tan(scene->tmap->player->fov / 2.0);
-	cast->map_h = (int)((cast->grid / no_fisheye_dist) * proj_plane_dist);
-	cast->ori_map_h = cast->map_h;
-	if (cast->map_h > HEIGHT)
-		cast->map_h = HEIGHT;
-	cast->ori_off = (HEIGHT - cast->map_h) / 2;
+	cast->rend_h = (int)((cast->grid / no_fisheye_dist) * proj_plane_dist);
+	cast->ori_rend_h = cast->rend_h;
+	if (cast->rend_h > HEIGHT)
+		cast->rend_h = HEIGHT;
+	cast->ori_off = (HEIGHT - cast->rend_h) / 2;
 	cast->draw_off = floor((1.0 - scene->tmap->player->pitch) * cast->ori_off);
 	draw_pix_column(r, cast, scene);
 }
@@ -105,7 +105,7 @@ void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off)
 	cast = scene->tmap->player->ray2;
 	cast->ra = scene->tmap->player->p_angle;
 	cast->fov = scene->tmap->player->fov;
-	cast->dof = fmax(scene->tmap->map_h, scene->tmap->map_w);
+	cast->dof = fmax(scene->tmap->count.map_lines, scene->tmap->count.map_width);
 	cast->grid = grid;
 	r = 0;
 	p.x -= off.x;

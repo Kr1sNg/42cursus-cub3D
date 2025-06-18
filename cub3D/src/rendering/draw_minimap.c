@@ -6,11 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:43:05 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 12:42:36 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:27:57 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 static void	renew_err_s(int *err, t_point   *s, t_point	delta, t_point	sign)
 {

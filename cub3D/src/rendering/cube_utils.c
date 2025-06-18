@@ -6,11 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:24:16 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 14:01:14 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:44:17 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 // change color s to color e by a ratio r, can use to change color transparence 
 int	gradient_color(float_t	r, int s, int e)  

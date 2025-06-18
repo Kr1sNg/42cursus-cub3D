@@ -6,11 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:37:03 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 10:59:15 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:27:57 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 static void	ft_init_map_2(t_map	*tmap, char **mapa)
 {

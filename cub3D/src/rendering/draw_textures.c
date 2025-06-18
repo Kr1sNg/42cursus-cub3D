@@ -6,11 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:00:40 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 14:01:37 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:08:09 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 static t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 {	
@@ -74,7 +74,7 @@ void	put_pixel_texture(t_scene	*scene, t_point	po, t_raycastor	*cast)
 	{
 		printf("MAP not found.\n");
 		i = 0;
-		while (i < cast->map_h)
+		while (i < cast->rend_h)
 		{
 			put_pixel(&scene->img, po);
 			po.y++;
@@ -85,7 +85,7 @@ void	put_pixel_texture(t_scene	*scene, t_point	po, t_raycastor	*cast)
 	i = 0;
 	x = hit_texture_x(cast);
 	y = 0.0;
-	while (i < cast->map_h)
+	while (i < cast->rend_h)
 	{
 		po.color = get_color_at(&tt_pic, (int)x, (int)y);
 		put_pixel(&scene->img, po);

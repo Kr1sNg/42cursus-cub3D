@@ -6,11 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 11:24:59 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:16:09 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_3d.h"
+#include "../../includes/cub3d.h"
 
 static void draw_square_minimap(t_scene	*scene, t_point p, int size, t_point	c[4])
 {
@@ -45,7 +45,7 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 	map_p.y = s->tmap->player->posy + lp.y;
 	if (inside_map_array(map_p.x, map_p.y, s))
 	{
-		c = s->tmap->map[map_p.y][map_p.x];
+		c = s->tmap->the_map[map_p.y][map_p.x];
 		if (c && (c == '1' || c == '0' || c == 'N' || c == 'S'
 				|| c == 'W' || c == 'E'))
 		{

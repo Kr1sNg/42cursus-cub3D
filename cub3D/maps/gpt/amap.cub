@@ -1,14 +1,13 @@
 
 F 32, 32, 32
-C 0, 0, 102
-
-
-NO ./textures/bark.xpm
-SO ./textures/bricks.xpm 
-EA ./textures/wood.xpm
-WE ./textures/wood.xpm
-
+C 0, 0, 10
+NO textures/blue.xpm
+SO textures/grey.xpm
+WE textures/mossy.xpm
+EA textures/red.xpm
 
 111111111111111111111
-1W00000000000000000011 
-11111111111111111E111
+100000000000000000011
+111111111111110111111
+
+
