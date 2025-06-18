@@ -3,45 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   event_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:23:26 by layang            #+#    #+#             */
-/*   Updated: 2025/06/10 17:50:39 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:58:13 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../cube_3d.h"
+
+void	rotate(t_scene	*scene, double angl_turn)
+{
+	scene->tmap->player->p_angle += angl_turn;
+	if (scene->tmap->player->p_angle > 2.0 * M_PI)
+		scene->tmap->player->p_angle -= 2.0 * M_PI;
+	if (scene->tmap->player->p_angle < 0)
+		scene->tmap->player->p_angle += 2.0 * M_PI;
+	scene->tmap->player->dirx = cos(scene->tmap->player->p_angle);
+	scene->tmap->player->diry = sin(scene->tmap->player->p_angle);		
+}
+
+void	translate(t_map	*tmap, double	mov)
+{
+	if (mov > -1.0 && mov < 1.0)
+		tmap->player->pitch += mov;
+	if (tmap->player->pitch < -1.0 || tmap->player->pitch > 1.0)
+		tmap->player->pitch -= mov;
+}
 
 int	key_hooks(int keycode, t_scene	*all)
 {
 	if (keycode == XK_Escape)
 		close_cube3d(all);
-/* 	if (keycode == XK_equal)
-		zoom(all->map, 1.2);
-	if (keycode == XK_minus)
-		zoom(all->map, 1 / 1.2); */
 	if (keycode == XK_Left)
-		rotate(all, -0.1);
+		rotate(all, 0.05);
 	if (keycode == XK_Right)
-		rotate(all, 0.1);
-/* 		if (keycode == XK_Up)
-		translate(all->map, (t_point){0, -10, 0, 0});
+		rotate(all, -0.05);
+	if (keycode == XK_Up)
+		translate(all->tmap, -0.1);
 	if (keycode == XK_Down)
-		translate(all->map, (t_point){0, 10, 0, 0}); */
+		translate(all->tmap, 0.1);
 	if (keycode == XK_w)
-		translate(all->tmap, (t_point){0, -1, 0});
+		floating_coord(all->tmap, 6, 0);
 	if (keycode == XK_s)
-		translate(all->tmap, (t_point){0, 1, 0});
+		floating_coord(all->tmap, -6, 0);
 	if (keycode == XK_d)
-		translate(all->tmap, (t_point){1, 0, 0});
+		floating_coord(all->tmap, 6, 1);
 	if (keycode == XK_a)
-		translate(all->tmap, (t_point){-1, 0, 0});
-/* 	if (keycode == XK_x)
-		rotate_x(all->map, -0.1);
-	if (keycode == XK_s)
-		rotate_x(all->map, 0.1);
-	else
-		key_hooks_2(keycode, all); */
+		floating_coord(all->tmap, -6, 1);
 	return (0);
 }
 

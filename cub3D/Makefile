@@ -3,65 +3,71 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+         #
+#    By: layang <layang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/01 19:03:06 by tat-nguy          #+#    #+#              #
-#    Updated: 2025/06/10 18:08:33 by tat-nguy         ###   ########.fr        #
+#    Created: 2025/06/06 15:21:57 by layang            #+#    #+#              #
+#    Updated: 2025/06/18 14:06:04 by layang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3D
+NAME = cube3d
+CC = cc
+CFLAGS = -Werror -Wall -Wextra -g
 
-# Libft
-LIBFT_DIR	= ./libft
-LIBFT		= $(LIBFT_DIR)/libft.a
+#CFLAGS_B = -Werror -Wall -Wextra -fsanitize=address -fPIC
 
-# MLX
-MLX_DIR		= ./minilibx
-MLX			= $(MLX_DIR)/libmlx.a
+RM = rm -rf
 
-# Source Files
-SRC_DIR 	= src
-SUBDIRS		= main parsing scene
-SRC_SUBDIR	= $(foreach dir, $(SUBDIRS), $(addprefix $(SRC_DIR)/, $(dir)))
-SRC     	= $(foreach dir, $(SRC_SUBDIR), $(wildcard $(dir)/*.c))
+SRC_F = ./src/
+SRC_C = main.c \
+		cube_init.c \
+		draw_3d.c \
+		draw_maps.c \
+		draw_minimap.c \
+		raycast_utils.c \
+		draw_textures.c \
+		cube_free.c \
+		event_hook.c \
+		event_hook_2.c \
+		cube_utils.c \
+		minimap_utils.c \
+		draw_3d.c
 
-# Object Files
-OBJS 		= $(SRC:.c=.o)
+SRCS = $(addprefix $(SRC_F), $(SRC_C))
 
-# Include and Flags
-INCLUDE 	= -Iincludes -Iminilibx
-CFLAGS 		= -Wall -Wextra -Werror -I/usr/X11/include -g
-CC 			= cc
-RM			= rm -rf
-LIBFLAGS	= -L$(LIBFT_DIR) -lft
-MLXFLAGS	= -L$(MLX_DIR) -lmlx -L/usr/X11/lib -lX11 -lXext
+LIBC =  -Llibft -Lminilibx-linux
+LINKS = -lmlx -lft -lm -lpthread -lX11 -lXext
 
-# Target
-all: $(LIBFT) $(MLX) $(NAME)
+OBJS = $(SRCS:.c=.o)
 
-$(LIBFT):
-	@$(MAKE) -s -C $(LIBFT_DIR)
+CYAN = \033[0;36m
+RESET = \033[0m
 
-$(MLX):
-	@$(MAKE) -C $(MLX_DIR)
+$(NAME) : $(OBJS)
+	@echo ""
+	@echo "${CYAN}Compiling libft and minilibx-linux...${RESET}"
+	$(MAKE) bonus -C libft
+	@echo ""
+	$(MAKE) -C minilibx-linux
+	@echo ""
+	@echo "${CYAN}libft and minilibx-linux Created${RESET}"
+	@echo ""
+	@echo "${CYAN}Compiling $(NAME)...${RESET}"
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBC) $(LINKS)
+	@echo ""
+	@echo "${CYAN}$(NAME) Created${RESET}"
 
-$(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) $(INCLUDE) $(CFLAGS) $(LIBFLAGS) $(MLXFLAGS) -lm
+all : $(NAME)
 
-# Clean
-clean:
-	@$(RM) $(OBJS)
-	@$(MAKE) -s -C $(LIBFT_DIR) clean
-	@$(MAKE) -s -C $(MLX_DIR) clean
+fclean : clean
+	$(MAKE) fclean -C libft
 
-fclean: clean
-	@$(RM) $(NAME)
-	@$(MAKE) -s -C $(LIBFT_DIR) fclean
+clean :
+	$(RM) $(NAME) $(OBJS)
+	$(MAKE) clean -C libft
 
-re: fclean all
+re : fclean all
 
-bonus: re
+bonus : $(NAME)
 
-.PHONY: all clean fclean re bonus
-
+.PHONY: all bonus clean fclean re

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cube_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  layang <layang@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:21:11 by layang            #+#    #+#             */
-/*   Updated: 2025/06/10 18:50:03 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:57:10 by  layang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../cube_3d.h"
 
 void	free_arr(char	***paths)
 {
@@ -54,14 +54,13 @@ int	close_cube3d(t_scene	*scene)
 	mlx_destroy_window(scene->mlx, scene->win);
 	scene->win = NULL;
 	mlx_destroy_image(scene->mlx, scene->img.mlx_img);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_n);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_s);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_w);
-	mlx_destroy_image(scene->mlx, scene->tmap->tex_e);
+	mlx_destroy_image(scene->mlx, scene->tmap->tex_n.mlx_img);
+	mlx_destroy_image(scene->mlx, scene->tmap->tex_s.mlx_img);
+	mlx_destroy_image(scene->mlx, scene->tmap->tex_w.mlx_img);
+	mlx_destroy_image(scene->mlx, scene->tmap->tex_e.mlx_img);
 	mlx_destroy_display(scene->mlx);
-	free_arr(&scene->tmap->the_map);
+	free_arr(&scene->tmap->map);
 	free_lst(&scene->tmap->lmap);
-	free_map_data(scene->tmap); // add
 	free(scene->mlx);
 	exit (0);
     return (0);
