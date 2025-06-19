@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/18 16:37:16 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 09:03:56 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ static bool	set_player(t_map *map, char dir, int x, int y)
 	if (map->count.player_count != 0)
 		return (false);
 	map->count.player_count = dir;
-	map->player->posx = x;
-	map->player->posy = y;
+	map->count.map_posx = x;
+	map->count.map_posy = y;
 	if (dir == 'N' || dir == 'S')
 	{
-		map->player->dirx = 0.0;
+		map->count.map_dirx = 0;
 		if (dir == 'N')
-			map->player->diry = -1.0;
-		map->player->diry = 1.0;
+			map->count.map_diry = -1;
+		map->count.map_diry = 1;
 	}
 	else if (dir == 'W' || dir == 'E')
 	{
-		map->player->diry = 0.0;
+		map->count.map_diry = 0;
 		if (dir == 'W')
-			map->player->dirx = -1.0;
-		map->player->dirx = 1.0;
+			map->count.map_dirx = -1;
+		map->count.map_dirx = 1;
 	}
 	return (true);
 }

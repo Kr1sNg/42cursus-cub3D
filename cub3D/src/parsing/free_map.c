@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 18:40:45 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/15 20:21:09 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:01:24 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	free_map_data(t_map *tmap)
 		free_arr(&tmap->the_map);
 	if (tmap && tmap->map_copy)
 		free_arr(&tmap->the_map);
-	//if (tmap && tmap->lmap)
-		//free_lst(&tmap->lmap);
 	if (tmap && tmap->path_e)
 		free(tmap->path_e);
 	if (tmap && tmap->path_n)

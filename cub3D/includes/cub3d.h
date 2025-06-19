@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/18 17:19:07 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 09:05:28 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ typedef struct s_count
 	int		map_lines; //map_h
 	int		map_width; //map_w include space
 	int		player_count; // S, W, E, N
+	
+	// move here for parsing
+	int			map_posx; // horizontal
+	int			map_posy; //  vertical
+	double		map_dirx; // N=(dirx = 0, diry = -1), S=(dirx = 0, diry = 1)
+	double		map_diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
 }	t_count;
 
 typedef struct s_raycastor
