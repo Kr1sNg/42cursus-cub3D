@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:24:16 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 14:44:17 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 10:00:06 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ double	normalize_angle(double angle)
 	return (angle);
 }
 
-double	get_player_angle(t_cam *player)
+double	get_player_angle(t_map *tmap)
 {
 	double angle_radian;
 
-	angle_radian = -atan2(player->diry, player->dirx);
+	angle_radian = -atan2(tmap->count.map_diry, tmap->count.map_dirx);
 	if (angle_radian < 0)
 		angle_radian += 2.0 * M_PI;
 	return (angle_radian);

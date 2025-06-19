@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 09:03:56 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:55:28 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ static bool	set_player(t_map *map, char dir, int x, int y)
 	if (dir == 'N' || dir == 'S')
 	{
 		map->count.map_dirx = 0;
+		map->count.map_diry = 1;
 		if (dir == 'N')
 			map->count.map_diry = -1;
-		map->count.map_diry = 1;
 	}
 	else if (dir == 'W' || dir == 'E')
 	{
 		map->count.map_diry = 0;
+		map->count.map_dirx = 1;
 		if (dir == 'W')
 			map->count.map_dirx = -1;
-		map->count.map_dirx = 1;
 	}
 	return (true);
 }

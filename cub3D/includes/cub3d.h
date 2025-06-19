@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 09:05:28 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:59:42 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_raycastor
 	double	offh;
 	int		ori_off;
 	int		draw_off;
+	t_pic	tt_pic;
 	double	disH;
 	double	disV;
 	double	dist;
@@ -265,10 +266,11 @@ void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth);
 /* cube_utils.c 4 okk*/
 int		gradient_color(float_t	r, int s, int e);
 double	normalize_angle(double angle);
-double	get_player_angle(t_cam *player);
+double	get_player_angle(t_map *tmap);
 void	put_pixel(t_pic	*img, t_point	pt);
 
 /*draw_textures.c 4 okk*/
+t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast);
 void	put_pixel_texture(t_scene	*scene, t_point	po, t_raycastor	*cast);
 
 /* event_hook.c 2 okk*/

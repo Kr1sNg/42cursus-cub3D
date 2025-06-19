@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 09:06:49 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:00:27 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static bool	check_img(void *mlx, t_pic *image, char *path)
 	(*image).mlx_img = mlx_xpm_file_to_image(mlx, path, &(*image).width, &(*image).height);
 	if (!(*image).mlx_img)
 		return (false);
+	printf("texture path: %s, height = %d, width: %d\n", path, (*image).height, (*image).width);
 	(*image).addr = mlx_get_data_addr((*image).mlx_img, &(*image).bits_pix,
 		&(*image).line_len, &(*image).endian);
 	if (!(*image).addr)
@@ -66,11 +67,10 @@ static void player_init(t_map *tmap)
 	tmap->player->planex = 0.66;
 	tmap->player->planey = 0;
 	tmap->player->pitch = 0.0;
-	tmap->player->p_angle = get_player_angle(tmap->player);
+	tmap->player->p_angle = get_player_angle(tmap);
 	tmap->player->fov = 66.0 * (M_PI / 180);
 	tmap->player->ray_nb = WIDTH;
-	tmap->visible = 10;
-	
+	tmap->visible = 10;	
 	tmap->player->dirx = tmap->count.map_dirx;
 	tmap->player->diry = tmap->count.map_diry;
 	tmap->player->posx = tmap->count.map_posx;

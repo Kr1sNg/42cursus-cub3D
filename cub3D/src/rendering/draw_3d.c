@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:09:52 by  layang           #+#    #+#             */
-/*   Updated: 2025/06/18 16:50:42 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 09:33:15 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,18 @@ static void	draw_pix_column(int r, t_raycastor	*cast, t_scene *scene)
 	int	start;
 	int	j;
 
+	if (!cast->tt_pic.mlx_img)  // put_default_col(po, cast, scene);
+	{
+		printf("Texture not found.\n");
+		i = 0;
+		j = 0;
+		while (i < cast->rend_h)
+			put_pixel(&scene->img, (t_point){i++, j++, PURPLE});
+		return ;
+	}
 	start = WIDTH - r * cast->pix_ray - 1;
 	i = WIDTH - r * cast->pix_ray - 1;
-	cast->step_tt = 64.0 / cast->ori_rend_h;
+	cast->step_tt = (double)cast->tt_pic.height / cast->ori_rend_h;
 	while (i > start - cast->pix_ray)
 	{
 		j = 0;
@@ -65,6 +74,7 @@ static void	draw_ray_3d(t_raycastor	*cast, t_scene *scene, int r, double ra)
 	double	proj_plane_dist;
 	
 	get_correct_dist(cast);
+	cast->tt_pic = find_texture_xpm(scene, cast);
 	ca = normalize_angle(scene->tmap->player->p_angle - ra);
 	no_fisheye_dist = cast->dist * cos(ca);
 	proj_plane_dist = (WIDTH / 2.0) / tan(scene->tmap->player->fov / 2.0);
