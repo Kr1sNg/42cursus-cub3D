@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 18:40:45 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 09:01:24 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:36:20 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,11 @@ void	free_map_data(t_map *tmap)
 		free(tmap->path_s);
 	if (tmap && tmap->path_w)
 		free(tmap->path_w);
+	if (tmap && tmap->player)
+	{
+		if (tmap->player && tmap->player->ray2)
+			free(tmap->player->ray2);
+		free(tmap->player);
+	}
 	free(tmap);
 }
