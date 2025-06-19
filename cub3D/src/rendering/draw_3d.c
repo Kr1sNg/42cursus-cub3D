@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:09:52 by  layang           #+#    #+#             */
-/*   Updated: 2025/06/19 12:17:20 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 17:15:37 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void	draw_ray_3d(t_raycastor	*cast, t_scene *scene, int r, double ra)
 	cast->ori_rend_h = cast->rend_h;
 	if (cast->rend_h > HEIGHT)
 		cast->rend_h = HEIGHT;
+	//cast->ori_off = (HEIGHT - cast->rend_h) / 2;
 	cast->ori_off = (HEIGHT - cast->rend_h) / 2;
 	cast->draw_off = floor((1.0 - scene->tmap->player->pitch) * cast->ori_off);
 	draw_pix_column(r, cast, scene);
@@ -98,6 +99,7 @@ static void dda_raycasting_3d(t_raycastor	*cast, t_scene *s, int r, t_point p)
     n = s->tmap->player->ray_nb;
     off_r = ((double)r / (n - 1)) * cast->fov - (cast->fov / 2.0);
     cast->ra = normalize_angle(s->tmap->player->p_angle + off_r);
+	cast->this_r = r;
     init_raycastor(p, cast);
     cast->dirx = cos(cast->ra);
     cast->diry = sin(cast->ra);
@@ -118,6 +120,10 @@ void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off)
 	cast->ra = scene->tmap->player->p_angle;
 	cast->fov = scene->tmap->player->fov;
 	cast->dof = fmax(scene->tmap->count.map_lines, scene->tmap->count.map_width);
+	cast->sprite.x = -1;
+	cast->sprite.y = -1;
+	cast->mi_r = 1e7;
+	cast->ma_r = -1;
 	cast->grid = grid;
 	r = 0;
 	p.x -= off.x;
@@ -131,4 +137,6 @@ void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off)
 		dda_raycasting_3d(cast, scene, r, p);
 		r++;
 	}
+/* 	if (cast->sprite.x != -1)
+		put_sprite(cast, scene); */
 }

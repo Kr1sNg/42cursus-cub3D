@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 17:16:09 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 16:08:10 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 	{
 		c = s->tmap->the_map[map_p.y][map_p.x];
 		if (c && (c == '1' || c == '0' || c == 'N' || c == 'S'
-				|| c == 'W' || c == 'E'))
+				|| c == 'W' || c == 'E' || c == '2' || c == '3'))
 		{
 			col = 0xFFD580;
 			if (c == '1')
@@ -111,7 +111,7 @@ void	draw_maps(t_scene	*scene)
 	draw_3d_scene(scene, center, grid, start);
 	draw_square(scene, start, size);
 	draw_minimap(scene, draw_start);
-	draw_player_vision(scene, center, grid, start);
+	//draw_player_vision(scene, center, grid, start);
 	draw_player_vector(scene, center, grid / 2);
 	draw_square(scene, (t_point){center.x - size_player / 2,
 		center.y - size_player / 2, 0xDE3163}, size_player);
