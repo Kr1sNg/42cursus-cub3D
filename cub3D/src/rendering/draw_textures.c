@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:00:40 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 17:27:29 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:19:39 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 	else if (cast->hit == DOOR && cast->dist > 60)
 		return (scene->tmap->door);
 	else if (cast->hit == DOOR && cast->dist <= 60)
-		return (scene->tmap->door2);
+		return (scene->tmap->door_open);
 	else
 		return (scene->tmap->sprite);
 }
@@ -77,6 +77,9 @@ void	put_pixel_texture(t_scene	*scene, t_point	po, t_raycastor	*cast)
 	i = 0;
 	x = hit_texture_x(cast);
 	y = 0.0;
+	if (cast->ori_rend_h > cast->rend_h)
+		y += (cast->tt_pic.height * (cast->ori_rend_h - cast->rend_h)) 
+			/ (2.0 * cast->ori_rend_h);
 	while (i < cast->rend_h)
 	{
 		po.color = get_color_at(&cast->tt_pic, (int)x, (int)y);

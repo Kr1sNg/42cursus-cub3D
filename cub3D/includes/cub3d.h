@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 17:24:46 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:34:04 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ typedef	struct s_cam
 typedef struct s_map
 {
 	t_pic	door; //2
-	t_pic	door2; //2
+	t_pic	door_open; //2
 	t_pic	sprite; //3
 	t_pic	tex_n;
 	t_pic	tex_s;

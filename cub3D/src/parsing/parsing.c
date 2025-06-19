@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/17 11:29:54 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:38:52 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,24 @@ bool	parse_headers(t_map *map, char **lines, int *i)
 				return (false);
 		}
 		else if (!is_empty_line(lines[*i]))
-			return (print_err("Invalid line before map block\n"), false);
+			return (print_err("Invalid line before map block"), false);
 		(*i)++;
 	}
 	if (!lines[*i])
-		return (print_err("No map block found\n"), false);
+		return (print_err("No map block found"), false);
 	return (true);
 }
 
 static bool	parse_and_validate_map(t_map *map, char **lines, int i)
 {
 	if (!parse_map_block(map, &lines[i]))
-		return (print_err("Map block invalid\n"), false);
+		return (print_err("Map block invalid"), false);
 	while (lines[i] && is_map_line(lines[i]))
 		i++;
 	while (lines[i])
 	{
 		if (!is_empty_line(lines[i]))
-			return (print_err("Map must be at the end\n"), false);
+			return (print_err("Map must be at the end"), false);
 		i++;
 	}
 	if (!is_valid_map(map, lines))

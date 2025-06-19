@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:21:11 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 17:13:54 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 17:34:57 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	close_cube3d(t_scene *scene)
 			mlx_destroy_image(scene->mlx, scene->tmap->tex_e.mlx_img);
 		if (scene->tmap->door.mlx_img)
 			mlx_destroy_image(scene->mlx, scene->tmap->door.mlx_img);
+		if (scene->tmap->door_open.mlx_img)
+			mlx_destroy_image(scene->mlx, scene->tmap->door_open.mlx_img);
 		if (scene->tmap->sprite.mlx_img)
 			mlx_destroy_image(scene->mlx, scene->tmap->sprite.mlx_img);
 		free_map_data(scene->tmap);

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 17:25:59 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:34:26 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static bool img_init(void *mlx, t_map *tmap)
 		|| !check_img(mlx, &tmap->tex_s, tmap->path_s)
 		|| !check_img(mlx, &tmap->tex_w, tmap->path_w)
 		|| !check_img(mlx, &tmap->door, "textures/Door1.xpm")
-		|| !check_img(mlx, &tmap->door2, "textures/Door11.xpm")
-		|| !check_img(mlx, &tmap->sprite, "textures/sprite.xpm"))
+		|| !check_img(mlx, &tmap->door_open, "textures/Door11.xpm")
+		|| !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm"))
 		return (false);
 	return (true);
 }
@@ -120,11 +120,9 @@ static int	loop_img(t_scene *scene)
 	//p.x = WIDTH / 2;
 	//p.y = HEIGHT / 2;
 	//map_to_img(&scene->img, scene->tmap, p);
-	printf("Key [%i]\n", scene->tmap->count.animation);
-	// scene->tmap->count.animation++;
 	animated_sprit(scene->mlx, scene->tmap);
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.mlx_img, 0, 0);
-	
+
 	//render_instructions(all);
 	return (0);
 }
