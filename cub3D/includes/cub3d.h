@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 17:34:04 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:07:45 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # include "../libft/includes/libft.h"
 # include "../minilibx/mlx.h"
-# include "../minilibx/mlx_int.h"
+// # include "../minilibx/mlx_int.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
