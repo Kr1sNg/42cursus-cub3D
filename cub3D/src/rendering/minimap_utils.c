@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 17:08:55 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:03:09 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,7 @@ void	init_raycastor(t_point p, t_raycastor	*cast)
 	cast->vhit = DEFAULT;
 	cast->hhit = DEFAULT;
 	cast->hit = DEFAULT;
+	cast->vhit_dir = DEFAULT;
+	cast->hhit_dir = DEFAULT;
+	cast->hit_dir = DEFAULT;
 }

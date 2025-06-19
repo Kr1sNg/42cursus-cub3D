@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:09:52 by  layang           #+#    #+#             */
-/*   Updated: 2025/06/19 09:33:15 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:17:20 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	get_correct_dist(t_raycastor	*cast)
 		cast->final_x = cast->vx;
 		cast->final_y = cast->vy;
 		cast->hit = cast->vhit;
+		cast->hit_dir = cast->vhit_dir;		
 		cast->dist = cast->disV;
 	}
 	else
@@ -63,6 +64,7 @@ void	get_correct_dist(t_raycastor	*cast)
 		cast->final_x = cast->hx;
 		cast->final_y = cast->hy;
 		cast->hit = cast->hhit;
+		cast->hit_dir = cast->hhit_dir;	
 		cast->dist = cast->disH;
 	}
 }

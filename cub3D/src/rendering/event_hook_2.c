@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:59:38 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 17:15:20 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:25:25 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static int	not_near_wall(t_map *tmap, double fx, double fy)
 					&& tmap->the_map[check_y][check_x] != 'N'
 					&& tmap->the_map[check_y][check_x] != 'S'
 					&& tmap->the_map[check_y][check_x] != 'E'
-					&& tmap->the_map[check_y][check_x] != 'W')
+					&& tmap->the_map[check_y][check_x] != 'W'
+					&& tmap->the_map[check_y][check_x] != '2')
 					return (0);
 			}
 			j++;
@@ -81,7 +82,7 @@ void	floating_coord(t_map	*tmap, int	n_pix, int	sign)
 	{
 		c = tmap->the_map[new.y][new.x];
 		if (c && (c == '0' || c == 'N' || c == 'S'
-				|| c == 'E' || c == 'W')
+				|| c == 'E' || c == 'W' || c == '2')
 				&& not_near_wall(tmap, fx, fy))
 		{
 			tmap->player->posx = new.x;

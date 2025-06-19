@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:00:40 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 09:35:10 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:18:16 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 		return (scene->tmap->tex_s);
 	else if (cast->hit == EAST)
 		return (scene->tmap->tex_e);
-	else
+	else if (cast->hit == WEST)
 		return (scene->tmap->tex_w);
+	else if (cast->hit == DOOR)
+		return (scene->tmap->door);
+	else
+		return (scene->tmap->sprite);
 }
 
 static int	get_color_at(t_pic *img, int x, int y)
@@ -41,7 +45,7 @@ static double	hit_texture_x(t_raycastor	*cast) // use Interpolation to blending 
 	t_point	hitt;
 	double	x;
 
-	if (cast->hit == NORTH || cast->hit == SOUTH)
+	if (cast->hit_dir == NORTH || cast->hit_dir == SOUTH)
 	{
 		hitt.x = (int)floor(cast->final_x);
 		hitt.x %= cast->grid;

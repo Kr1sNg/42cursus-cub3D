@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 09:59:42 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:03:34 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@
 
 typedef enum e_hit
 {
+	DEFAULT = -1,
 	NORTH,
 	SOUTH,
 	EAST,
 	WEST,
-	DEFAULT = -1
+	DOOR,
+	SPRITE
 }	t_hit;
 
 typedef struct s_point
@@ -126,6 +128,9 @@ typedef struct s_raycastor
 	t_hit	vhit;
 	t_hit	hhit;
 	t_hit	hit;
+	t_hit	vhit_dir;
+	t_hit	hhit_dir;
+	t_hit	hit_dir;
 	t_point	offset;
 	t_point	in_map;
 }	t_raycastor;

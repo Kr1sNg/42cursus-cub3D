@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:43:22 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 17:18:05 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 12:14:37 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,70 @@ static void    no_wall(t_scene *scene, t_raycastor	*cast, int *depth)
     }
 }
 
+static int hit_something(char	**map, int x, int y)
+{
+	char c;
+
+	c = map[y][x];
+	if (c == '0' || c == 'E' || c == 'W' || c == 'N' || c == 'S')
+		return (0);
+	else
+		return (1);
+}
+
+static t_hit find_hit_side(t_raycastor	*cast, char c, int is_dir, int	is_v)
+{
+	if (c == '1' || is_dir == 1)
+	{
+		if (is_v)
+		{
+			if (cast->ra == M_PI / 2)
+				return(NORTH);
+			else if (cast->ra == 3 * M_PI / 2)
+				return(SOUTH);
+			else if ((cast->ra > M_PI / 2) && (cast->ra < 3 * M_PI / 2))
+				return(WEST);
+			else
+				return(EAST);
+		}
+		else
+		{
+			if (cast->ra == 0.0)
+				return(EAST);
+			else if (cast->ra == M_PI)
+				return(WEST);
+			else if (cast->ra > M_PI)
+				return(SOUTH);
+			else
+				return(NORTH);
+		}
+	}
+	else if (c == '2')
+		return(DOOR);
+	else if (c == '3')
+		return(SPRITE);
+	else
+		return (DEFAULT);
+}
+
 void	get_dis_v(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 {
+	char	c;
+	
 	while (*depth < cast->dof)
 	{
 		cast->in_map.x = scene->tmap->player->posx + floor(cast->rx  / cast->grid) - 5;
 		cast->in_map.y = scene->tmap->player->posy + floor(cast->ry  / cast->grid) - 5;
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& scene->tmap->the_map[cast->in_map.y][cast->in_map.x] == '1')
+				&& hit_something(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
 		{
+			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			cast->vx = cast->rx;
 			cast->vy = cast->ry;
 			cast->disV = dist(p.x, p.y, cast->vx, cast->vy);
 			*depth = cast->dof;
-			if (cast->ra == M_PI / 2)
-				cast->vhit = NORTH;
-			else if (cast->ra == 3 * M_PI / 2)
-				cast->vhit = SOUTH;
-			else if ((cast->ra > M_PI / 2) && (cast->ra < 3 * M_PI / 2))
-				cast->vhit = WEST;
-			else
-				cast->vhit = EAST;
+			cast->vhit = find_hit_side(cast, c, 0, 1);
+			cast->vhit_dir = find_hit_side(cast, c, 1, 1);
 		}
 		else
             no_wall(scene, cast, depth);
@@ -111,25 +154,22 @@ void	intersect_h(t_raycastor	*cast, t_point p, int *depth)
 
 void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 {
+	char	c;
+	
 	while (*depth < cast->dof)
 	{
 		cast->in_map.x = scene->tmap->player->posx + floor(cast->rx  / cast->grid) - 5;
 		cast->in_map.y = scene->tmap->player->posy + floor(cast->ry  / cast->grid) - 5;		
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& scene->tmap->the_map[cast->in_map.y][cast->in_map.x] == '1')
+				&& hit_something(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
 		{
+			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			cast->hx = cast->rx;
 			cast->hy = cast->ry;
 			cast->disH = dist(p.x, p.y, cast->hx, cast->hy);
 			*depth = cast->dof;
-			if (cast->ra == 0.0)
-				cast->hhit = EAST;
-			else if (cast->ra == M_PI)
-				cast->hhit = WEST;
-			else if (cast->ra > M_PI)
-				cast->hhit = SOUTH;
-			else
-				cast->hhit = NORTH;
+			cast->hhit = find_hit_side(cast, c, 0, 0);
+			cast->hhit_dir = find_hit_side(cast, c, 1, 0);
 		}
 		else
 			no_wall(scene, cast, depth);
