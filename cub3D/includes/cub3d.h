@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 14:36:21 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:24:46 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 //# define HEIGHT		680
 # define WIDTH			1920
 # define HEIGHT			1080
+//# define WIDTH			3840
+//# define HEIGHT			2160
 
 # define WHITE			0xFFFFFF
 # define BLACK			0x000000
@@ -113,6 +115,10 @@ typedef struct s_raycastor
 	int		ori_off;
 	int		draw_off;
 	t_pic	tt_pic;
+	int		this_r;
+	int		mi_r;
+	int		ma_r;
+	t_point	sprite;
 	double	disH;
 	double	disV;
 	double	dist;
@@ -155,6 +161,7 @@ typedef	struct s_cam
 typedef struct s_map
 {
 	t_pic	door; //2
+	t_pic	door2; //2
 	t_pic	sprite; //3
 	t_pic	tex_n;
 	t_pic	tex_s;

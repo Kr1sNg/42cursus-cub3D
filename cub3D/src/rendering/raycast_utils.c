@@ -6,11 +6,16 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:43:22 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 12:14:37 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 17:14:53 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+/* static void	save_door_sprite(t_raycastor	*cast, t_scene *scene)
+{
+	if (cast->this_r < )
+} */
 
 void	intersect_v(t_raycastor	*cast, t_point p, int *depth)
 {
@@ -53,7 +58,7 @@ static void    no_wall(t_scene *scene, t_raycastor	*cast, int *depth)
     }
 }
 
-static int hit_something(char	**map, int x, int y)
+static int hit_wall(char	**map, int x, int y)
 {
 	char c;
 
@@ -62,7 +67,23 @@ static int hit_something(char	**map, int x, int y)
 		return (0);
 	else
 		return (1);
+/* 	if (c == '1')
+		return (1);
+	else
+		return (0); */
 }
+
+/* static int hit_door_sprite(char	**map, int x, int y)
+{
+	char c;
+
+	c = map[y][x];
+
+	if (c == '2' || c == '3')
+		return (1);
+	else
+		return (0);
+} */
 
 static t_hit find_hit_side(t_raycastor	*cast, char c, int is_dir, int	is_v)
 {
@@ -108,7 +129,7 @@ void	get_dis_v(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 		cast->in_map.x = scene->tmap->player->posx + floor(cast->rx  / cast->grid) - 5;
 		cast->in_map.y = scene->tmap->player->posy + floor(cast->ry  / cast->grid) - 5;
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& hit_something(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
+				&& hit_wall(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
 		{
 			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			cast->vx = cast->rx;
@@ -161,7 +182,7 @@ void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 		cast->in_map.x = scene->tmap->player->posx + floor(cast->rx  / cast->grid) - 5;
 		cast->in_map.y = scene->tmap->player->posy + floor(cast->ry  / cast->grid) - 5;		
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& hit_something(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
+				&& hit_wall(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
 		{
 			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			cast->hx = cast->rx;
@@ -171,6 +192,9 @@ void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 			cast->hhit = find_hit_side(cast, c, 0, 0);
 			cast->hhit_dir = find_hit_side(cast, c, 1, 0);
 		}
+		//if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
+		//&& hit_door_sprite(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
+		//	save_door_sprite(cast, scene);
 		else
 			no_wall(scene, cast, depth);
 	}	

@@ -6,17 +6,11 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:00:40 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 15:31:19 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:27:29 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-// t_pic	animated_sprite()
-// {
-	
-// }
-
-
 
 t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 {	
@@ -30,8 +24,10 @@ t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 		return (scene->tmap->tex_e);
 	else if (cast->hit == WEST)
 		return (scene->tmap->tex_w);
-	else if (cast->hit == DOOR)
+	else if (cast->hit == DOOR && cast->dist > 60)
 		return (scene->tmap->door);
+	else if (cast->hit == DOOR && cast->dist <= 60)
+		return (scene->tmap->door2);
 	else
 		return (scene->tmap->sprite);
 }
