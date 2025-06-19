@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   draw_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:00:40 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 12:18:16 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 15:31:19 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+// t_pic	animated_sprite()
+// {
+	
+// }
+
+
 
 t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 {	

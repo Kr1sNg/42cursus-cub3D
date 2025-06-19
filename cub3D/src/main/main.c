@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 10:00:27 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 16:34:34 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,64 @@ static bool	check_img(void *mlx, t_pic *image, char *path)
 	return (true);
 }
 
+static bool	animated_sprit(void *mlx, t_map *tmap)
+{
+	if (tmap->count.animation > 3)
+		tmap->count.animation = 0;
+	if (tmap->sprite.mlx_img)
+		mlx_destroy_image(mlx, tmap->sprite.mlx_img);
+	if (tmap->count.animation == 0)
+	{
+		if (!check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm"))
+			return (false);
+	}
+	else if (tmap->count.animation == 1)
+	{
+		if (!check_img(mlx, &tmap->sprite, "textures/KeyFly2.xpm"))
+			return (false);
+	}
+	else if (tmap->count.animation == 2)
+	{
+		if (!check_img(mlx, &tmap->sprite, "textures/KeyFly3.xpm"))
+			return (false);
+	}
+	else if (tmap->count.animation == 3)
+	{
+		if (!check_img(mlx, &tmap->sprite, "textures/KeyFly4.xpm"))
+			return (false);
+	}
+	tmap->count.animation++;
+	return (true);
+}
+
+
 static bool img_init(void *mlx, t_map *tmap)
 {
+	printf("loop image!\n");
 	if (!check_img(mlx, &tmap->tex_e, tmap->path_e)
 		|| !check_img(mlx, &tmap->tex_n, tmap->path_n) 
 		|| !check_img(mlx, &tmap->tex_s, tmap->path_s)
 		|| !check_img(mlx, &tmap->tex_w, tmap->path_w)
 		|| !check_img(mlx, &tmap->door, "textures/door.xpm")
-		|| !check_img(mlx, &tmap->sprite, "textures/sprite.xpm"))
+		|| !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm"))
+		// || !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm")
+		// !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm")
+		// !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm")
 		return (false);
 	return (true);
 }
 
-static void player_init(t_map *tmap)
+static bool player_init(t_map *tmap)
 {
 	tmap->player = malloc(sizeof(t_cam));
 	if (!tmap->player)
 	{
-		perror("Cube3D: malloc player");
-		return ;		
+		print_err("Cube3D: malloc player");
+		return (false);		
 	}	
 	tmap->player->ray2 = malloc(sizeof(t_raycastor));
 	if (!tmap->player->ray2)
-	{
-		perror("Cube3D: malloc ray2");
-		return ;
-	}
+		return (print_err("Cube3D: malloc ray2"), false);
 	tmap->player->ray2->offx = 0.0;
 	tmap->player->ray2->offy = 0.0;
 	tmap->player->planex = 0.66;
@@ -75,6 +107,7 @@ static void player_init(t_map *tmap)
 	tmap->player->diry = tmap->count.map_diry;
 	tmap->player->posx = tmap->count.map_posx;
 	tmap->player->posy = tmap->count.map_posy;
+	return (true);
 }
 
 
@@ -89,6 +122,9 @@ static int	loop_img(t_scene *scene)
 	//p.x = WIDTH / 2;
 	//p.y = HEIGHT / 2;
 	//map_to_img(&scene->img, scene->tmap, p);
+	printf("Key [%i]\n", scene->tmap->count.animation);
+	// scene->tmap->count.animation++;
+	animated_sprit(scene->mlx, scene->tmap);
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.mlx_img, 0, 0);
 	
 	//render_instructions(all);
@@ -112,7 +148,8 @@ int	main(int ac, char	**av)
 		return (perror_and_exit(&scene, "Cube3D: mlx_new_window"), 1);
 	if (!img_init(scene.mlx, scene.tmap))
 		return (perror_and_exit(&scene, "Cannot load image"), 1);
-	player_init(scene.tmap);
+	if (!player_init(scene.tmap))
+		return (perror_and_exit(&scene, NULL), 1);
 	scene.img.mlx_img = mlx_new_image(scene.mlx, WIDTH, HEIGHT);
 	if (!scene.img.mlx_img)
 		return (perror_and_exit(&scene, "mlx_new_image"), 1);

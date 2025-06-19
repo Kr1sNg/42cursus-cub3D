@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_hook_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:59:38 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 12:25:25 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 15:58:31 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	not_near_wall(t_map *tmap, double fx, double fy)
 }
 
 //floating point coor
-void	floating_coord(t_map	*tmap, int	n_pix, int	sign)
+void	floating_coord(t_map *tmap, int	n_pix, int	sign)
 {
 	double	fx;
 	double	fy;

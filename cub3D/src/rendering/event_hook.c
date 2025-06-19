@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:23:26 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 14:27:57 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 16:40:37 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	mouse_rotate(t_scene *all)
 void	hook_controls(t_scene	*scene)
 {
 	mlx_hook(scene->win, DestroyNotify, 0, close_cube3d, scene);
-	mlx_key_hook(scene->win, key_hooks, scene);
+	mlx_hook(scene->win, KeyPress, KeyPressMask, key_hooks, scene);
 	mlx_mouse_move(scene->mlx, scene->win, WIDTH/2, HEIGHT/2);
-	// mlx_mouse_hide(scene->mlx, scene->win); - it causes some leaks
+	// mlx_mouse_hide(scene->mlx, scene->win); //- it causes some leaks
 }

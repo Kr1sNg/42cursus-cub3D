@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_maps.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/18 17:16:09 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/19 17:08:22 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,13 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 	{
 		c = s->tmap->the_map[map_p.y][map_p.x];
 		if (c && (c == '1' || c == '0' || c == 'N' || c == 'S'
-				|| c == 'W' || c == 'E'))
+				|| c == 'W' || c == 'E' || c == '3' || c == '2'))
 		{
 			col = 0xFFD580;
-			if (c == '1')
+			if (c == '1' || c == '3')
 				col = 0x666666;
+			if (c == '2')
+				col = 0xFFD000;
 			pix_p.x = p.x + lp.x * grid + 1;
 			pix_p.y = p.y + lp.y * grid + 1;
 			pix_p.color = col;
