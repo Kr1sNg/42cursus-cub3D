@@ -1,7 +1,7 @@
-NO textures/test/north.xpm
-SO textures/test/south.xpm
-WE textures/test/x
-EA textures/test/east.xpm
+NO textures/ocean.xpm
+SO textures/stone.xpm
+WE textures/x
+EA textures/metal.xpm
 
 F 20,20,20
 C 200,200,200

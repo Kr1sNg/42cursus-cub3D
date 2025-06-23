@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 10:55:57 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 09:02:27 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 08:11:32 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ static void	flood_fill(t_map *tmap, int x, int y, char **lines)
 		free_map_data(tmap);
 		exit(1);
 	}
-	if (tmap->map_copy[y][x] == '1' || tmap->map_copy[y][x] == '3'
-		|| tmap->map_copy[y][x] == 'v')
+	if (tmap->map_copy[y][x] == '1' || tmap->map_copy[y][x] == 'v')
 		return ;
 	tmap->map_copy[y][x] = 'v';
 	flood_fill(tmap, x + 1, y, lines);
