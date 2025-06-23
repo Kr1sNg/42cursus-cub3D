@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:09:52 by  layang           #+#    #+#             */
-/*   Updated: 2025/06/19 17:15:37 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:29:42 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,31 @@ void	clear_zbuffer_sprites(t_cam *player)
 	player->nb_sprites = 0;
 }
 
+/* static double	get_background_dist(t_scene	*sc, int r)
+{
+	t_cam	*pl;
+	t_point sprite;
+	double sprite_x, sprite_y;
+	double inv_det, ty;
+
+	pl = sc->tmap->player;
+	//printf("cam dir: (%.6f, %.6f), plane: (%.6f, %.6f)\n",
+    //pl->dirx, pl->diry, pl->planex, pl->planey);
+	sprite = pl->zbuffer[WIDTH - r - 1];
+	// 相对于玩家位置的偏移
+	//printf("sprite orig position: (%d, %d)\n", sprite.x, sprite.y);
+	// sprite_x = sprite.x + 0.5 - pl->posx;
+	// sprite_y = sprite.y + 0.5 - pl->posy;
+	sprite_x = sprite.x - (pl->posx + pl->ray2->offx / pl->ray2->grid);
+	sprite_y = sprite.y - (pl->posy + pl->ray2->offy / pl->ray2->grid);
+	//printf("sprite position: (%f, %f)\n", sprite_x, sprite_y);
+	// 矩阵变换：世界坐标 -> 相机坐标
+	inv_det = 1.0 / (pl->planex * pl->diry - pl->dirx * pl->planey);
+	//tx = inv_det * (pl->diry * sprite_x - pl->dirx * sprite_y);
+	ty = inv_det * (-pl->planey * sprite_x + pl->planex * sprite_y);
+	return (ty);
+} */
+
 static void draw_sprites(t_scene	*sc, int i)
 {
 	t_cam	*pl;
@@ -44,6 +69,7 @@ static void draw_sprites(t_scene	*sc, int i)
 	t_point de;
 	int st, y;
 	t_pic	sprt;
+	double	bac;
 
 	pl = sc->tmap->player;
 	printf("cam dir: (%.6f, %.6f), plane: (%.6f, %.6f)\n",
@@ -58,9 +84,12 @@ static void draw_sprites(t_scene	*sc, int i)
 	printf("sprite position: (%f, %f)\n", sprite_x, sprite_y);
 	// 矩阵变换：世界坐标 -> 相机坐标
 	inv_det = 1.0 / (pl->planex * pl->diry - pl->dirx * pl->planey);
+	//inv_det = 1.0 / (pl->dirx * pl->planey - pl->planex * pl->diry);
 	tx = inv_det * (pl->diry * sprite_x - pl->dirx * sprite_y);
 	ty = inv_det * (-pl->planey * sprite_x + pl->planex * sprite_y);
-	printf("inv_det = %f, tx = %f, ty = %f\n", inv_det, tx, ty);
+	//tx = inv_det * (-pl->diry * sprite_x + pl->dirx * sprite_y);
+	//ty = inv_det * (pl->planey * sprite_x - pl->planex * sprite_y);
+	printf("inv_det = %f, tx = %f, ty = %f -----\n", inv_det, tx, ty);
 	if (ty <= 0)
 	{
 		printf("SKIP: behind player\n");
@@ -91,27 +120,34 @@ static void draw_sprites(t_scene	*sc, int i)
 	for (st = ds.x; st < de.x; st++)
 	{
 		//if (ty > 0 && st >= 0 && st < WIDTH && pl->zbuffer[st] == 1.0)
-		printf("st: %d, zbuffer st: %f\n", st, pl->zbuffer[st]);
+		//if (ty > 0 && st >= 0 && st < WIDTH && ty * 30 < pl->zbuffer[st])
+		//printf("st: %d, zbuffer [x, y]: (%d, %d))\n", st, pl->zbuffer[WIDTH - st - 1].x, pl->zbuffer[WIDTH - st - 1].y);
 		printf("player pos: (%d, %d)\n", pl->posx, pl->posy);
-		if (ty > 0 && st >= 0 && st < WIDTH && ty * 30 < pl->zbuffer[st])
+		if (ty > 0 && st >= 0 && st < WIDTH)
 		{
-			int tex_x = (int)(256 * (st - (-spriw / 2 + sprix)) * sprt.width / spriw) / 256;
-			// 垂直方向步进
-			double step = 1.0 * sprt.height / sprih;
-			// 起始的 y 纹理位置
-			double tex_pos = (ds.y - HEIGHT / 2 + sprih / 2 - pl->pitch) * step;
-			for (y = ds.y; y < de.y; y++)
+			//bac =  get_background_dist(sc, st);
+			bac = pl->zbuffer[WIDTH - st - 1];
+			printf("bac pix distance ----: %f\n", bac);
+			if (ty * 30 < bac)
 			{
-				// 获取贴图的 Y 坐标
-				if (y == ds.y)
-					printf("DRAWING sprite.\n");
-				int tex_y = (int)tex_pos & (sprt.height - 1);
-				tex_pos += step;
-				// 获取贴图颜色
-				int color = get_color_at(&sprt, tex_x, tex_y);
-				// 忽略透明颜色（比如：颜色为0或某个mask值）(color & 0xFFFFFF) != 0
-				if (color != 0x432600)
-					put_pixel(&sc->img, (t_point){st, y, color});
+				int tex_x = (int)(256 * (st - (-spriw / 2 + sprix)) * sprt.width / spriw) / 256;
+				// 垂直方向步进
+				double step = 1.0 * sprt.height / sprih;
+				// 起始的 y 纹理位置
+				double tex_pos = (ds.y - HEIGHT / 2 + sprih / 2 - pl->pitch) * step;
+				for (y = ds.y; y < de.y; y++)
+				{
+					// 获取贴图的 Y 坐标
+					if (y == ds.y)
+						printf("DRAWING sprite.\n");
+					int tex_y = (int)tex_pos & (sprt.height - 1);
+					tex_pos += step;
+					// 获取贴图颜色
+					int color = get_color_at(&sprt, tex_x, tex_y);
+					// 忽略透明颜色（比如：颜色为0或某个mask值）(color & 0xFFFFFF) != 0
+					if (color != 0x432600)
+						put_pixel(&sc->img, (t_point){st, y, color});
+				}
 			}
 		}
 		else
@@ -181,6 +217,8 @@ static void sort_draw_sprites(t_scene *scene, t_point p)
 
 	nb = scene->tmap->player->nb_sprites;
 	printf("nb of sprite hit: %d\n", nb);
+	if (nb == 0)
+		return ;
 	order = malloc(sizeof(int) * nb);
 	if (!order)
 		return ;
@@ -315,29 +353,71 @@ void	get_correct_dist(t_raycastor	*cast)
 	}
 }
 
+/* static void print_hit_points(t_ray	*hitps, t_raycastor	*cast, t_scene *scene)
+{
+	int	i;
+
+	i = 0;
+	while (i < hitps->hit_count)
+	{
+		printf("**------------------------------------------****\n");
+		printf("oooooooooNUM: %d, ray : %d\n", i + 1, cast->this_r);
+		printf("player at [x, y]: [%d, %d]\n", scene->tmap->player->posx, scene->tmap->player->posy);
+		if (hitps->hits[i].hit_type == SPRITE)
+		{
+			printf("*************************** *****************\n");
+			printf("**                                       ****\n");
+			printf("**        SPRITE !!!                     ****\n");
+			printf("**                                       ****\n");
+			printf("**                                       ****\n");
+			printf("**                                       ****\n");
+			printf("**                                       ****\n");
+			printf("*************************** *****************\n");
+			printf("hit type: %d, hit dir: %d\n", hitps->hits[i].hit_type, hitps->hits[i].hit_dir);
+			printf("distance : %f, is vertical? %d\n", hitps->hits[i].dist, hitps->hits[i].vert_side);
+			printf("hit map (x, y): [%d, %d]\n", hitps->hits[i].hit_map.x, hitps->hits[i].hit_map.y);
+			printf("hit pix (rx, ry): [%f, %f]\n", hitps->hits[i].hit_x, hitps->hits[i].hit_y);
+			printf("*************************** *****************\n");
+			exit (1);
+		}		
+		printf("hit type: %d, hit dir: %d\n", hitps->hits[i].hit_type, hitps->hits[i].hit_dir);
+		printf("distance : %f, is vertical? %d\n", hitps->hits[i].dist, hitps->hits[i].vert_side);
+		printf("hit map (x, y): [%d, %d]\n", hitps->hits[i].hit_map.x, hitps->hits[i].hit_map.y);
+		printf("hit pix (rx, ry): [%f, %f]\n", hitps->hits[i].hit_x, hitps->hits[i].hit_y);
+		i++;		
+	}
+} */
+
 static void draw_pix_column(t_ray	*hitps, t_raycastor	*cast, t_scene *scene)
 {
 	int		i;
 	t_hit	h;
-	t_point	hp;
+	int		dst;
 
 	sort_hit_points(hitps);
-	i = hitps->hit_count - 1;
+	// for test
+	//print_hit_points(hitps, cast, scene);
+	//get_zbuffer();//position of : wall or nearest closed(closed, opening, closing) door
+ 	i = hitps->hit_count - 1;
 	while (i >= 0)
 	{
 		h = hitps->hits[i].hit_type;
 		if (i == hitps->hit_count - 1)
 			scene->tmap->player->zbuffer[cast->this_r] = hitps->hits[i].dist;
 		if (h == NORTH || h == SOUTH || h == EAST || h == WEST)
-			draw_wall_column(cast, scene, hitps->hits[i]);
+		{
+			draw_wall_column(cast, scene, hitps->hits[i]);			
+		}
 		else if (h == DOOR)
 		{
 			draw_door_height(cast, scene, hitps->hits[i]);
 			if (i - 1 >= 0 && hitps->hits[i - 1].hit_type == SPRITE)
 			{
-				hp = hitps->hits[i].hit_map;
-				if (scene->tmap->door_state[hp.y][hp.x] == DOOR_CLOSED)
-					scene->tmap->player->zbuffer[cast->this_r] = hitps->hits[i].dist;
+				dst = scene->tmap->door_state[hitps->hits[i].hit_map.y][hitps->hits[i].hit_map.x];
+				if (dst == DOOR_CLOSED || dst == DOOR_OPENING || dst == DOOR_CLOSING)
+				{				
+					scene->tmap->player->zbuffer[cast->this_r] = hitps->hits[i].dist;								
+				}
 			}
 		}
 		else if (h == SPRITE)
@@ -372,11 +452,13 @@ static void dda_raycasting_3d(t_raycastor	*cast, t_scene *s, int r, t_point p)
     cast->diry = sin(cast->ra);
 	cast->p = p;
 	hitps.hit_count = 0;
+	hitps.distW = 0.0;
 	//
-	//init_raycastor(p, cast);
+	init_raycastor(p, cast);
 	intersect_v(cast, p, &depth);
 	get_hit_v(cast, s, &depth, &hitps);
 	//init_raycastor(p, cast);
+	
 	intersect_h(cast, p, &depth);
 	get_hit_h(cast, s, &depth, &hitps);
 	//
@@ -402,6 +484,8 @@ void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off)
 	n = scene->tmap->player->ray_nb;
 	cast->pix_ray = WIDTH / scene->tmap->player->ray_nb;
 	clear_zbuffer_sprites(scene->tmap->player);
+	//r = 581;
+	//n = 583;
 	while (r < n)
 	{
 		dda_raycasting_3d(cast, scene, r, p);

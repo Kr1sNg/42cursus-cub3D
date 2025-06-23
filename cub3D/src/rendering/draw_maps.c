@@ -54,6 +54,8 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 				col = 0x666666;
 			if (c == '2')
 				col = 0xFFD000;
+			if (c == '3')
+				col = 0xAFEEEE;
 			pix_p.x = p.x + lp.x * grid + 1;
 			pix_p.y = p.y + lp.y * grid + 1;
 			pix_p.color = col;

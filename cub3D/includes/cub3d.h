@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 20:07:45 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:19:11 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_ray_hit
 typedef struct s_ray
 {
 	t_ray_hit	hits[MAX_HITS_PER_RAY];
+	double		distW;
 	int			hit_count;
 }	t_ray;
 
@@ -171,6 +172,7 @@ typedef	struct s_cam
 	double		dirx; // N=(dirx = 0, diry = -1), S=(dirx = 0, diry = 1)
 	double		diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
 	t_raycastor	*ray2;
+	//t_point		zbuffer[WIDTH];
 	double		zbuffer[WIDTH];
 	t_point		sprites[MAX_HITS_PER_RAY];
 	int			nb_sprites;

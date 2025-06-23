@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin < layang@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 17:34:26 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/24 01:30:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ static bool	animated_sprit(void *mlx, t_map *tmap)
 	}
 	else if (tmap->count.animation == 2)
 	{
-		if (!check_img(mlx, &tmap->sprite, "textures/KeyFly3.xpm"))
+		if (!check_img(mlx, &tmap->sprite, "textures/KeyFly3.xpm"))//KeyFly3.xpm
 			return (false);
 	}
 	else if (tmap->count.animation == 3)
 	{
-		if (!check_img(mlx, &tmap->sprite, "textures/KeyFly4.xpm"))
+		if (!check_img(mlx, &tmap->sprite, "textures/KeyFly4.xpm"))//KeyFly4.xpm
 			return (false);
 	}
 	tmap->count.animation++;
@@ -76,7 +76,7 @@ static bool img_init(void *mlx, t_map *tmap)
 		|| !check_img(mlx, &tmap->tex_w, tmap->path_w)
 		|| !check_img(mlx, &tmap->door, "textures/Door1.xpm")
 		|| !check_img(mlx, &tmap->door_open, "textures/Door11.xpm")
-		|| !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm"))
+		|| !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm")) //|| !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm"))
 		return (false);
 	return (true);
 }
@@ -94,8 +94,10 @@ static bool player_init(t_map *tmap)
 		return (print_err("Cube3D: malloc ray2"), false);
 	tmap->player->ray2->offx = 0.0;
 	tmap->player->ray2->offy = 0.0;
-	tmap->player->planex = 0.66;
-	tmap->player->planey = 0;
+	// tmap->player->planex = 0.66;
+	// tmap->player->planey = 0;
+	tmap->player->planex = -tmap->count.map_diry * 0.66;
+	tmap->player->planey = tmap->count.map_dirx * 0.66;
 	tmap->player->pitch = 0.0;
 	tmap->player->p_angle = get_player_angle(tmap);
 	tmap->player->fov = 66.0 * (M_PI / 180);

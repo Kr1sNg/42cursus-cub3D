@@ -20,7 +20,10 @@ void	rotate(t_scene	*scene, double angl_turn)
 	if (scene->tmap->player->p_angle < 0)
 		scene->tmap->player->p_angle += 2.0 * M_PI;
 	scene->tmap->player->dirx = cos(scene->tmap->player->p_angle);
-	scene->tmap->player->diry = -sin(scene->tmap->player->p_angle);		
+	scene->tmap->player->diry = -sin(scene->tmap->player->p_angle);	
+	//add lan
+	//scene->tmap->player->planex = -scene->tmap->count.map_diry * 0.66;
+	//scene->tmap->player->planey = scene->tmap->count.map_dirx * 0.66;	
 }
 
 /* void	translate(t_map	*tmap, double	mov)

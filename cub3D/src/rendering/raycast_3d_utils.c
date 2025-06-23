@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_3d_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin < layang@student.42.fr>             +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 17:55:59 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/21 17:55:59 by marvin           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:58:08 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,66 @@ static void	record_hits(t_raycastor	*cast, t_scene *scene, t_ray	*hitps, char	c)
 		return ;
 }
 
+/* static int	find_record_wall_index(t_ray	*hitps)
+{
+	int	n;
+	int	i;
+	t_hit	type;
+
+	i = 0;
+	n = hitps->hit_count;	
+	while (i < n)
+	{
+		type = hitps->hits[i].hit_type;
+		if (type == NORTH || type == SOUTH || type == WEST || type == EAST)
+			return (i);
+		i++;
+	}
+	return (-1);
+} */
+
+/* static int have_repeat(t_point in,  t_ray	*hitps, double	dist, t_hit	type)
+{
+	int	n;
+	int	i;
+	t_point	hit;
+	int	indexwall;
+
+	if (type == NORTH || type == SOUTH || type == WEST || type == EAST)
+	{
+		indexwall = find_record_wall_index(hitps);
+		if (indexwall < 0)
+			return (-2);
+		else if (dist > hitps->distW)
+			return (-1);
+		else
+		{
+			hitps->distW = dist;
+			return (indexwall);	
+		}
+	}
+	else
+	{
+		if (dist > hitps->distW)
+			return (-1);
+		i = 0;
+		n = hitps->hit_count;
+		while (i < n)
+		{
+			hit = hitps->hits[i].hit_map;
+			if (hit.x == in.x && hit.y == in.y)
+			{
+				if (dist < hitps->hits[i].dist)
+					return (i);
+				else
+					return (-1);
+			}
+			i++;
+		}
+		return (-2);
+	}
+} */
+
 static int have_repeat(t_point in,  t_ray	*hitps, double	dist)
 {
 	int	n;
@@ -154,8 +214,8 @@ static void	renew_record_hits(t_raycastor	*cast, t_scene *scene, t_ray	*hitps, c
 		hitps->hits[n].hit_map.y = cast->in_map.y;
 		hitps->hits[n].dist = dis;
 		hitps->hits[n].hit_type = find_hit_side(cast, c, 0, 0);
-		if (hitps->hits[n].hit_type == DOOR)
-			hitps->hits[n].dist += scene->tmap->door_timer[cast->in_map.y][cast->in_map.x] * cast->grid;
+		// if (hitps->hits[n].hit_type == DOOR)
+		// 	hitps->hits[n].dist += scene->tmap->door_timer[cast->in_map.y][cast->in_map.x] * cast->grid;
 		hitps->hits[n].hit_dir = find_hit_side(cast, c, 1, 0);
 		hitps->hits[n].vert_side = 0;
 		hitps->hits[n].hit_x = cast->rx;
@@ -190,10 +250,14 @@ void	get_hit_v(t_raycastor	*cast, t_scene *scene, int *depth, t_ray	*hitps)
 				&& hit_wall_3d(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
 		{
 			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
+			printf("V: get map[x, y]: [%d, %d] = %c\n", cast->in_map.x, cast->in_map.y, c);
+			printf("V: max dist is : %f\n", hitps->distW);
 			if (c == '1')
 			{
 				record_hits(cast, scene, hitps, c);
+				hitps->distW = hitps->hits[hitps->hit_count - 1].dist;
 				*depth = cast->dof;
+				printf("V: max dist in wall is : %f\n", hitps->distW);
 			}
 			else
 			{
@@ -201,6 +265,8 @@ void	get_hit_v(t_raycastor	*cast, t_scene *scene, int *depth, t_ray	*hitps)
 				cast->rx += cast->stepx;
         		cast->ry += cast->stepy;
 				(*depth)++;
+				printf("V: non-wall dist is : %f\n", hitps->hits[hitps->hit_count - 1].dist);
+				printf("V: max dist NOT IN WALL is : %f\n", hitps->distW);
 			}
 		}
 		else
@@ -220,10 +286,13 @@ void	get_hit_h(t_raycastor	*cast, t_scene *scene, int *depth, t_ray	*hits)
 				&& hit_wall_3d(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
 		{
 			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
+			printf("H: get map[x, y]: [%d, %d] = %c\n", cast->in_map.x, cast->in_map.y, c);
+			printf("H: max dist is : %f\n", hits->distW);
 			if (c == '1')
 			{
 				renew_record_hits(cast, scene, hits, c);
 				*depth = cast->dof;
+				printf("H: max dist in wall is : %f\n", hits->distW);
 			}
 			else
 			{
@@ -231,6 +300,7 @@ void	get_hit_h(t_raycastor	*cast, t_scene *scene, int *depth, t_ray	*hits)
 				cast->rx += cast->stepx;
         		cast->ry += cast->stepy;
 				(*depth)++;
+				printf("H: max dist in wall is : %f\n", hits->distW);
 			}
 		}
 		else
@@ -243,6 +313,7 @@ void	sort_hit_points(t_ray	*hitps)
 	int	i;
 	int j;
 	t_ray_hit	tmp;
+	t_hit	h;
 
 	i = 0;
 	while (i < hitps->hit_count - 1)
@@ -260,4 +331,13 @@ void	sort_hit_points(t_ray	*hitps)
 		}
 		i++;
 	}
+	i = 0;
+	while (i < hitps->hit_count)
+	{
+		h = hitps->hits[i].hit_type;
+		if (h == NORTH || h == SOUTH || h == EAST || h == WEST)
+			break ;
+		i++;
+	}
+	hitps->hit_count = i + 1;
 }
