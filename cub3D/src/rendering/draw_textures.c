@@ -32,7 +32,7 @@ t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 		return (scene->tmap->sprite);
 }
 
-static int	get_color_at(t_pic *img, int x, int y)
+int	get_color_at(t_pic *img, int x, int y)
 {
 	char *pixel;
 	int color;
@@ -83,6 +83,39 @@ void	put_pixel_texture(t_scene	*scene, t_point	po, t_raycastor	*cast)
 	while (i < cast->rend_h)
 	{
 		po.color = get_color_at(&cast->tt_pic, (int)x, (int)y);
+		put_pixel(&scene->img, po);
+		y += cast->step_tt;
+		po.y++;
+		i++;
+	}
+}
+
+void	texture_3d(t_scene	*scene, t_point	po, t_raycastor	*cast, t_ray_hit	hit)
+{
+	double	x;
+	double	y;
+	int		 i;
+	int		len;
+	double	t;
+
+	i = 0;
+	x = hit.tex_x;
+	if (hit.hit_type == DOOR)
+	{
+		t = scene->tmap->door_timer[hit.hit_map.y][hit.hit_map.x];
+		len = hit.tt_pic.width;
+		x -= t * len;
+		if (x < 0)
+			return ;
+	}
+	y = 0.0;
+	if (hit.tt_pic.mlx_img && (cast->ori_rend_h > cast->rend_h))
+		y += (hit.tt_pic.height * (cast->ori_rend_h - cast->rend_h)) 
+			/ (2.0 * cast->ori_rend_h);
+	while (i < cast->rend_h)
+	{
+		if (hit.tt_pic.mlx_img)
+			po.color = get_color_at(&hit.tt_pic, (int)x, (int)y);
 		put_pixel(&scene->img, po);
 		y += cast->step_tt;
 		po.y++;

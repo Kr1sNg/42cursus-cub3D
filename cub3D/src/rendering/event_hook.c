@@ -20,16 +20,21 @@ void	rotate(t_scene	*scene, double angl_turn)
 	if (scene->tmap->player->p_angle < 0)
 		scene->tmap->player->p_angle += 2.0 * M_PI;
 	scene->tmap->player->dirx = cos(scene->tmap->player->p_angle);
-	scene->tmap->player->diry = sin(scene->tmap->player->p_angle);		
+	scene->tmap->player->diry = -sin(scene->tmap->player->p_angle);		
 }
 
-void	translate(t_map	*tmap, double	mov)
+/* void	translate(t_map	*tmap, double	mov)
 {
 	if (mov > -1.0 && mov < 1.0)
 		tmap->player->pitch += mov;
 	if (tmap->player->pitch < -1.0 || tmap->player->pitch > 1.0)
 		tmap->player->pitch -= mov;
-}
+} 
+	if (keycode == XK_Up)
+		translate(all->tmap, -0.1);
+	if (keycode == XK_Down)
+		translate(all->tmap, 0.1);		
+*/
 
 int	key_hooks(int keycode, t_scene	*all)
 {
@@ -39,10 +44,6 @@ int	key_hooks(int keycode, t_scene	*all)
 		rotate(all, 0.05);
 	if (keycode == XK_Right)
 		rotate(all, -0.05);
-	if (keycode == XK_Up)
-		translate(all->tmap, -0.1);
-	if (keycode == XK_Down)
-		translate(all->tmap, 0.1);
 	if (keycode == XK_w)
 		floating_coord(all->tmap, 6, 0);
 	if (keycode == XK_s)

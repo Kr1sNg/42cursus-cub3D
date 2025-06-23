@@ -46,7 +46,7 @@ void	intersect_v(t_raycastor	*cast, t_point p, int *depth)
 	}
 }
 
-static void    no_wall(t_scene *scene, t_raycastor	*cast, int *depth)
+void    no_wall(t_scene *scene, t_raycastor	*cast, int *depth)
 {
     if (!inside_map_array(cast->in_map.x, cast->in_map.y, scene))
         (*depth) = cast->dof;
@@ -63,10 +63,11 @@ static int hit_wall(char	**map, int x, int y)
 	char c;
 
 	c = map[y][x];
-	if (c == '0' || c == 'E' || c == 'W' || c == 'N' || c == 'S')
-		return (0);
-	else
+	//if (c == '0' || c == 'E' || c == 'W' || c == 'N' || c == 'S')
+	if (c == '1' || c == '2')
 		return (1);
+	else
+		return (0);
 /* 	if (c == '1')
 		return (1);
 	else
@@ -85,7 +86,7 @@ static int hit_wall(char	**map, int x, int y)
 		return (0);
 } */
 
-static t_hit find_hit_side(t_raycastor	*cast, char c, int is_dir, int	is_v)
+t_hit find_hit_side(t_raycastor	*cast, char c, int is_dir, int	is_v)
 {
 	if (c == '1' || is_dir == 1)
 	{
@@ -192,9 +193,6 @@ void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 			cast->hhit = find_hit_side(cast, c, 0, 0);
 			cast->hhit_dir = find_hit_side(cast, c, 1, 0);
 		}
-		//if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-		//&& hit_door_sprite(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
-		//	save_door_sprite(cast, scene);
 		else
 			no_wall(scene, cast, depth);
 	}	

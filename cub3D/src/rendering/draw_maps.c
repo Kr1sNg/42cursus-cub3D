@@ -50,7 +50,7 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 				|| c == 'W' || c == 'E' || c == '2' || c == '3'))
 		{
 			col = 0xFFD580;
-			if (c == '1' || c == '3')
+			if (c == '1')
 				col = 0x666666;
 			if (c == '2')
 				col = 0xFFD000;
@@ -110,8 +110,9 @@ void	draw_maps(t_scene	*scene)
 	center.x = draw_start.x + grid / 2 + scene->tmap->player->ray2->offx;
 	center.y = draw_start.y + grid / 2 + scene->tmap->player->ray2->offy;
 	center.color = 0x000000;
+	//update_doors();  
 	draw_3d_scene(scene, center, grid, start);
-	draw_square(scene, start, size);
+	//draw_square(scene, start, size);
 	draw_minimap(scene, draw_start);
 	draw_player_vision(scene, center, grid, start);
 	draw_player_vector(scene, center, grid / 2);

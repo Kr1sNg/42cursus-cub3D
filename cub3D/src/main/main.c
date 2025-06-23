@@ -28,7 +28,7 @@ static bool	check_img(void *mlx, t_pic *image, char *path)
 	(*image).mlx_img = mlx_xpm_file_to_image(mlx, path, &(*image).width, &(*image).height);
 	if (!(*image).mlx_img)
 		return (false);
-	printf("texture path: %s, height = %d, width: %d\n", path, (*image).height, (*image).width);
+	//printf("texture path: %s, height = %d, width: %d\n", path, (*image).height, (*image).width);
 	(*image).addr = mlx_get_data_addr((*image).mlx_img, &(*image).bits_pix,
 		&(*image).line_len, &(*image).endian);
 	if (!(*image).addr)
@@ -114,8 +114,11 @@ static int	loop_img(t_scene *scene)
 	if (!scene->win)
 		return (1);		
 	//render_background(&scene->img, scene->tmap);
+	update_doors(scene->tmap); //add lan 0620
+	//clear_zbuffer_sprites(scene->tmap->player);
 	draw_maps(scene);
 	mouse_rotate(scene);
+
 	//put_minimap(scene);
 	//p.x = WIDTH / 2;
 	//p.y = HEIGHT / 2;
@@ -146,6 +149,10 @@ int	main(int ac, char	**av)
 		return (perror_and_exit(&scene, "Cannot load image"), 1);
 	if (!player_init(scene.tmap))
 		return (perror_and_exit(&scene, NULL), 1);
+
+	if (!init_doors(scene.tmap))
+		return (perror_and_exit(&scene, NULL), 1);
+
 	scene.img.mlx_img = mlx_new_image(scene.mlx, WIDTH, HEIGHT);
 	if (!scene.img.mlx_img)
 		return (perror_and_exit(&scene, "mlx_new_image"), 1);
