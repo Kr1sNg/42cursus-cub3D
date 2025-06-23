@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 20:07:45 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:51:10 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 //# define HEIGHT		680
 # define WIDTH			1920
 # define HEIGHT			1080
-//# define WIDTH			3840
-//# define HEIGHT			2160
+//# define WIDTH		3840
+//# define HEIGHT		2160
 
 # define WHITE			0xFFFFFF
 # define BLACK			0x000000
@@ -89,12 +89,11 @@ typedef struct s_count
 	int		map_width; //map_w include space
 	int		player_count; // S, W, E, N
 	int		animation;
-	
 	// move here for parsing
-	int			map_posx; // horizontal
-	int			map_posy; //  vertical
-	double		map_dirx; // N=(dirx = 0, diry = -1), S=(dirx = 0, diry = 1)
-	double		map_diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
+	int		map_posx; // horizontal
+	int		map_posy; //  vertical
+	double	map_dirx; // N=(dirx = 0, diry = -1), S=(dirx = 0, diry = 1)
+	double	map_diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
 }	t_count;
 
 typedef struct s_raycastor
@@ -142,7 +141,7 @@ typedef struct s_raycastor
 	t_point	in_map;
 }	t_raycastor;
 
-typedef	struct s_cam
+typedef struct s_cam
 {
 	int			posx; // horizontal
 	int			posy; //  vertical
@@ -152,9 +151,9 @@ typedef	struct s_cam
 	int			grid;
 	double		planex;
 	double		planey;
-	double  	p_angle;
+	double		p_angle;
 	double		pitch;
-	double  	fov;
+	double		fov;
 	int			ray_nb;	
 }	t_cam;
 
@@ -165,7 +164,7 @@ typedef struct s_map
 	t_pic	sprite; //3
 	t_pic	tex_n;
 	t_pic	tex_s;
-	t_pic	tex_w; //image
+	t_pic	tex_w;
 	t_pic	tex_e;
 	char	*path_n; //need to free
 	char	*path_s; //need to free
@@ -176,11 +175,11 @@ typedef struct s_map
 	char	**the_map;
 	char	**map_copy;
 	t_cam	*player;
-	t_count	count; // you can find map_h, map_w here
+	t_count	count;
 	int		visible;
 }	t_map;
 
-typedef	struct s_scene
+typedef struct s_scene
 {
 	t_map	*tmap;
 	t_pic	img;
@@ -198,6 +197,7 @@ void	perror_and_exit(t_scene *scene, char *str);
 void	print_err(char *str);
 // free_map
 void	free_map_data(t_map *tmap);
+void	free_map_img(t_scene *scene);
 //is_line
 int		is_texture_line(char *line);
 int		is_color_line(char *line);
@@ -220,37 +220,11 @@ bool	is_cub_file(char *path);
 char	**read_file(char *path);
 //utils
 int		color_toi(char **split);
-void	print_map(t_scene *scene);
 
-/*main
-t_map	*map_init(t_scene *scene, char *path);*/
-
-/* minimap.c 2*/
-//void	put_minimap(t_scene	*scene);
-
-/* minimap_utils.c 3
-int		inside_map_array(int x, int y, t_scene *scene);
-void	draw_square(t_scene	*scene, t_point p, int size);
-void	draw_line(t_scene	*scene, t_point	s, t_point	e, int	color);
-void	draw_player_vector(t_scene	*scene, t_point player, int	len);
-void	draw_player_vision(t_scene *scene, t_point p, int grid);*/
-
-/* cube_utils.c 5
-double	get_player_angle(t_cam *player);
-void	put_pixel(t_pic	*img, t_point	pt);
-void	render_background(t_pic	*img, t_map	*tmap);
-void	rotate(t_scene	*scene, double angl_turn);
-void	translate(t_map	*tmap, t_point	mov);*/
-
-/* event_hook.c 2
-int		key_hooks(int keycode, t_scene	*all);
-void	hook_controls(t_scene	*scene);
-int		mouse_rotate(t_scene *all);*/
-
-/* cube_free.c 5
-void	free_arr(char ***paths);
-void	free_lst(t_lmap	**tokens);
-int		close_cube3d(t_scene *scene); */
+/*main */
+// animation
+bool	animated_sprit(void *mlx, t_map *tmap);
+bool	check_img(void *mlx, t_pic *image, char *path);
 
 /* draw_3d.c 5 ok*/
 void	get_correct_dist(t_raycastor	*cast);
@@ -266,7 +240,7 @@ void	draw_maps(t_scene	*scene);
 /* minimap_utils.c 5 ok*/
 int		inside_map_array(int x, int y, t_scene *scene);
 void	draw_square(t_scene	*scene, t_point p, int size);
-void	draw_player_vector(t_scene	*scene, t_point player, int	len);
+void	draw_player_vector(t_scene *scene, t_point player, int len);
 double	dist(double sx, double sy, double ex, double ey);
 void	init_raycastor(t_point p, t_raycastor	*cast);
 
@@ -283,22 +257,22 @@ double	get_player_angle(t_map *tmap);
 void	put_pixel(t_pic	*img, t_point	pt);
 
 /*draw_textures.c 4 okk*/
-t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast);
-void	put_pixel_texture(t_scene	*scene, t_point	po, t_raycastor	*cast);
+t_pic	find_texture_xpm(t_scene *scene, t_raycastor *cast);
+void	put_pixel_texture(t_scene *scene, t_point po, t_raycastor *cast);
 
 /* event_hook.c 2 okk*/
 void	rotate(t_scene	*scene, double angl_turn);
-void	translate(t_map	*tmap, double	mov);
+// void	translate(t_map	*tmap, double mov);
 int		key_hooks(int keycode, t_scene	*all);
 int		mouse_rotate(t_scene *all);
 void	hook_controls(t_scene	*scene);
 
 /* event_hook_2.c */
-void	floating_coord(t_map	*tmap, int	n_pix, int	sign);
+void	floating_coord(t_map *tmap, int n_pix, int sign);
 
 /* cube_free.c 3*/
-void	free_arr(char	***paths);
+void	free_arr(char ***paths);
 //void	free_lst(t_lmap	**tokens);
-int		close_cube3d(t_scene	*scene);
+int		close_cube3d(t_scene *scene);
 
 #endif

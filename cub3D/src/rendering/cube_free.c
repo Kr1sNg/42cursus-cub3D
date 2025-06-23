@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:21:11 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 17:34:57 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:53:10 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,33 +58,18 @@ int	close_cube3d(t_scene *scene)
 		mlx_destroy_window(scene->mlx, scene->win);
 		scene->win = NULL;
 	}
-	if (scene->img.mlx_img)
-		mlx_destroy_image(scene->mlx, scene->img.mlx_img);
 	if (scene->tmap)
 	{
-		if (scene->tmap->tex_n.mlx_img)
-			mlx_destroy_image(scene->mlx, scene->tmap->tex_n.mlx_img);
-		if (scene->tmap->tex_s.mlx_img)
-			mlx_destroy_image(scene->mlx, scene->tmap->tex_s.mlx_img);
-		if (scene->tmap->tex_w.mlx_img)
-			mlx_destroy_image(scene->mlx, scene->tmap->tex_w.mlx_img);
-		if (scene->tmap->tex_e.mlx_img)
-			mlx_destroy_image(scene->mlx, scene->tmap->tex_e.mlx_img);
-		if (scene->tmap->door.mlx_img)
-			mlx_destroy_image(scene->mlx, scene->tmap->door.mlx_img);
-		if (scene->tmap->door_open.mlx_img)
-			mlx_destroy_image(scene->mlx, scene->tmap->door_open.mlx_img);
-		if (scene->tmap->sprite.mlx_img)
-			mlx_destroy_image(scene->mlx, scene->tmap->sprite.mlx_img);
+		free_map_img(scene);
 		free_map_data(scene->tmap);
 	}
+	if (scene && scene->img.mlx_img)
+		mlx_destroy_image(scene->mlx, scene->img.mlx_img);
 	if (scene->mlx)
 	{
 		mlx_destroy_display(scene->mlx);
 		free(scene->mlx);
-	}	
+	}
 	exit (1);
-    return (0);
+	return (0);
 }
-
-

@@ -3,12 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: layang <layang@student.42.fr>              +#+  +:+       +#+         #
+#    By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 19:03:06 by tat-nguy          #+#    #+#              #
-#    Updated: 2025/06/18 14:26:09 by layang           ###   ########.fr        #
+#    Updated: 2025/06/23 10:12:29 by tat-nguy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# ***** Color Definition ***** #
+
+RED 	= \033[91m
+YELLOW 	= \033[33m
+GREEN 	= \033[92m
+RESET 	= \033[0m
+
+# **************************** #
 
 NAME = cub3D
 
@@ -40,6 +49,9 @@ MLXFLAGS	= -L$(MLX_DIR) -lmlx -L/usr/X11/lib -lX11 -lXext
 # Target
 all: $(LIBFT) $(MLX) $(NAME)
 
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR)
 
@@ -47,17 +59,21 @@ $(MLX):
 	@$(MAKE) -C $(MLX_DIR)
 
 $(NAME): $(OBJS)
+	@echo "$(YELLOW) 🛠️  waiting for compilation...$(RESET)"
 	@$(CC) $(OBJS) -o $(NAME) $(INCLUDE) $(CFLAGS) $(LIBFLAGS) $(MLXFLAGS) -lm
-
+	@echo "$(GREEN) 🤖  Compiled successful ✴️  $(NAME) ✴️$(RESET)"
+	
 # Clean
 clean:
 	@$(RM) $(OBJS)
 	@$(MAKE) -s -C $(LIBFT_DIR) clean
 	@$(MAKE) -s -C $(MLX_DIR) clean
+	@echo "$(RED) 🗑️  Deleted object files.$(RESET)"
 
 fclean: clean
 	@$(RM) $(NAME)
 	@$(MAKE) -s -C $(LIBFT_DIR) fclean
+	@echo "$(RED) 🚽  Deleted ❄️  $(NAME) ❄️$(RESET)"
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:56:18 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/17 11:03:42 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:40:48 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ bool	parse_color_line(t_map *tmap, char **lines, int i)
 static bool	store_texture(t_map *map, char **split, char *line)
 {
 	int	type;
-	
+
 	type = is_texture_line(line);
 	if (type == 1 && !map->count.no_line)
-		return (map->count.no_line = 1, 
+		return (map->count.no_line = 1,
 			map->path_n = ft_strdup(split[1]), true);
 	if (type == 2 && !map->count.so_line)
 		return (map->count.so_line = 1,
@@ -63,12 +63,10 @@ static bool	store_texture(t_map *map, char **split, char *line)
 	return (print_err("Unknown texture type"), false);
 }
 
-
-
 bool	parse_texture_line(t_map *map, char **lines, int i)
-{	
-	char **split;
-	
+{
+	char	**split;
+
 	if (!lines || !(*lines))
 		return (print_err("Missing line"), false);
 	split = ft_split_charset(lines[i], " \n");
@@ -79,42 +77,3 @@ bool	parse_texture_line(t_map *map, char **lines, int i)
 	ft_split_free(split);
 	return (true);
 }
-
-
-
-
-	/*	if (is_texture_line(lines[i]) == 1)
-	{
-		if (map->count.no_line)
-			return (ft_split_free(split), printf("Dup texture\n"), false);
-		map->count.no_line = 1;
-		map->path_n = ft_strdup(split[1]);
-	}
-	else if (is_texture_line(lines[i]) == 2)
-	{
-		if (map->count.so_line)
-			return (ft_split_free(split), printf("Dup texture\n"), false);
-		map->count.so_line = 1;
-		map->path_s = ft_strdup(split[1]);
-	}
-	else if (is_texture_line(lines[i]) == 3)
-	{
-		if (map->count.we_line)
-			return (ft_split_free(split), printf("Dup texture\n"), false);
-		map->count.we_line = 1;
-		map->path_w = ft_strdup(split[1]);
-	}
-	else if (is_texture_line(lines[i]) == 4)
-	{
-		if (map->count.ea_line)
-			return (ft_split_free(split), printf("Dup texture\n"), false);
-		map->count.ea_line = 1;
-		map->path_e = ft_strdup(split[1]);
-	}
-	else
-		return (ft_split_free(split), printf("Unvalid texture\n"), false);
-	ft_split_free(split);
-	return (true);
-}
-	*/
-

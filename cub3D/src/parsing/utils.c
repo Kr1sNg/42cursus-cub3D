@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 19:04:01 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/16 11:54:06 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:38:11 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,4 @@ int	color_toi(char **split)
 		return (-42);
 	value = ((ri << 16) | (gi << 8) | bi);
 	return (value);
-}
-
-void	print_map(t_scene *scene)
-{
-	int	i;
-
-	if (!scene->tmap || !scene->tmap->the_map)
-		perror_and_exit(scene, "NO MAP!");
-	i = -1;
-	while (scene->tmap->the_map && scene->tmap->the_map[++i])
-		printf("map[%i]: [%s]\n", i, scene->tmap->the_map[i]);
 }

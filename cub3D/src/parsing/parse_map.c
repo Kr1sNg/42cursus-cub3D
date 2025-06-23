@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:23:46 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/17 11:31:03 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:43:58 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_valid_map(t_map *tmap, char **lines)
 	if (!is_closed_map(tmap, lines))
 		return (print_err("Invalid map block"), false);
 	if (tmap->count.c_line != 1 || tmap->count.f_line != 1
-		|| tmap->count.ea_line != 1 || tmap->count.no_line != 1 
+		|| tmap->count.ea_line != 1 || tmap->count.no_line != 1
 		|| tmap->count.so_line != 1 || tmap->count.we_line != 1)
 		return (print_err("Missing element"), false);
 	return (true);

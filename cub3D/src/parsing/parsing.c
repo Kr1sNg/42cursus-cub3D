@@ -6,7 +6,7 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/19 17:38:52 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:43:42 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static bool	parse_and_validate_map(t_map *map, char **lines, int i)
 	return (true);
 }
 
-
 int	ft_parsing(char *path, t_scene *scene)
 {
 	char	**lines;
@@ -73,21 +72,15 @@ int	ft_parsing(char *path, t_scene *scene)
 	scene->tmap = ft_calloc(1, sizeof(t_map));
 	if (!scene->tmap)
 		return (print_err("Malloc failed"), -42);
-	
 	if (!check_file_and_read(path, &lines))
 		return (-42);
-	
 	if (!parse_headers(scene->tmap, lines, &i))
 		return (ft_split_free(lines), -42);
-	
 	if (!parse_and_validate_map(scene->tmap, lines, i))
 		return (ft_split_free(lines), -42);
 	ft_split_free(lines);
 	return (0);
 }
-
-
-
 
 /*
 int	ft_parsing(char *path, t_scene *scene)
@@ -135,7 +128,8 @@ int	ft_parsing(char *path, t_scene *scene)
 	while (lines[i])
 	{
 		if (!is_empty_line(lines[i]))
-			return (ft_split_free(lines), printf("Map must be at the end\n"), -42);
+			return (ft_split_free(lines),
+			printf("Map must be at the end\n"), -42);
 		i++;
 	}
 	if (!is_valid_map(scene->tmap, lines))

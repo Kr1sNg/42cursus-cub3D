@@ -6,17 +6,18 @@
 /*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 17:27:05 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:02:34 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void draw_square_minimap(t_scene	*scene, t_point p, int size, t_point	c[4])
+static void	draw_square_minimap(t_scene	*scene, t_point p, int size,
+	t_point c[4])
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	while (i < size)
 	{
@@ -24,8 +25,8 @@ static void draw_square_minimap(t_scene	*scene, t_point p, int size, t_point	c[4
 		while (j < size)
 		{
 			if (p.x + i >= c[0].x && p.y + j >= c[0].y
-					&& p.x + i <= c[3].x && p.y + j <= c[3].y)
-			put_pixel(&scene->img, (t_point){p.x + i, p.y + j, p.color});
+				&& p.x + i <= c[3].x && p.y + j <= c[3].y)
+				put_pixel(&scene->img, (t_point){p.x + i, p.y + j, p.color});
 			j++;
 		}
 		i++;
@@ -62,7 +63,6 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 	}
 }
 
-
 static void	draw_minimap(t_scene	*scene, t_point	p)
 {
 	int		x;
@@ -71,23 +71,23 @@ static void	draw_minimap(t_scene	*scene, t_point	p)
 
 	cor[0].x = (int)(WIDTH / 50);
 	cor[0].y = (int)(HEIGHT / 50);
-	cor[1].x = cor[0].x + round((WIDTH + HEIGHT)/ 10);
+	cor[1].x = cor[0].x + round((WIDTH + HEIGHT) / 10);
 	cor[1].y = cor[0].y;
 	cor[2].x = cor[0].x;
-	cor[2].y = cor[0].y + round((WIDTH + HEIGHT)/ 10);
-	cor[3].x = cor[0].x + round((WIDTH + HEIGHT)/ 10);
-	cor[3].y = cor[0].y + round((WIDTH + HEIGHT)/ 10);
+	cor[2].y = cor[0].y + round((WIDTH + HEIGHT) / 10);
+	cor[3].x = cor[0].x + round((WIDTH + HEIGHT) / 10);
+	cor[3].y = cor[0].y + round((WIDTH + HEIGHT) / 10);
 	y = -5;
 	while (y < 5)
 	{
 		x = -5;
 		while (x < 5)
 		{
-			draw_minimap_tile(scene, (t_point){x, y, 0} , p, cor);
+			draw_minimap_tile(scene, (t_point){x, y, 0}, p, cor);
 			x++;
 		}
 		y++;		
-	}		
+	}	
 }
 
 void	draw_maps(t_scene	*scene)
