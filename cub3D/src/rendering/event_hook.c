@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:23:26 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 18:22:27 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:20:46 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	rotate(t_scene	*scene, double angl_turn)
 	scene->tmap->player->dirx = cos(scene->tmap->player->p_angle);
 	scene->tmap->player->diry = -sin(scene->tmap->player->p_angle);	
 	//add lan
-	//scene->tmap->player->planex = -scene->tmap->count.map_diry * 0.66;
-	//scene->tmap->player->planey = scene->tmap->count.map_dirx * 0.66;	
+	scene->tmap->player->planex = -scene->tmap->count.map_diry * 0.66;
+	scene->tmap->player->planey = scene->tmap->count.map_dirx * 0.66;	
 }
 
 /* void	translate(t_map	*tmap, double	mov)
