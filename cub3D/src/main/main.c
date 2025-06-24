@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/23 11:27:05 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:04:08 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-/* static bool	check_img(void *mlx, void **image, char *path)
-{
-	int	width;
-	int	height;
-
-	*image = mlx_xpm_file_to_image(mlx, path, &width, &height);
-	if (!(*image))
-		return (false);
-	return (true);
-} */
 
 bool	check_img(void *mlx, t_pic *image, char *path)
 {
@@ -43,7 +32,6 @@ static bool	img_init(void *mlx, t_map *tmap)
 		|| !check_img(mlx, &tmap->tex_s, tmap->path_s)
 		|| !check_img(mlx, &tmap->tex_w, tmap->path_w)
 		|| !check_img(mlx, &tmap->door, "textures/Door1.xpm")
-		|| !check_img(mlx, &tmap->door_open, "textures/Door11.xpm")
 		|| !check_img(mlx, &tmap->sprite, "textures/KeyFly1.xpm"))
 		return (false);
 	return (true);
@@ -57,10 +45,12 @@ static bool	player_init(t_map *tmap)
 	tmap->player->ray2 = malloc(sizeof(t_raycastor));
 	if (!tmap->player->ray2)
 		return (print_err("Cube3D: malloc ray2"), false);
+	if (!init_doors(tmap))
+		return (print_err("Cube3D: doors initiation"), false);
 	tmap->player->ray2->offx = 0.0;
 	tmap->player->ray2->offy = 0.0;
-	tmap->player->planex = 0.66;
-	tmap->player->planey = 0;
+	tmap->player->planex = -tmap->count.map_diry * 0.66;
+	tmap->player->planey = tmap->count.map_dirx * 0.66;
 	tmap->player->pitch = 0.0;
 	tmap->player->p_angle = get_player_angle(tmap);
 	tmap->player->fov = 66.0 * (M_PI / 180);
@@ -77,6 +67,7 @@ static int	loop_img(t_scene *scene)
 {
 	if (!scene->win)
 		return (1);
+	update_doors(scene->tmap);
 	draw_maps(scene);
 	mouse_rotate(scene);
 	animated_sprit(scene->mlx, scene->tmap);

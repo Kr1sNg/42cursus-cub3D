@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/23 11:51:10 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:57:51 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@
 # include <X11/keysym.h> // macOS
 
 # define MAX_LINES	1024
+# define MAX_HITS_PER_RAY 20
+# define DOOR_CLOSED 0
+# define DOOR_OPENING 1
+# define DOOR_OPEN 2
+# define DOOR_CLOSING 3
 
 //# define WIDTH		920
 //# define HEIGHT		680
@@ -96,6 +101,40 @@ typedef struct s_count
 	double	map_diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
 }	t_count;
 
+typedef struct s_sprite
+{
+	double	sprite_x;
+	double	sprite_y;
+	double	inv_det;
+	double	tx;
+	double	ty;
+	int		sprix;
+	int		sprih;
+	int		spriw;
+	t_point	ds;
+	t_point de;
+}	t_sprite;
+
+typedef struct s_ray_hit
+{
+	t_hit	hit_type;
+	t_hit	hit_dir;
+	double	dist;
+	t_point	hit_map;//t_point	in_map;
+	int		vert_side;
+	double	hit_x;
+	double	hit_y;
+	double	tex_x;
+	t_pic	tt_pic;
+}	t_ray_hit;
+
+typedef struct s_ray
+{
+	t_ray_hit	hits[MAX_HITS_PER_RAY];
+	double		distW;
+	int			hit_count;
+}	t_ray;
+
 typedef struct s_raycastor
 {
 	double	offx;
@@ -115,9 +154,7 @@ typedef struct s_raycastor
 	int		draw_off;
 	t_pic	tt_pic;
 	int		this_r;
-	int		mi_r;
-	int		ma_r;
-	t_point	sprite;
+	t_point	p;
 	double	disH;
 	double	disV;
 	double	dist;
@@ -148,7 +185,9 @@ typedef struct s_cam
 	double		dirx; // N=(dirx = 0, diry = -1), S=(dirx = 0, diry = 1)
 	double		diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
 	t_raycastor	*ray2;
-	int			grid;
+	double		zbuffer[WIDTH];
+	t_point		sprites[MAX_HITS_PER_RAY];
+	int			nb_sprites;
 	double		planex;
 	double		planey;
 	double		p_angle;
@@ -177,6 +216,8 @@ typedef struct s_map
 	t_cam	*player;
 	t_count	count;
 	int		visible;
+	int 	**door_state;
+	double	**door_timer;
 }	t_map;
 
 typedef struct s_scene
@@ -226,8 +267,7 @@ int		color_toi(char **split);
 bool	animated_sprit(void *mlx, t_map *tmap);
 bool	check_img(void *mlx, t_pic *image, char *path);
 
-/* draw_3d.c 5 ok*/
-void	get_correct_dist(t_raycastor	*cast);
+/* draw_3d.c  ok*/
 void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off);
 
 /*draw_minimap.c 5 ok*/
@@ -244,21 +284,49 @@ void	draw_player_vector(t_scene *scene, t_point player, int len);
 double	dist(double sx, double sy, double ex, double ey);
 void	init_raycastor(t_point p, t_raycastor	*cast);
 
-/*raycast_utils.c 5 ok*/
+/* raycast.c  ok*/
+void	get_correct_dist(t_raycastor	*cast);
 void	intersect_v(t_raycastor	*cast, t_point p, int *depth);
 void	get_dis_v(t_raycastor	*cast, t_scene *scene, t_point p, int *depth);
 void	intersect_h(t_raycastor	*cast, t_point p, int *depth);
 void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth);
 
-/* cube_utils.c 4 okk*/
+/*raycast_utils.c 4*/
+void    no_wall(t_scene *scene, t_raycastor	*cast, int *depth);
+int		hit_wall(char	**map, int x, int y);
+t_hit find_hit_side(t_raycastor	*cast, char c, int is_dir, int	is_v);
+
+/*raycast_3d_utils.c  ok*/
+void	get_render_height(t_raycastor	*cast, t_scene *scene, t_ray_hit	hit);
+void	get_hit_v(t_raycastor	*cast, t_scene *scene, int *depth, t_ray	*hitps);
+void	get_hit_h(t_raycastor	*cast, t_scene *scene, int *depth, t_ray	*hits);
+
+/*draw_3d_utils.c 1*/
+void	draw_wall_column(t_raycastor	*cast, t_scene *scene, t_ray_hit	hit);
+void	draw_door_height(t_raycastor	*cast, t_scene *scene, t_ray_hit	hit);
+void	clear_zbuffer_sprites(t_cam *player);
+void	sort_hit_points(t_ray	*hitps);
+
+/* doors.c */
+int    init_doors(t_map   *tmap);
+void	update_doors(t_map *tmap);
+
+/*draw_sprite.c ok*/
+void put_col_sprite(t_sprite	spt, t_pic	sprt, t_scene	*sc, t_point	*c);
+void sort_draw_sprites(t_scene *scene, t_point p);
+
+/* cube_utils.c ok*/
 int		gradient_color(float_t	r, int s, int e);
 double	normalize_angle(double angle);
 double	get_player_angle(t_map *tmap);
 void	put_pixel(t_pic	*img, t_point	pt);
+double 	sp_dist(t_cam *player, t_point	po, t_point	s, int	n);
 
-/*draw_textures.c 4 okk*/
+/*draw_textures.c 4 ok*/
+int		get_color_at(t_pic *img, int x, int y);
 t_pic	find_texture_xpm(t_scene *scene, t_raycastor *cast);
 void	put_pixel_texture(t_scene *scene, t_point po, t_raycastor *cast);
+void	texture_3d(t_scene	*scene, t_point	po, t_raycastor	*cast, t_ray_hit	hit);
 
 /* event_hook.c 2 okk*/
 void	rotate(t_scene	*scene, double angl_turn);

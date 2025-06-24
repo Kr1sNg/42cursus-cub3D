@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:00:40 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 18:19:39 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:57:36 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,13 @@ t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 		return (scene->tmap->tex_e);
 	else if (cast->hit == WEST)
 		return (scene->tmap->tex_w);
-	else if (cast->hit == DOOR && cast->dist > 60)
+	else if (cast->hit == DOOR)
 		return (scene->tmap->door);
-	else if (cast->hit == DOOR && cast->dist <= 60)
-		return (scene->tmap->door_open);
 	else
 		return (scene->tmap->sprite);
 }
 
-static int	get_color_at(t_pic *img, int x, int y)
+int	get_color_at(t_pic *img, int x, int y)
 {
 	char *pixel;
 	int color;
@@ -68,21 +66,36 @@ static double	hit_texture_x(t_raycastor	*cast) // use Interpolation to blending 
 	return (x);
 }
 
-void	put_pixel_texture(t_scene	*scene, t_point	po, t_raycastor	*cast)
+static	void renew_x_door(double *x, t_scene	*scene, t_ray_hit	hit)
+{
+	double	t;
+	
+	t = scene->tmap->door_timer[hit.hit_map.y][hit.hit_map.x];
+	*x -= t * hit.tt_pic.width;
+}
+
+void	texture_3d(t_scene	*scene, t_point	po, t_raycastor	*cast, t_ray_hit	hit)
 {
 	double	x;
 	double	y;
 	int		 i;
 
 	i = 0;
-	x = hit_texture_x(cast);
+	x = hit.tex_x;
+	if (hit.hit_type == DOOR)
+	{
+		renew_x_door(&x, scene, hit);
+		if (x < 0)
+			return ;
+	}
 	y = 0.0;
-	if (cast->ori_rend_h > cast->rend_h)
-		y += (cast->tt_pic.height * (cast->ori_rend_h - cast->rend_h)) 
+	if (hit.tt_pic.mlx_img && (cast->ori_rend_h > cast->rend_h))
+		y += (hit.tt_pic.height * (cast->ori_rend_h - cast->rend_h)) 
 			/ (2.0 * cast->ori_rend_h);
 	while (i < cast->rend_h)
 	{
-		po.color = get_color_at(&cast->tt_pic, (int)x, (int)y);
+		if (hit.tt_pic.mlx_img)
+			po.color = get_color_at(&hit.tt_pic, (int)x, (int)y);
 		put_pixel(&scene->img, po);
 		y += cast->step_tt;
 		po.y++;
