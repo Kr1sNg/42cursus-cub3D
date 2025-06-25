@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:24:16 by layang            #+#    #+#             */
-/*   Updated: 2025/06/23 11:54:30 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:32:54 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,25 @@ void	put_pixel(t_pic	*img, t_point	pt)
 		return ;
 	dst = img->addr + (y * img->line_len + x * (img->bits_pix / 8));
 	*(unsigned int *)dst = pt.color;
+}
+
+double sp_dist(t_cam *player, t_point	po, t_point	s, int	n)
+{
+	double	ox;
+	double	oy;
+	double	dis;
+	int		gr;
+	
+	ox = player->ray2->offx;
+	oy = player->ray2->offy;
+	gr = player->ray2->grid;
+	if (n == 1)
+		return (s.x * gr -(po.x * gr + ox));
+	else if (n == 2)
+		return (s.y * gr -(po.y * gr + oy));
+	else  // n = 0
+	{
+		dis = dist(s.x * gr, s.y * gr, po.x * gr + ox, po.y * gr + oy);
+		return (dis);
+	}
 }

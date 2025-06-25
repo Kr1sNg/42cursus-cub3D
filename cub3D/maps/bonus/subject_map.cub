@@ -1,7 +1,7 @@
 NO textures/purple.xpm
 SO textures/fire.xpm
-WE textures/red.xpm
-EA textures/m.xpm
+WE textures/grey.xpm
+EA textures/metal.xpm
 
 F 220,100,0
 C 225,30,0

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_maps.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/23 12:02:34 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:45:25 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 	t_point	map_p;
 	t_point	pix_p;
 	char	c;
-	int		col;
 	int		grid;
 
 	grid = s->tmap->player->ray2->grid;
@@ -50,14 +49,13 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 		if (c && (c == '1' || c == '0' || c == 'N' || c == 'S'
 				|| c == 'W' || c == 'E' || c == '2' || c == '3'))
 		{
-			col = 0xFFD580;
+			pix_p.color = 0xFFD580;
 			if (c == '1' || c == '3')
-				col = 0x666666;
+				pix_p.color = 0x666666;
 			if (c == '2')
-				col = 0xFFD000;
+				pix_p.color = 0xFFD000;
 			pix_p.x = p.x + lp.x * grid + 1;
 			pix_p.y = p.y + lp.y * grid + 1;
-			pix_p.color = col;
 			draw_square_minimap(s, pix_p, grid - 1, cor);
 		}
 	}
@@ -111,7 +109,7 @@ void	draw_maps(t_scene	*scene)
 	center.y = draw_start.y + grid / 2 + scene->tmap->player->ray2->offy;
 	center.color = 0x000000;
 	draw_3d_scene(scene, center, grid, start);
-	draw_square(scene, start, size);
+	//draw_square(scene, start, size);
 	draw_minimap(scene, draw_start);
 	draw_player_vision(scene, center, grid, start);
 	draw_player_vector(scene, center, grid / 2);
