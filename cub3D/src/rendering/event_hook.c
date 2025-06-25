@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:23:26 by layang            #+#    #+#             */
-/*   Updated: 2025/06/20 15:43:34 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 13:19:24 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,9 @@ void	rotate(t_scene	*scene, double angl_turn)
 	if (scene->tmap->player->p_angle < 0)
 		scene->tmap->player->p_angle += 2.0 * M_PI;
 	scene->tmap->player->dirx = cos(scene->tmap->player->p_angle);
-	scene->tmap->player->diry = sin(scene->tmap->player->p_angle);		
+	scene->tmap->player->diry = -sin(scene->tmap->player->p_angle);		
 }
 
-/* void	translate(t_map	*tmap, double	mov)
-{
-	if (mov > -1.0 && mov < 1.0)
-		tmap->player->pitch += mov;
-	if (tmap->player->pitch < -1.0 || tmap->player->pitch > 1.0)
-		tmap->player->pitch -= mov;
-} */
-
-/* if (keycode == XK_Up)
-translate(all->tmap, -0.1);
-if (keycode == XK_Down)
-translate(all->tmap, 0.1);
- */
 int	key_hooks(int keycode, t_scene	*all)
 {
 	if (keycode == XK_Escape)

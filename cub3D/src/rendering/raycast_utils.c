@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:43:22 by layang            #+#    #+#             */
-/*   Updated: 2025/06/24 17:32:55 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 11:50:56 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,15 @@ void    no_wall(t_scene *scene, t_raycastor	*cast, int *depth)
     }
 }
 
-int hit_wall(char	**map, t_point p)
+int hit_wall(t_map	*tmap, t_point p, int is_3d)
 {
 	char c;
+	int	sp;
 
-	c = map[p.y][p.x];
-	if (c == '0' || c == 'E' || c == 'W' || c == 'N' || c == 'S')
+	c = tmap->the_map[p.y][p.x];
+	sp = tmap->sprite_on;
+	if (c == '0' || c == 'E' || c == 'W' || c == 'N' || c == 'S'
+		|| (is_3d && c == '3' && sp == 0))
 		return (0);
 	else if (c == '1' || c == '2')
 		return (1);

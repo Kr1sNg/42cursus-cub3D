@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/24 17:04:08 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 10:38:24 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static bool	player_init(t_map *tmap)
 	tmap->player->fov = 66.0 * (M_PI / 180);
 	tmap->player->ray_nb = WIDTH;
 	tmap->visible = 10;
+	tmap->sprite_on = 1;
 	tmap->player->dirx = tmap->count.map_dirx;
 	tmap->player->diry = tmap->count.map_diry;
 	tmap->player->posx = tmap->count.map_posx;

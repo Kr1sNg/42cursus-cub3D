@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_3d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin < layang@student.42.fr>             +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 07:09:10 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/25 07:09:10 by marvin           ###   ########.fr       */
+/*   Updated: 2025/06/25 13:21:43 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	get_hit_v(t_raycastor	*cast, t_scene	*sc, int	*depth, t_ray	*hs)
 	{
 		renew_pos_in_map(sc, cast);
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, sc)
-				&& hit_wall(sc->tmap->the_map, cast->in_map))
+				&& hit_wall(sc->tmap, cast->in_map, 1))
 		{
 			c = sc->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			if (c == '1')
@@ -109,7 +109,7 @@ void	get_hit_h(t_raycastor	*cast, t_scene	*sc, int	*depth, t_ray	*hs)
 	{
 		renew_pos_in_map(sc, cast);		
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, sc)
-				&& hit_wall(sc->tmap->the_map, cast->in_map))
+				&& hit_wall(sc->tmap, cast->in_map, 1))
 		{
 			c = sc->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			if (c == '1')

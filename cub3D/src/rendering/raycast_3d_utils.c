@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:02:25 by layang            #+#    #+#             */
-/*   Updated: 2025/06/24 17:44:28 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 11:07:52 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_pic	find_texture_3d(t_scene	*scene, t_ray_hit	hit)
 {		
 	if (hit.hit_type == DEFAULT)
 		return ((t_pic){NULL, NULL, 0, 0, 0, 0, 0});
-	else if (hit.hit_type == NORTH)
+	else if (hit.hit_type == NORTH && scene->tmap->sprite_on)
 		return (scene->tmap->tex_n);
 	else if (hit.hit_type == SOUTH)
 		return (scene->tmap->tex_s);

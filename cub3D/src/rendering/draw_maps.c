@@ -6,7 +6,11 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/25 12:35:40 by tat-nguy         ###   ########.fr       */
+=======
+/*   Updated: 2025/06/25 12:33:55 by layang           ###   ########.fr       */
+>>>>>>> 6ab087a (try to get close to the sprite)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +54,7 @@ static void	draw_minimap_tile(t_scene *s, t_point lp, t_point p, t_point *cor)
 				|| c == 'W' || c == 'E' || c == '2' || c == '3'))
 		{
 			pix_p.color = 0xFFD580;
-			if (c == '1' || c == '3')
+			if (c == '1')
 				pix_p.color = 0x666666;
 			if (c == '2')
 				pix_p.color = 0xFFD000;

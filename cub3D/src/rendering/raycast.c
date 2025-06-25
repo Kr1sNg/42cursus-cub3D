@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:09:57 by layang            #+#    #+#             */
-/*   Updated: 2025/06/24 17:27:06 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 10:52:24 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	get_dis_v(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 	{
 		renew_pos_in_map(scene, cast);
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& hit_wall(scene->tmap->the_map, cast->in_map) == 1)
+				&& hit_wall(scene->tmap, cast->in_map, 0) == 1)
 		{
 			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			cast->vx = cast->rx;
@@ -121,7 +121,7 @@ void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 	{
 		renew_pos_in_map(scene, cast);
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& hit_wall(scene->tmap->the_map, cast->in_map) == 1)
+				&& hit_wall(scene->tmap, cast->in_map, 0) == 1)
 		{
 			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			cast->hx = cast->rx;
