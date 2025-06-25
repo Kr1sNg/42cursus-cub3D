@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:38:00 by layang            #+#    #+#             */
-/*   Updated: 2025/06/24 17:51:01 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 18:43:58 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,24 @@ void	draw_wall_column(t_raycastor	*cast, t_scene *scene, t_ray_hit	hit)
 			j++;
 		}
 		i--;
-	}	
+	}
 }
 
 void	draw_door_height(t_raycastor	*cast, t_scene *scene, t_ray_hit	hit)
 {
-	int	i;
-	int	start;
-	int	j;
+	int		i;
+	int		start;
+	int		j;
+	int		st;
+	t_point	p;
 
+	p = hit.hit_map;
+	st = scene->tmap->door_state[p.y][p.x];
+	if (st == DOOR_CLOSED)
+	{
+		draw_wall_column(cast, scene, hit);
+		return ;
+	}
 	get_render_height(cast, scene, hit);
 	start = WIDTH - cast->this_r * cast->pix_ray - 1;
 	i = start;
@@ -56,7 +65,7 @@ void	draw_door_height(t_raycastor	*cast, t_scene *scene, t_ray_hit	hit)
 		j = cast->draw_off;
 		texture_3d(scene, (t_point){i, j, PURPLE}, cast, hit);
 		i--;
-	}	
+	}
 }
 
 void	clear_zbuffer_sprites(t_cam *player)
@@ -80,26 +89,48 @@ void	clear_zbuffer_sprites(t_cam *player)
 	player->nb_sprites = 0;
 }
 
-static void    cut_hits_by_wall(t_ray	*hitps)
+static void	cut_hits_by_wall(t_ray	*hitps, t_scene	*scene)
 {
-    t_hit	h;
-    int     i;
+	t_hit	h;
+	int		i;
+	int		st;
+	t_point	p;
 
-    i = 0;
+	i = 0;
 	while (i < hitps->hit_count)
 	{
 		h = hitps->hits[i].hit_type;
 		if (h == NORTH || h == SOUTH || h == EAST || h == WEST)
 			break ;
+		if (h == DOOR)
+		{
+			p = hitps->hits[i].hit_map;
+			st = scene->tmap->door_state[p.y][p.x];
+			if (st == DOOR_CLOSED)
+				break ;
+		}
 		i++;
 	}
 	hitps->hit_count = i + 1;
 }
 
-void	sort_hit_points(t_ray	*hitps)
+/* static void print_hits(t_ray	*hitps)
 {
 	int	i;
-	int j;
+
+	i = 0;
+	while (i < hitps->hit_count)
+	{
+		printf("hit nb %d,type: %d, dist: %f\n", i + 1,
+			hitps->hits[i].hit_type, hitps->hits[i].dist);
+		i++;
+	}
+} */
+
+void	sort_hit_points(t_ray	*hitps, t_scene *scene)
+{
+	int			i;
+	int			j;
 	t_ray_hit	tmp;
 
 	i = 0;
@@ -118,5 +149,5 @@ void	sort_hit_points(t_ray	*hitps)
 		}
 		i++;
 	}
-    cut_hits_by_wall(hitps);
+	cut_hits_by_wall(hitps, scene);
 }

@@ -6,18 +6,38 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:02:25 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 14:52:42 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 20:16:36 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+void	get_correct_dist(t_raycastor	*cast)
+{
+	if (cast->dis_v < cast->dis_h)
+	{
+		cast->final_x = cast->vx;
+		cast->final_y = cast->vy;
+		cast->hit = cast->vhit;
+		cast->hit_dir = cast->vhit_dir;
+		cast->dist = cast->dis_v;
+	}
+	else
+	{
+		cast->final_x = cast->hx;
+		cast->final_y = cast->hy;
+		cast->hit = cast->hhit;
+		cast->hit_dir = cast->hhit_dir;
+		cast->dist = cast->dis_h;
+	}
+}
+
 void	get_render_height(t_raycastor	*cast, t_scene *scene, t_ray_hit	hit)
-{			
+{
 	double	ca;
 	double	no_fisheye_dist;
 	double	proj_plane_dist;
-	
+
 	ca = normalize_angle(scene->tmap->player->p_angle - cast->ra);
 	no_fisheye_dist = hit.dist * cos(ca);
 	proj_plane_dist = (WIDTH / 2.0) / tan(scene->tmap->player->fov / 2.0);
@@ -29,10 +49,10 @@ void	get_render_height(t_raycastor	*cast, t_scene *scene, t_ray_hit	hit)
 	cast->draw_off = cast->ori_off;
 }
 
-int have_repeat(t_point in,  t_ray	*hitps, double	dist)
+int	have_repeat(t_point	in, t_ray	*hitps, double dist)
 {
-	int	n;
-	int	i;
+	int		n;
+	int		i;
 	t_point	hit;
 
 	i = 0;
@@ -53,14 +73,14 @@ int have_repeat(t_point in,  t_ray	*hitps, double	dist)
 }
 
 t_pic	find_texture_3d(t_scene	*scene, t_ray_hit	hit)
-{		
+{
 	if (hit.hit_type == DEFAULT)
 		return ((t_pic){NULL, NULL, 0, 0, 0, 0, 0});
-	else if (hit.hit_type == NORTH)
+	else if (hit.hit_type == NORTH && scene->tmap->sprite_on)
 		return (scene->tmap->tex_n);
 	else if (hit.hit_type == SOUTH)
 		return (scene->tmap->tex_s);
-	else if (hit.hit_type == EAST && scene->tmap->sprite_on)
+	else if (hit.hit_type == EAST)
 		return (scene->tmap->tex_e);
 	else if (hit.hit_type == WEST)
 		return (scene->tmap->tex_w);

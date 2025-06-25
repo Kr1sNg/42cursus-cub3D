@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:09:52 by  layang           #+#    #+#             */
-/*   Updated: 2025/06/25 13:20:38 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 20:08:33 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	renew_zbuffer(t_scene	*s, t_ray_hit	hit, int r)
 
 static void	save_sprite_status(t_scene *scene, t_ray_hit	hit)
 {
-	int	i;
+	int		i;
 	t_cam	*player;
 
 	player = scene->tmap->player;
@@ -33,8 +33,8 @@ static void	save_sprite_status(t_scene *scene, t_ray_hit	hit)
 	i = 0;
 	while (i < player->nb_sprites)
 	{
-		if (player->sprites[i].x == hit.hit_map.x 
-				&& player->sprites[i].y == hit.hit_map.y)
+		if (player->sprites[i].x == hit.hit_map.x
+			&& player->sprites[i].y == hit.hit_map.y)
 			return ;
 		i++;
 	}
@@ -44,12 +44,12 @@ static void	save_sprite_status(t_scene *scene, t_ray_hit	hit)
 	player->nb_sprites++;
 }
 
-static void draw_pix_column(t_ray	*hitps, t_raycastor	*cast, t_scene *scene)
+static void	draw_pix_column(t_ray	*hitps, t_raycastor	*cast, t_scene	*scene)
 {
 	int		i;
 	t_hit	h;
 
-	sort_hit_points(hitps);
+	sort_hit_points(hitps, scene);
 	i = hitps->hit_count - 1;
 	while (i >= 0)
 	{
@@ -81,12 +81,10 @@ static void	dda_raycasting_3d(t_raycastor	*cast, t_scene *s, int r, t_point p)
 	off_r = ((double)r / (n - 1)) * cast->fov - (cast->fov / 2.0);
 	cast->ra = normalize_angle(s->tmap->player->p_angle + off_r);
 	cast->this_r = r;
-	//init_raycastor(p, cast);
 	cast->dirx = cos(cast->ra);
 	cast->diry = sin(cast->ra);
 	cast->p = p;
 	hitps.hit_count = 0;
-	hitps.distW = 0.0;
 	intersect_v(cast, p, &depth);
 	get_hit_v(cast, s, &depth, &hitps);
 	intersect_h(cast, p, &depth);
@@ -104,7 +102,7 @@ void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off)
 	cast->ra = scene->tmap->player->p_angle;
 	cast->fov = scene->tmap->player->fov;
 	cast->dof = fmax(scene->tmap->count.map_lines,
-		scene->tmap->count.map_width);
+			scene->tmap->count.map_width);
 	cast->grid = grid;
 	r = 0;
 	p.x -= off.x;

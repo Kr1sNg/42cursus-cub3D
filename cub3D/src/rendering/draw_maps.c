@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_maps.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 14:23:38 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:47:27 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,19 @@ static void	draw_minimap(t_scene	*scene, t_point	p)
 			draw_minimap_tile(scene, (t_point){x, y, 0}, p, cor);
 			x++;
 		}
-		y++;		
-	}	
+		y++;
+	}
 }
 
 void	draw_maps(t_scene	*scene)
 {
-	int		size = round((WIDTH + HEIGHT) / scene->tmap->visible);
+	int		size;
 	t_point	center;
 	int		grid;
 	t_point	start;
 	t_point	draw_start;
-	int		size_player;
-	
+
+	size = round((WIDTH + HEIGHT) / scene->tmap->visible);
 	scene->tmap->player->ray2->grid = size / scene->tmap->visible;
 	grid = scene->tmap->player->ray2->grid;
 	start.x = (int)(WIDTH / (5 * scene->tmap->visible));
@@ -104,7 +104,6 @@ void	draw_maps(t_scene	*scene)
 	start.color = gradient_color(0.3, WHITE, scene->tmap->color_c);
 	draw_start.x = start.x + (scene->tmap->visible / 2) * grid;
 	draw_start.y = start.y + (scene->tmap->visible / 2) * grid;
-	size_player = grid / 3;
 	center.x = draw_start.x + grid / 2 + scene->tmap->player->ray2->offx;
 	center.y = draw_start.y + grid / 2 + scene->tmap->player->ray2->offy;
 	center.color = 0x000000;
@@ -113,6 +112,6 @@ void	draw_maps(t_scene	*scene)
 	draw_minimap(scene, draw_start);
 	draw_player_vision(scene, center, grid, start);
 	draw_player_vector(scene, center, grid / 2);
-	draw_square(scene, (t_point){center.x - size_player / 2,
-		center.y - size_player / 2, 0xDE3163}, size_player);
+	draw_square(scene, (t_point){center.x - grid / 6,
+		center.y - grid / 6, 0xDE3163}, grid / 3);
 }

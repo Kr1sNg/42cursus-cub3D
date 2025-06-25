@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:54:08 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 14:41:00 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:48:49 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static void	sort_sprites(t_cam	*pl, t_point p, int *order)
 {
-    t_point c;
-	int max;
+	t_point	c;
+	int		max;
 	t_point	*spr;
-	int tmp_order;
+	int		tmp_order;
 
 	c.x = 0;
 	spr = pl->sprites;
-	while (c.x < pl->nb_sprites - 1) 
+	while (c.x < pl->nb_sprites - 1)
 	{
 		max = c.x;
 		c.y = c.x + 1;
@@ -29,7 +29,7 @@ static void	sort_sprites(t_cam	*pl, t_point p, int *order)
 		{
 			if (sp_dist(pl, p, spr[c.y], 0) > sp_dist(pl, p, spr[max], 0))
 				max = c.y;
-            c.y++;
+			c.y++;
 		}
 		if (max != c.x)
 		{
@@ -41,14 +41,14 @@ static void	sort_sprites(t_cam	*pl, t_point p, int *order)
 	}
 }
 
-static int get_pos_sprite(t_sprite	*spt, t_cam	*pl, t_point	sp)
+static int	get_pos_sprite(t_sprite	*spt, t_cam	*pl, t_point	sp)
 {
-    spt->sprite_x = (double)sp.x - (pl->posx + pl->ray2->offx / pl->ray2->grid);
+	spt->sprite_x = (double)sp.x - (pl->posx + pl->ray2->offx / pl->ray2->grid);
 	spt->sprite_y = (double)sp.y - (pl->posy + pl->ray2->offy / pl->ray2->grid);
 	spt->inv_det = 1.0 / (pl->planex * pl->diry - pl->dirx * pl->planey);
 	spt->tx = spt->inv_det * (pl->diry * spt->sprite_x
 			- pl->dirx * spt->sprite_y);
-	spt->ty = spt->inv_det * (-pl->planey * spt->sprite_x 
+	spt->ty = spt->inv_det * (-pl->planey * spt->sprite_x
 			+ pl->planex * spt->sprite_y);
 	if (spt->ty <= 0)
 		return (0);
@@ -70,39 +70,38 @@ static int get_pos_sprite(t_sprite	*spt, t_cam	*pl, t_point	sp)
 	return (1);
 }
 
-void put_col_sprite(t_sprite	spt, t_pic	sprt, t_scene	*sc, t_point	*c)
+void	put_col_sprite(t_sprite	spt, t_pic	sprt, t_scene	*sc, t_point	*c)
 {
-	int tex_x;
-	double step;
-	double tex_pos;
-	int tex_y;
-	int color;
-	t_cam       *pl;
-	
+	double	step;
+	double	tex_pos;
+	t_point	tex;
+	int		color;
+	t_cam	*pl;
+
 	pl = sc->tmap->player;
-	tex_x = (int)(256 * ((*c).x - (-spt.spriw / 2 + spt.sprix))
-		* sprt.width / spt.spriw) / 256;
+	tex.x = (int)(256 * ((*c).x - (-spt.spriw / 2 + spt.sprix))
+			* sprt.width / spt.spriw) / 256;
 	step = 1.0 * sprt.height / spt.sprih;
 	tex_pos = (spt.ds.y - HEIGHT / 2 + spt.sprih / 2 - pl->pitch) * step;
 	(*c).y = spt.ds.y;
 	while ((*c).y < spt.de.y)
 	{
-		tex_y = (int)tex_pos & (sprt.height - 1);
+		tex.y = (int)tex_pos & (sprt.height - 1);
 		tex_pos += step;
-		color = get_color_at(&sprt, tex_x, tex_y);
+		color = get_color_at(&sprt, tex.x, tex.y);
 		if (color != 0x432600)
 			put_pixel(&sc->img, (t_point){(*c).x, (*c).y, color});
 		(*c).y++;
 	}
 }
 
-static void draw_sprites(t_scene	*sc, int i)
+static void	draw_sprites(t_scene	*sc, int i)
 {
-	t_cam       *pl;
-	t_point     sp;
-    t_sprite    spt;
-    t_point     c;
-	t_pic       sprt;
+	t_cam		*pl;
+	t_point		sp;
+	t_sprite	spt;
+	t_point		c;
+	t_pic		sprt;
 
 	pl = sc->tmap->player;
 	sp = pl->sprites[i];
@@ -118,14 +117,14 @@ static void draw_sprites(t_scene	*sc, int i)
 	c.x = spt.ds.x;
 	while (c.x < spt.de.x)
 	{
-		if (spt.ty > 0 && c.x >= 0 && c.x < WIDTH 
-				&& spt.ty * 30 < pl->zbuffer[WIDTH - c.x - 1])
+		if (spt.ty > 0 && c.x >= 0 && c.x < WIDTH
+			&& spt.ty * 30 < pl->zbuffer[WIDTH - c.x - 1])
 			put_col_sprite(spt, sprt, sc, &c);
 		c.x++;
 	}
 }
 
-void sort_draw_sprites(t_scene *scene, t_point p)
+void	sort_draw_sprites(t_scene	*scene, t_point	p)
 {
 	int	nb;
 	int	*order;
@@ -147,7 +146,7 @@ void sort_draw_sprites(t_scene *scene, t_point p)
 	i = 0;
 	while (i < nb)
 	{
-		 draw_sprites(scene, order[i]);
-		 i++;
+		draw_sprites(scene, order[i]);
+		i++;
 	}
 }

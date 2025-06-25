@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/19 12:03:09 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 20:14:11 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	inside_map_array(int x, int y, t_scene *scene)
 	return (1);
 }
 
-void draw_square(t_scene	*scene, t_point p, int size)
+void	draw_square(t_scene	*scene, t_point	p, int size)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	while (i < size)
 	{
@@ -41,10 +41,10 @@ void draw_square(t_scene	*scene, t_point p, int size)
 	}
 }
 
-void	draw_player_vector(t_scene	*scene, t_point p, int	len)
+void	draw_player_vector(t_scene	*scene, t_point p, int len)
 {
-	double	p_angle;
-	t_point vec;
+	double		p_angle;
+	t_point		vec;
 	t_raycastor	*cast;
 
 	p_angle = scene->tmap->player->p_angle;
@@ -53,17 +53,17 @@ void	draw_player_vector(t_scene	*scene, t_point p, int	len)
 	vec.color = p.color;
 	cast = scene->tmap->player->ray2;
 	line_bh(scene, p, vec, cast);
-} 
+}
 
-double dist(double sx, double sy, double ex, double ey)
+double	dist(double sx, double sy, double ex, double ey)
 {
 	return (sqrt((ex - sx) * (ex - sx) + (ey - sy) * (ey - sy)));
 }
 
 void	init_raycastor(t_point p, t_raycastor	*cast)
 {
-	cast->disH = 1e6;
-	cast->disV = 1e6;
+	cast->dis_h = 1e6;
+	cast->dis_v = 1e6;
 	cast->hx = p.x;
 	cast->hy = p.y;
 	cast->vx = p.x;

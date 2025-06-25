@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:24:16 by layang            #+#    #+#             */
-/*   Updated: 2025/06/24 18:32:54 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 18:36:51 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	put_pixel(t_pic	*img, t_point	pt)
 	*(unsigned int *)dst = pt.color;
 }
 
-double sp_dist(t_cam *player, t_point	po, t_point	s, int	n)
+double	sp_dist(t_cam *player, t_point	po, t_point	s, int n)
 {
 	double	ox;
 	double	oy;
 	double	dis;
 	int		gr;
-	
+
 	ox = player->ray2->offx;
 	oy = player->ray2->offy;
 	gr = player->ray2->grid;
@@ -69,7 +69,7 @@ double sp_dist(t_cam *player, t_point	po, t_point	s, int	n)
 		return (s.x * gr -(po.x * gr + ox));
 	else if (n == 2)
 		return (s.y * gr -(po.y * gr + oy));
-	else  // n = 0
+	else
 	{
 		dis = dist(s.x * gr, s.y * gr, po.x * gr + ox, po.y * gr + oy);
 		return (dis);

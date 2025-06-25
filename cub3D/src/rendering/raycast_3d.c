@@ -6,16 +6,16 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 07:09:10 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/25 13:21:43 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 19:03:12 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void add_hit_cast(t_raycastor	*cast, int n, char c, t_ray	*hitps)
+static void	add_hit_cast(t_raycastor	*cast, int n, char c, t_ray	*hitps)
 {
 	int	vert;
-	
+
 	vert = hitps->hits[n].vert_side;
 	hitps->hits[n].hit_map.x = cast->in_map.x;
 	hitps->hits[n].hit_map.y = cast->in_map.y;
@@ -30,7 +30,7 @@ void	renew_hits(t_raycastor	*cast, t_scene	*s, t_ray	*hitps, char c)
 	double	dis;
 	int		n;
 	int		repeat;
-	
+
 	if (hitps->hit_count < MAX_HITS_PER_RAY)
 	{
 		dis = dist(cast->p.x, cast->p.y, cast->rx, cast->ry);
@@ -56,8 +56,8 @@ void	renew_hits(t_raycastor	*cast, t_scene	*s, t_ray	*hitps, char c)
 
 void	record_hits(t_raycastor	*cast, t_scene	*sc, t_ray	*hitps, char c)
 {
-	int		n;
-	
+	int	n;
+
 	if (hitps->hit_count < MAX_HITS_PER_RAY)
 	{
 		n = hitps->hit_count;
@@ -71,16 +71,16 @@ void	record_hits(t_raycastor	*cast, t_scene	*sc, t_ray	*hitps, char c)
 	else
 		return ;
 }
- 
+
 void	get_hit_v(t_raycastor	*cast, t_scene	*sc, int	*depth, t_ray	*hs)
 {
 	char	c;
-	
+
 	while (*depth < cast->dof)
 	{
 		renew_pos_in_map(sc, cast);
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, sc)
-				&& hit_wall(sc->tmap, cast->in_map, 1))
+			&& hit_wall(sc->tmap, cast->in_map, 1))
 		{
 			c = sc->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			if (c == '1')
@@ -92,40 +92,40 @@ void	get_hit_v(t_raycastor	*cast, t_scene	*sc, int	*depth, t_ray	*hs)
 			{
 				record_hits(cast, sc, hs, c);
 				cast->rx += cast->stepx;
-        		cast->ry += cast->stepy;
-				(*depth)++;
-			}
-		}
-		else
-            no_wall(sc, cast, depth);
-	}	
-}
-
-void	get_hit_h(t_raycastor	*cast, t_scene	*sc, int	*depth, t_ray	*hs)
-{
-	char	c;
-	
-	while (*depth < cast->dof)
-	{
-		renew_pos_in_map(sc, cast);		
-		if (inside_map_array(cast->in_map.x, cast->in_map.y, sc)
-				&& hit_wall(sc->tmap, cast->in_map, 1))
-		{
-			c = sc->tmap->the_map[cast->in_map.y][cast->in_map.x];
-			if (c == '1')
-			{
-				renew_hits(cast, sc, hs, c);
-				*depth = cast->dof;
-			}
-			else
-			{
-				renew_hits(cast, sc, hs, c);
-				cast->rx += cast->stepx;
-        		cast->ry += cast->stepy;
+				cast->ry += cast->stepy;
 				(*depth)++;
 			}
 		}
 		else
 			no_wall(sc, cast, depth);
-	}	
+	}
+}
+
+void	get_hit_h(t_raycastor	*cast, t_scene	*sc, int	*depth, t_ray	*hs)
+{
+	char	c;
+
+	while (*depth < cast->dof)
+	{
+		renew_pos_in_map(sc, cast);
+		if (inside_map_array(cast->in_map.x, cast->in_map.y, sc)
+			&& hit_wall(sc->tmap, cast->in_map, 1))
+		{
+			c = sc->tmap->the_map[cast->in_map.y][cast->in_map.x];
+			if (c == '1')
+			{
+				renew_hits(cast, sc, hs, c);
+				*depth = cast->dof;
+			}
+			else
+			{
+				renew_hits(cast, sc, hs, c);
+				cast->rx += cast->stepx;
+				cast->ry += cast->stepy;
+				(*depth)++;
+			}
+		}
+		else
+			no_wall(sc, cast, depth);
+	}
 }
