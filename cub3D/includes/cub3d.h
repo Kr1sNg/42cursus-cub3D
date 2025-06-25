@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/24 18:57:51 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 10:51:52 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ typedef struct s_map
 	t_cam	*player;
 	t_count	count;
 	int		visible;
+	int		sprite_on;
 	int 	**door_state;
 	double	**door_timer;
 }	t_map;
@@ -293,7 +294,7 @@ void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth);
 
 /*raycast_utils.c ok*/
 void    no_wall(t_scene *scene, t_raycastor	*cast, int *depth);
-int		hit_wall(char	**map, t_point p);
+int		hit_wall(t_map	*tmap, t_point p, int is_3d);
 void	renew_pos_in_map(t_scene *scene, t_raycastor	*cast);
 t_hit	find_hit_side(t_raycastor	*cast, char c, int is_dir, int	is_v);
 
