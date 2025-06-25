@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/25 10:38:24 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 14:24:25 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int ac, char	**av)
 	t_scene	scene;
 
 	if (ac != 2)
-		return (printf("Usage: ./cub3d valid_map.cub"));
+		return (printf("Usage: ./cub3d valid_map.cub\n"));
 	if (ft_parsing(av[1], &scene) != 0)
 		return (free_map_data(scene.tmap), 1);
 	scene.mlx = mlx_init();
