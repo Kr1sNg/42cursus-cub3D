@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/24 18:45:25 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 12:35:40 by tat-nguy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	draw_maps(t_scene	*scene)
 	center.y = draw_start.y + grid / 2 + scene->tmap->player->ray2->offy;
 	center.color = 0x000000;
 	draw_3d_scene(scene, center, grid, start);
-	//draw_square(scene, start, size);
+	draw_square(scene, start, size);
 	draw_minimap(scene, draw_start);
 	draw_player_vision(scene, center, grid, start);
 	draw_player_vector(scene, center, grid / 2);
