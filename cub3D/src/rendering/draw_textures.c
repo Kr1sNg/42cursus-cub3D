@@ -40,29 +40,31 @@ int	get_color_at(t_pic *img, int x, int y)
 	return (color);
 }
 
-static double	hit_texture_x(t_raycastor	*cast) // use Interpolation to blending the color
+double	get_texture_x(t_raycastor	*cast, t_ray_hit	hit)
 {
 	t_point	hitt;
 	double	x;
 
-	if (cast->hit_dir == NORTH || cast->hit_dir == SOUTH)
+	if (hit.hit_dir == NORTH || hit.hit_dir == SOUTH)
 	{
-		hitt.x = (int)floor(cast->final_x);
+		hitt.x = (int)floor(hit.hit_x);
 		hitt.x %= cast->grid;
 		x = (double)hitt.x / cast->grid;
-		x = fabs(floor(x * (double)cast->tt_pic.width));
+		x = fabs(floor(x * (double)hit.tt_pic.width));
 		if (cast->diry < 0)
-			x = (double)cast->tt_pic.width - x - 1;
+			x = (double)hit.tt_pic.width - x - 1;
 	}
 	else
 	{
-		hitt.y = (int)floor(cast->final_y);
+		hitt.y = (int)floor(hit.hit_y);
 		hitt.y %= cast->grid;
 		x = (double)hitt.y / cast->grid;
-		x = fabs(floor(x * (double)cast->tt_pic.width));
+		x = fabs(floor(x * (double)hit.tt_pic.width));
 		if (cast->dirx > 0)
-			x = (double)cast->tt_pic.width - x - 1;
+			x = (double)hit.tt_pic.width - x - 1;
 	}
+	if (x < 0.0)
+		x = 0.0;
 	return (x);
 }
 

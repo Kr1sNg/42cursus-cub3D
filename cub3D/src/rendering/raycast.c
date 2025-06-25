@@ -67,10 +67,9 @@ void	get_dis_v(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 	
 	while (*depth < cast->dof)
 	{
-		cast->in_map.x = scene->tmap->player->posx + floor(cast->rx  / cast->grid) - 5;
-		cast->in_map.y = scene->tmap->player->posy + floor(cast->ry  / cast->grid) - 5;
+		renew_pos_in_map(scene, cast);
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& hit_wall(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
+				&& hit_wall(scene->tmap->the_map, cast->in_map) == 1)
 		{
 			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			cast->vx = cast->rx;
@@ -120,10 +119,9 @@ void	get_dis_h(t_raycastor	*cast, t_scene *scene, t_point p, int *depth)
 	
 	while (*depth < cast->dof)
 	{
-		cast->in_map.x = scene->tmap->player->posx + floor(cast->rx  / cast->grid) - 5;
-		cast->in_map.y = scene->tmap->player->posy + floor(cast->ry  / cast->grid) - 5;		
+		renew_pos_in_map(scene, cast);
 		if (inside_map_array(cast->in_map.x, cast->in_map.y, scene)
-				&& hit_wall(scene->tmap->the_map, cast->in_map.x, cast->in_map.y))
+				&& hit_wall(scene->tmap->the_map, cast->in_map) == 1)
 		{
 			c = scene->tmap->the_map[cast->in_map.y][cast->in_map.x];
 			cast->hx = cast->rx;

@@ -24,15 +24,28 @@ void    no_wall(t_scene *scene, t_raycastor	*cast, int *depth)
     }
 }
 
-int hit_wall(char	**map, int x, int y)
+int hit_wall(char	**map, t_point p)
 {
 	char c;
 
-	c = map[y][x];
+	c = map[p.y][p.x];
 	if (c == '0' || c == 'E' || c == 'W' || c == 'N' || c == 'S')
 		return (0);
-	else
+	else if (c == '1' || c == '2')
 		return (1);
+	else
+		return (2);
+}
+
+void renew_pos_in_map(t_scene *scene, t_raycastor	*cast)
+{
+	int	px;
+	int	py;
+
+	px = scene->tmap->player->posx;
+	py = scene->tmap->player->posy;
+	cast->in_map.x = px + floor(cast->rx  / cast->grid) - 5;
+	cast->in_map.y = py + floor(cast->ry  / cast->grid) - 5;
 }
 
 static t_hit	nonvertical_side_wall(t_raycastor	*cast)

@@ -51,8 +51,8 @@ void	free_map_img(t_scene *scene)
 		mlx_destroy_image(scene->mlx, scene->tmap->tex_e.mlx_img);
 	if (scene->tmap->door.mlx_img)
 		mlx_destroy_image(scene->mlx, scene->tmap->door.mlx_img);
-	if (scene->tmap->door_open.mlx_img)
-		mlx_destroy_image(scene->mlx, scene->tmap->door_open.mlx_img);
+	//if (scene->tmap->door_open.mlx_img)
+	//	mlx_destroy_image(scene->mlx, scene->tmap->door_open.mlx_img);
 	if (scene->tmap->sprite.mlx_img)
 		mlx_destroy_image(scene->mlx, scene->tmap->sprite.mlx_img);
 }
