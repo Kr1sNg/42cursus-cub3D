@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_3d_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:02:25 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 14:31:18 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:52:42 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_pic	find_texture_3d(t_scene	*scene, t_ray_hit	hit)
 		return (scene->tmap->tex_n);
 	else if (hit.hit_type == SOUTH)
 		return (scene->tmap->tex_s);
-	else if (hit.hit_type == EAST)
+	else if (hit.hit_type == EAST && scene->tmap->sprite_on)
 		return (scene->tmap->tex_e);
 	else if (hit.hit_type == WEST)
 		return (scene->tmap->tex_w);
