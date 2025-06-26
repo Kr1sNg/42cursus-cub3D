@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:20:17 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 19:47:27 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/26 15:48:33 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,26 @@ static void	draw_minimap(t_scene	*scene, t_point	p)
 	}
 }
 
+static void	draw_3d(t_scene	*scene)
+{
+	int		size;
+	t_point	center;
+	int		grid;
+	t_point	draw_start;
+
+	size = WIDTH + HEIGHT;
+	scene->tmap->player->ray2->grid = size / scene->tmap->visible;
+	grid = scene->tmap->player->ray2->grid;
+	draw_start.x = (scene->tmap->visible / 2) * grid;
+	draw_start.y = (scene->tmap->visible / 2) * grid;
+	center.x = draw_start.x + grid / 2
+		+ scene->tmap->player->ray2->offx * scene->tmap->visible;
+	center.y = draw_start.y + grid / 2
+		+ scene->tmap->player->ray2->offy * scene->tmap->visible;
+	center.color = 0x000000;
+	draw_3d_scene(scene, center, grid);
+}
+
 void	draw_maps(t_scene	*scene)
 {
 	int		size;
@@ -96,6 +116,7 @@ void	draw_maps(t_scene	*scene)
 	t_point	start;
 	t_point	draw_start;
 
+	draw_3d(scene);
 	size = round((WIDTH + HEIGHT) / scene->tmap->visible);
 	scene->tmap->player->ray2->grid = size / scene->tmap->visible;
 	grid = scene->tmap->player->ray2->grid;
@@ -107,7 +128,6 @@ void	draw_maps(t_scene	*scene)
 	center.x = draw_start.x + grid / 2 + scene->tmap->player->ray2->offx;
 	center.y = draw_start.y + grid / 2 + scene->tmap->player->ray2->offy;
 	center.color = 0x000000;
-	draw_3d_scene(scene, center, grid, start);
 	draw_square(scene, start, size);
 	draw_minimap(scene, draw_start);
 	draw_player_vision(scene, center, grid, start);

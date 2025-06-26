@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:09:52 by  layang           #+#    #+#             */
-/*   Updated: 2025/06/25 20:08:33 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/26 15:26:32 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	dda_raycasting_3d(t_raycastor	*cast, t_scene *s, int r, t_point p)
 	draw_pix_column(&hitps, cast, s);
 }
 
-void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off)
+void	draw_3d_scene(t_scene *scene, t_point p, int grid)
 {
 	t_raycastor	*cast;
 	int			r;
@@ -105,10 +105,6 @@ void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off)
 			scene->tmap->count.map_width);
 	cast->grid = grid;
 	r = 0;
-	p.x -= off.x;
-	p.y -= off.y;
-	cast->offset.x = off.x;
-	cast->offset.y = off.y;
 	n = scene->tmap->player->ray_nb;
 	cast->pix_ray = WIDTH / scene->tmap->player->ray_nb;
 	clear_zbuffer_sprites(scene->tmap->player);

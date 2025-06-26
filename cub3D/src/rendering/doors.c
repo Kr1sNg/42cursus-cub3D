@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doors.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:34:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/26 09:04:00 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/26 15:51:31 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	update_door_at(t_map *tmap, int y, int x)
 {
 	if (tmap->door_state[y][x] == DOOR_OPENING)
 	{
-		tmap->door_timer[y][x] += 0.25;
+		tmap->door_timer[y][x] += 0.1;
 		if (tmap->door_timer[y][x] >= 1.0)
 		{
 			tmap->door_timer[y][x] = 1.0;
@@ -104,7 +104,7 @@ static void	update_door_at(t_map *tmap, int y, int x)
 	}
 	else if (tmap->door_state[y][x] == DOOR_CLOSING)
 	{
-		tmap->door_timer[y][x] -= 0.25;
+		tmap->door_timer[y][x] -= 0.1;
 		if (tmap->door_timer[y][x] <= 0.0)
 		{
 			tmap->door_timer[y][x] = 0.0;

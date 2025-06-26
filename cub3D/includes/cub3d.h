@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/26 14:15:08 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/26 15:33:16 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@
 # define DOOR_OPEN 2
 # define DOOR_CLOSING 3
 
-# define WIDTH			1920
-# define HEIGHT			1080
+// # define WIDTH			1920
+// # define HEIGHT			1080
+# define WIDTH			920
+# define HEIGHT			680
 
 # define WHITE			0xFFFFFF
 # define BLACK			0x000000
@@ -265,7 +267,7 @@ bool	animated_sprit(void *mlx, t_map *tmap);
 bool	check_img(void *mlx, t_pic *image, char *path);
 
 /* draw_3d.c  ok*/
-void	draw_3d_scene(t_scene *scene, t_point p, int grid, t_point	off);
+void	draw_3d_scene(t_scene *scene, t_point p, int grid);
 
 /*draw_minimap.c 5 ok*/
 void	line_bh(t_scene	*scene, t_point	s, t_point	e, t_raycastor	*cast);
