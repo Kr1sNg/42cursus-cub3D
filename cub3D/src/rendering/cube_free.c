@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cube_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:21:11 by layang            #+#    #+#             */
-/*   Updated: 2025/06/23 11:53:10 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:21:02 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	free_arr(char	***paths)
+void	free_arr(void	***paths)
 {
 	int	i;
 

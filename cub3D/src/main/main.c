@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/25 14:24:25 by tat-nguy         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:28:02 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ static bool	player_init(t_map *tmap)
 	tmap->player->ray2 = malloc(sizeof(t_raycastor));
 	if (!tmap->player->ray2)
 		return (print_err("Cube3D: malloc ray2"), false);
-	if (!init_doors(tmap))
-		return (print_err("Cube3D: doors initiation"), false);
 	tmap->player->ray2->offx = 0.0;
 	tmap->player->ray2->offy = 0.0;
+	tmap->player->ray2->grid = 0;
+	if (!init_doors(tmap))
+		return (print_err("Cube3D: doors initiation"), false);
 	tmap->player->planex = -tmap->count.map_diry * 0.66;
 	tmap->player->planey = tmap->count.map_dirx * 0.66;
 	tmap->player->pitch = 0.0;
@@ -76,6 +77,7 @@ static int	loop_img(t_scene *scene)
 	return (0);
 }
 
+//	ft_bzero(&scene, sizeof(t_scene));
 int	main(int ac, char	**av)
 {
 	t_scene	scene;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/25 20:13:56 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/26 09:20:54 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,11 @@ typedef struct s_count
 	double	map_diry; // W=(dirx = -1, diry = 0), E=(dirx = 1, diry = 0)
 }	t_count;
 
+//	double	inv_det;
 typedef struct s_sprite
 {
-	double	sprite_x;
-	double	sprite_y;
-	double	inv_det;
+	double	dx;
+	double	dy;
 	double	tx;
 	double	ty;
 	int		sprix;
@@ -218,6 +218,7 @@ typedef struct s_map
 	int		sprite_on;
 	int		**door_state;
 	double	**door_timer;
+	int		*order;
 }	t_map;
 
 typedef struct s_scene
@@ -337,7 +338,7 @@ double	sp_dist(t_cam *player, t_point	po, t_point	s, int n);
 /*draw_textures.c ok*/
 int		get_color_at(t_pic *img, int x, int y);
 double	get_texture_x(t_raycastor	*cast, t_ray_hit	hit);
-t_pic	find_texture_xpm(t_scene *scene, t_raycastor *cast);
+//t_pic	find_texture_xpm(t_scene *scene, t_raycastor *cast);
 void	put_pixel_texture(t_scene *scene, t_point po, t_raycastor *cast);
 void	texture_3d(t_scene	*scene, t_point	po, t_raycastor	*cast,
 			t_ray_hit	hit);
@@ -353,7 +354,7 @@ void	hook_controls(t_scene	*scene);
 void	floating_coord(t_map *tmap, int n_pix, int sign);
 
 /* cube_free.c 3*/
-void	free_arr(char ***paths);
+void	free_arr(void ***paths);
 int		close_cube3d(t_scene *scene);
 
 #endif

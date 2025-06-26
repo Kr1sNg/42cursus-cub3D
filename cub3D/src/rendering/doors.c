@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   doors.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:34:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/25 18:39:26 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/26 09:04:00 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	init_doors_values(t_map	*tmap, int height, int width)
+/* static void	init_doors_values(t_map	*tmap, int height, int width)
 {
 	int	y;
 	int	x;
@@ -22,6 +22,33 @@ static void	init_doors_values(t_map	*tmap, int height, int width)
 	{
 		x = 0;
 		while (x < width)
+		{
+			if (tmap->the_map[y][x] == '2')
+			{
+				tmap->door_state[y][x] = DOOR_CLOSED;
+				tmap->door_timer[y][x] = 0.0;
+			}
+			else
+			{
+				tmap->door_state[y][x] = -1;
+				tmap->door_timer[y][x] = 0.0;
+			}
+			x++;
+		}
+		y++;
+	}
+} */
+
+static void	init_doors_values(t_map	*tmap, int height)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < (int)ft_strlen(tmap->the_map[y]))
 		{
 			if (tmap->the_map[y][x] == '2')
 			{
@@ -47,20 +74,20 @@ int	init_doors(t_map	*tmap)
 
 	height = tmap->count.map_lines;
 	width = tmap->count.map_width;
-	tmap->door_state = malloc(sizeof(int *) * height);
-	tmap->door_timer = malloc(sizeof(double *) * height);
+	tmap->door_state = ft_calloc(height + 1, sizeof(int *));
+	tmap->door_timer = ft_calloc(height + 1, sizeof(double *));
 	if (!tmap->door_state || !tmap->door_timer)
 		return (false);
 	y = 0;
 	while (y < height)
 	{
-		tmap->door_state[y] = malloc(sizeof(int) * width);
-		tmap->door_timer[y] = malloc(sizeof(double) * width);
+		tmap->door_state[y] = ft_calloc(width + 1, sizeof(int));
+		tmap->door_timer[y] = ft_calloc(width + 1, sizeof(double));
 		if (!tmap->door_state[y] || !tmap->door_timer[y])
 			return (1);
 		y++;
 	}
-	init_doors_values(tmap, height, width);
+	init_doors_values(tmap, height);
 	return (true);
 }
 
@@ -94,6 +121,10 @@ static void	update_door(t_map	*tmap, int x, int y)
 	int		st;
 	int		grid;
 
+	if (!tmap->player || !tmap->player->ray2)
+		return ;
+	if (tmap->player->ray2->grid == 0)
+		return ;
 	st = tmap->door_state[y][x];
 	grid = tmap->player->ray2->grid;
 	dx = tmap->player->posx + tmap->player->ray2->offx / grid;
@@ -106,7 +137,7 @@ static void	update_door(t_map	*tmap, int x, int y)
 	update_door_at(tmap, y, x);
 }
 
-void	update_doors(t_map *tmap)
+/* void	update_doors(t_map *tmap)
 {
 	int	y;
 	int	x;
@@ -118,6 +149,27 @@ void	update_doors(t_map *tmap)
 		while (x < tmap->count.map_width)
 		{
 			if (tmap->the_map[y][x] == '2')
+				update_door(tmap, x, y);
+			x++;
+		}
+		y++;
+	}
+} */
+
+void	update_doors(t_map *tmap)
+{
+	int		y;
+	int		x;
+	char	c;
+
+	y = 0;
+	while (y < tmap->count.map_lines)
+	{
+		x = 0;
+		while (x < (int)ft_strlen(tmap->the_map[y]))
+		{
+			c = tmap->the_map[y][x];
+			if (c == '2')
 				update_door(tmap, x, y);
 			x++;
 		}

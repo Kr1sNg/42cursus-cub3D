@@ -3,23 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   free_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 18:40:45 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/25 18:36:03 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 23:45:11 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+static void	free_map_data_2(t_map *tmap)
+{
+	if (tmap && tmap->door_state)
+		free_arr((void ***)&tmap->door_state);
+	if (tmap && tmap->door_timer)
+		free_arr((void ***)&tmap->door_timer);
+	if (tmap && tmap->order)
+		free(tmap->order);
+	free(tmap);
+}
 
 void	free_map_data(t_map *tmap)
 {
 	if (!tmap)
 		return ;
 	if (tmap && tmap->the_map)
-		free_arr(&tmap->the_map);
+		free_arr((void ***)&tmap->the_map);
 	if (tmap && tmap->map_copy)
-		free_arr(&tmap->the_map);
+		free_arr((void ***)&tmap->the_map);
 	if (tmap && tmap->path_e)
 		free(tmap->path_e);
 	if (tmap && tmap->path_n)
@@ -34,7 +45,7 @@ void	free_map_data(t_map *tmap)
 			free(tmap->player->ray2);
 		free(tmap->player);
 	}
-	free(tmap);
+	free_map_data_2(tmap);
 }
 
 void	free_map_img(t_scene *scene)

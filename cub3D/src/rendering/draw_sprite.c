@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:54:08 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 19:48:49 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/26 09:27:08 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,36 @@ static void	sort_sprites(t_cam	*pl, t_point p, int *order)
 	}
 }
 
-static int	get_pos_sprite(t_sprite	*spt, t_cam	*pl, t_point	sp)
+static int	get_pos_sprite(t_sprite *spt, t_cam *pl, t_point sp)
+{
+	double	camera_dist;
+
+	spt->dx = (double)sp.x - (pl->posx + pl->ray2->offx / pl->ray2->grid);
+	spt->dy = (double)sp.y - (pl->posy + pl->ray2->offy / pl->ray2->grid);
+	spt->tx = spt->dy * cos(pl->p_angle) + spt->dx * sin(pl->p_angle);
+	spt->ty = spt->dx * cos(pl->p_angle) - spt->dy * sin(pl->p_angle);
+	if (spt->ty <= 0)
+		return (0);
+	camera_dist = (WIDTH / 2) / tan(pl->fov / 2);
+	spt->sprix = (int)((WIDTH / 2) + (spt->tx * camera_dist / spt->ty));
+	spt->sprih = abs((int)(HEIGHT / spt->ty));
+	spt->spriw = spt->sprih;
+	spt->ds.y = -spt->sprih / 2 + HEIGHT / 2 + (int)(pl->pitch);
+	if (spt->ds.y < 0)
+		spt->ds.y = 0;
+	spt->de.y = spt->sprih / 2 + HEIGHT / 2 + (int)(pl->pitch);
+	if (spt->de.y >= HEIGHT)
+		spt->de.y = HEIGHT - 1;
+	spt->ds.x = -spt->spriw / 2 + spt->sprix;
+	if (spt->ds.x < 0)
+		spt->ds.x = 0;
+	spt->de.x = spt->spriw / 2 + spt->sprix;
+	if (spt->de.x >= WIDTH)
+		spt->de.x = WIDTH - 1;
+	return (1);
+}
+
+/* static int	get_pos_sprite(t_sprite	*spt, t_cam	*pl, t_point	sp)
 {
 	spt->sprite_x = (double)sp.x - (pl->posx + pl->ray2->offx / pl->ray2->grid);
 	spt->sprite_y = (double)sp.y - (pl->posy + pl->ray2->offy / pl->ray2->grid);
@@ -68,7 +97,7 @@ static int	get_pos_sprite(t_sprite	*spt, t_cam	*pl, t_point	sp)
 	if (spt->de.x >= WIDTH)
 		spt->de.x = WIDTH - 1;
 	return (1);
-}
+} */
 
 void	put_col_sprite(t_sprite	spt, t_pic	sprt, t_scene	*sc, t_point	*c)
 {
@@ -124,7 +153,7 @@ static void	draw_sprites(t_scene	*sc, int i)
 	}
 }
 
-void	sort_draw_sprites(t_scene	*scene, t_point	p)
+/* void	sort_draw_sprites(t_scene	*scene, t_point	p)
 {
 	int	nb;
 	int	*order;
@@ -133,7 +162,7 @@ void	sort_draw_sprites(t_scene	*scene, t_point	p)
 	nb = scene->tmap->player->nb_sprites;
 	if (nb == 0)
 		return ;
-	order = malloc(sizeof(int) * nb);
+	order = ft_calloc(nb + 1, sizeof(int));
 	if (!order)
 		return ;
 	i = 0;
@@ -149,4 +178,33 @@ void	sort_draw_sprites(t_scene	*scene, t_point	p)
 		draw_sprites(scene, order[i]);
 		i++;
 	}
+	free(order);
+} */
+
+void	sort_draw_sprites(t_scene	*scene, t_point	p)
+{
+	int	nb;
+	int	i;
+
+	nb = scene->tmap->player->nb_sprites;
+	if (nb == 0)
+		return ;
+	scene->tmap->order = ft_calloc(nb + 1, sizeof(int));
+	if (!scene->tmap->order)
+		return ;
+	i = 0;
+	while (i < nb)
+	{
+		scene->tmap->order[i] = i;
+		i++;
+	}
+	sort_sprites(scene->tmap->player, p, scene->tmap->order);
+	i = 0;
+	while (i < nb)
+	{
+		draw_sprites(scene, scene->tmap->order[i]);
+		i++;
+	}
+	free(scene->tmap->order);
+	scene->tmap->order = NULL;
 }

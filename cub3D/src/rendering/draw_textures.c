@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   draw_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:00:40 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 18:50:03 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/25 23:11:48 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
+/* t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 {
 	if (cast->hit == DEFAULT)
 		return ((t_pic){NULL, NULL, 0, 0, 0, 0, 0});
@@ -28,7 +28,7 @@ t_pic	find_texture_xpm(t_scene	*scene, t_raycastor	*cast)
 		return (scene->tmap->door);
 	else
 		return (scene->tmap->sprite);
-}
+} */
 
 int	get_color_at(t_pic *img, int x, int y)
 {
