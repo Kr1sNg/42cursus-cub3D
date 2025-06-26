@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/26 09:20:54 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/26 14:10:58 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define DOOR_OPEN 2
 # define DOOR_CLOSING 3
 
-//# define WIDTH		920
-//# define HEIGHT		680
+// # define WIDTH		920
+// # define HEIGHT		680
 # define WIDTH			1920
 # define HEIGHT			1080
 //# define WIDTH		3840
