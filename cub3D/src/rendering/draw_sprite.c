@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:54:08 by layang            #+#    #+#             */
-/*   Updated: 2025/06/27 14:01:01 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/27 14:42:08 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,10 @@ void	put_col_sprite(t_sprite	spt, t_pic	sprt, t_scene	*sc, t_point	*c)
 		tex_pos += step;
 		color = get_color_at(&sprt, tex.x, tex.y);
 		if (color != 0x432600)
+		{
+			color = gradient_color(0.3, PURPLE, color);
 			put_pixel(&sc->img, (t_point){(*c).x, (*c).y, color});
+		}
 		(*c).y++;
 	}
 }
