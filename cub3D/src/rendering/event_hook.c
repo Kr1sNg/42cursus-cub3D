@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:23:26 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 18:50:32 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/27 13:54:06 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ int	key_hooks(int keycode, t_scene	*all)
 	if (keycode == XK_Right)
 		rotate(all, -0.05);
 	if (keycode == XK_w)
-		floating_coord(all->tmap, 12, 0);
+		floating_coord(all->tmap, 2, 0);
 	if (keycode == XK_s)
-		floating_coord(all->tmap, -12, 0);
+		floating_coord(all->tmap, -2, 0);
 	if (keycode == XK_d)
-		floating_coord(all->tmap, 12, 1);
+		floating_coord(all->tmap, 2, 1);
 	if (keycode == XK_a)
-		floating_coord(all->tmap, -12, 1);
+		floating_coord(all->tmap, -2, 1);
 	return (0);
 }
 
-int	mouse_rotate(t_scene *all)
+/* int	mouse_rotate(t_scene *all)
 {
 	int	x;
 	int	y;
@@ -53,6 +53,19 @@ int	mouse_rotate(t_scene *all)
 	rotate(all, dx *(-(2 * M_PI / 11520)));
 	mlx_mouse_move(all->mlx, all->win, WIDTH / 2, HEIGHT / 2);
 	return (0);
+} */
+
+int	mouse_rotate(int x, int y, void	*param)
+{
+	t_scene	*all;
+	int		dx;
+
+	(void)y;
+	all = (t_scene *)param;
+	dx = x - (WIDTH / 2);
+	rotate(all, dx * (-(2 * M_PI / 11520)));
+	mlx_mouse_move(all->mlx, all->win, WIDTH / 2, HEIGHT / 2);
+	return (0);
 }
 
 void	hook_controls(t_scene	*scene)
@@ -60,4 +73,5 @@ void	hook_controls(t_scene	*scene)
 	mlx_hook(scene->win, DestroyNotify, 0, close_cube3d, scene);
 	mlx_hook(scene->win, KeyPress, KeyPressMask, key_hooks, scene);
 	mlx_mouse_move(scene->mlx, scene->win, WIDTH / 2, HEIGHT / 2);
+	mlx_hook(scene->win, 6, PointerMotionMask, mouse_rotate, scene);
 }

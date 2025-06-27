@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:43:22 by layang            #+#    #+#             */
-/*   Updated: 2025/06/25 19:06:02 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/27 13:51:17 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@ void	no_wall(t_scene	*scene, t_raycastor	*cast, int	*depth)
 int	hit_wall(t_map	*tmap, t_point	p, int is_3d)
 {
 	char	c;
+
+	(void)is_3d;
+	c = tmap->the_map[p.y][p.x];
+	if (c == '0' || c == 'E' || c == 'W' || c == 'N' || c == 'S')
+		return (0);
+	else if (c == '1' || c == '2')
+		return (1);
+	else
+		return (2);
+}
+
+/* int	hit_wall(t_map	*tmap, t_point	p, int is_3d)
+{
+	char	c;
 	int		sp;
 
 	c = tmap->the_map[p.y][p.x];
@@ -38,7 +52,7 @@ int	hit_wall(t_map	*tmap, t_point	p, int is_3d)
 		return (1);
 	else
 		return (2);
-}
+} */
 
 void	renew_pos_in_map(t_scene	*scene, t_raycastor	*cast)
 {

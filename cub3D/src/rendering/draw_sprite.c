@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: layang <layang@student.42perpignan.fr>     +#+  +:+       +#+        */
+/*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:54:08 by layang            #+#    #+#             */
-/*   Updated: 2025/06/26 09:27:08 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/27 14:01:01 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ static void	draw_sprites(t_scene	*sc, int i)
 	if (abs(sp.x - pl->posx) <= 1 && abs(sp.x - pl->posx) >= 0
 		&& abs(sp.y - pl->posy) <= 1 && abs(sp.y - pl->posy) >= 0)
 	{
-		sc->tmap->sprite_on = 0;
+		sc->tmap->sprite_on = (sc->tmap->sprite_on == 0);
 		sc->tmap->the_map[sp.y][sp.x] = '0';
 	}
 	if (!get_pos_sprite(&spt, pl, sp))

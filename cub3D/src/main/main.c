@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:35:19 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/26 15:41:22 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/27 11:48:32 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ static bool	player_init(t_map *tmap)
 	return (true);
 }
 
+//mouse_rotate(scene);
 static int	loop_img(t_scene *scene)
 {
 	if (!scene->win)
 		return (1);
 	update_doors(scene->tmap);
 	draw_maps(scene);
-	mouse_rotate(scene);
 	animated_sprit(scene->mlx, scene->tmap);
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.mlx_img, 0, 0);
 	return (0);

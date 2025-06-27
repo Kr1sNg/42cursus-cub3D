@@ -6,7 +6,7 @@
 /*   By: layang <layang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:34:26 by tat-nguy          #+#    #+#             */
-/*   Updated: 2025/06/26 15:33:16 by layang           ###   ########.fr       */
+/*   Updated: 2025/06/27 13:51:01 by layang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@
 # define DOOR_OPEN 2
 # define DOOR_CLOSING 3
 
-// # define WIDTH			1920
-// # define HEIGHT			1080
-# define WIDTH			920
-# define HEIGHT			680
+# define WIDTH			1920
+# define HEIGHT			1080
+// # define WIDTH			920
+// # define HEIGHT			680
 
 # define WHITE			0xFFFFFF
 # define BLACK			0x000000
@@ -345,7 +345,8 @@ void	texture_3d(t_scene	*scene, t_point	po, t_raycastor	*cast,
 void	rotate(t_scene	*scene, double angl_turn);
 // void	translate(t_map	*tmap, double mov);
 int		key_hooks(int keycode, t_scene	*all);
-int		mouse_rotate(t_scene *all);
+//int		mouse_rotate(t_scene *all);
+int		mouse_rotate(int x, int y, void	*param);
 void	hook_controls(t_scene	*scene);
 
 /* event_hook_2.c */
