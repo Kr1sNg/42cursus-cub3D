@@ -6,7 +6,7 @@
 #    By: tat-nguy <tat-nguy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 19:03:06 by tat-nguy          #+#    #+#              #
-#    Updated: 2025/06/23 10:12:29 by tat-nguy         ###   ########.fr        #
+#    Updated: 2025/07/02 08:46:25 by tat-nguy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,34 @@ MLX_DIR		= ./minilibx
 MLX			= $(MLX_DIR)/libmlx.a
 
 # Source Files
-SRC_DIR 	= src
-SUBDIRS		= main parsing rendering
-SRC_SUBDIR	= $(foreach dir, $(SUBDIRS), $(addprefix $(SRC_DIR)/, $(dir)))
-SRC     	= $(foreach dir, $(SRC_SUBDIR), $(wildcard $(dir)/*.c))
-
+SRC     	= src/main/animation.c src/main/main.c \
+				src/parsing/error_map.c \
+				src/parsing/free_map.c \
+				src/parsing/is_line.c \
+				src/parsing/map_floodfill.c \
+				src/parsing/map_player.c \
+				src/parsing/parse_lines.c \
+				src/parsing/parse_map.c \
+				src/parsing/parsing.c \
+				src/parsing/read_file.c \
+				src/parsing/utils.c \
+				src/rendering/cube_free.c	 \
+				src/rendering/cube_utils.c	 \
+				src/rendering/doors.c	 \
+				src/rendering/draw_3d.c	 \
+				src/rendering/draw_3d_utils.c	 \
+				src/rendering/draw_maps.c	 \
+				src/rendering/draw_minimap.c	 \
+				src/rendering/draw_sprite.c	 \
+				src/rendering/draw_textures.c	 \
+				src/rendering/event_hook.c	 \
+				src/rendering/event_hook_2.c	 \
+				src/rendering/minimap_utils.c	 \
+				src/rendering/raycast.c	 \
+				src/rendering/raycast_3d.c	 \
+				src/rendering/raycast_3d_utils.c	 \
+				src/rendering/raycast_utils.c	 \
+				
 # Object Files
 OBJS 		= $(SRC:.c=.o)
 
