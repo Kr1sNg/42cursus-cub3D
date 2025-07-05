@@ -5,10 +5,14 @@
 *A 42's project inspired by the world-famous [Wolfenstein 3D game](https://en.wikipedia.org/wiki/Wolfenstein) 🏹*
 
 
+<p align="center">
+  <img src="https://github.com/Kr1sNg/42cursus-cub3D/blob/main/Screencast_cub3D.gif" />
+</p>
+
 <h4 align="right">
 	
   🧑🏻‍💻👩🏻‍💻 Made by [@KrisNg](https://github.com/Kr1sNg) and [@ISDouglas](https://github.com/ISDouglas)  
-  
+
 </h4>
 
 
