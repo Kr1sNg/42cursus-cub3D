@@ -95,7 +95,7 @@ make
 ### ▶️ Run the Project
 
 ```bash
-./cub3D maps/path/to/the/map.cub
+./cub3D maps/bonus/cheese_maze.cub
 ```
 
 🚀 Sample `.cub` files are available in the `/maps` directory.
